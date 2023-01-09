@@ -31,6 +31,7 @@ module.exports = {
     ],
     "simple-import-sort/exports": "warn",
     "simple-import-sort/imports": "warn",
+    "import/namespace": "off",
   },
   overrides: [
     {

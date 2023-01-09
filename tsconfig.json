@@ -1,4 +1,15 @@
 {
   "extends": "expo/tsconfig.base.json",
-  "compilerOptions": {}
+  "compilerOptions": {
+    "strict": true,
+    "strictNullChecks": true,
+    "paths": {
+      "components": ["./src/components"],
+      "store": ["./src/store"],
+      "api": ["./src/api"],
+      "types": ["./src/types"],
+      "utils": ["./src/utils"],
+      "src": ["./src"]
+    }
+  }
 }

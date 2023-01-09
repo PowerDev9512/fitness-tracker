@@ -1,10 +1,14 @@
 import { NavigationContainer } from "@react-navigation/native";
-import { Suspense } from "react";
+import React, { Suspense } from "react";
 import { TamaguiProvider } from "tamagui";
 
 import config from "../tamagui.config";
 
-export const Provider: FCC = ({ children }) => {
+interface Props {
+  children: React.ReactNode;
+}
+
+export const Provider = ({ children }: Props) => {
   return (
     <TamaguiProvider config={config}>
       <Suspense>
