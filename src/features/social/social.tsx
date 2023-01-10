@@ -1,14 +1,16 @@
 import { useGetFeed, useGetUser, useGetUsers } from "api";
-import { Button, Input, Loading, Screen, Toast } from "components";
+import { Input, Loading, Screen } from "components";
 import React, { useCallback, useEffect, useMemo } from "react";
-import { FlatList, HStack } from "tamagui";
+import { FlatList } from "react-native";
+import Toast from "react-native-toast-message";
+import { Button, XStack } from "tamagui";
 import { Message, User } from "types";
 
 import { AddFriendModal } from "./components/addFriendModal/addFriendModal";
 import { FeedEntry } from "./components/feedEntry/feedEntry";
 import { FeedHeader } from "./components/feedHeader/feedHeader";
 
-export function SocialScreen() {
+export function Social() {
   const [searchedUserId, setSearchedUserId] = React.useState<number>(-1);
   const [searchedUser, setSearchedUser] = React.useState<User | null>(null);
   const [search, setSearch] = React.useState("");
@@ -64,10 +66,10 @@ export function SocialScreen() {
             if (foundUser) {
               setSearchedUserId(foundUser.id);
             } else {
-              Toast({
-                title: "User not found",
-                description: "Please try a different username",
-                colorScheme: "warning",
+              Toast.show({
+                text1: "User not found",
+                text2: "Please try a different username",
+                type: "warning",
               });
             }
           }}
@@ -79,9 +81,7 @@ export function SocialScreen() {
       {feedLoading && <Loading message="Loading social feed" />}
       {!feedLoading && (
         <FlatList
-          w="90%"
-          mx="auto"
-          mb={5}
+          style={{ width: "90%" }}
           data={feed ?? []}
           keyExtractor={(item) => item.text + item.user.id + item.date}
           ListHeaderComponent={createHeader}

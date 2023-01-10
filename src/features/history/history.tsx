@@ -1,3 +1,4 @@
+import { MaterialTopTabBarProps } from "@react-navigation/material-top-tabs";
 import { useGetUser } from "api";
 import { Carousel, Screen, WorkoutCard } from "components";
 import React from "react";
@@ -5,7 +6,7 @@ import { Stack, Text } from "tamagui";
 import { CompletedWorkout } from "types";
 import { getPastWorkouts } from "utils";
 
-export function History() {
+export const History = ({ navigation }: MaterialTopTabBarProps) => {
   const { data: user } = useGetUser();
 
   const pastWorkouts = getPastWorkouts(user);
@@ -31,4 +32,4 @@ export function History() {
     );
 
   return <Screen>{content}</Screen>;
-}
+};

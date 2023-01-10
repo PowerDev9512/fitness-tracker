@@ -1,37 +1,28 @@
-import {
-  VictoryChart,
-  VictoryTheme,
-  VictoryArea,
-  VictoryAxis,
-  VictoryTooltip,
-  VictoryVoronoiContainer,
-} from "victory-native";
-import React, { useMemo, useState } from "react";
-import {
-  Spinner,
-  useTheme,
-  Text,
-  Select,
-  Heading,
-  VStack,
-  HStack,
-  Center,
-  Card,
-} from "tamagui";
-import { Defs, LinearGradient, Stop } from "react-native-svg";
 import { useGetUser, useGetWorkoutData } from "api";
+import React, { useMemo, useState } from "react";
+import { Card, Heading, Spinner, Stack, Text, XStack, YStack } from "tamagui";
 import { ExerciseType, GraphType, StrengthData, StrengthExercise } from "types";
 import { getPastWorkouts } from "utils";
+import {
+  VictoryArea,
+  VictoryAxis,
+  VictoryChart,
+  VictoryTooltip,
+} from "victory-native";
+
 import { Dropdown } from "./workoutChart.styles";
 
 export function WorkoutChart() {
   const { data: user } = useGetUser();
-  const theme = useTheme();
 
-  const pastWorkouts = getPastWorkouts(user).filter((workout) => workout.completed).filter((workout) => workout.activities.length > 1);
+  const pastWorkouts = getPastWorkouts(user)
+    .filter((workout) => workout.completed)
+    .filter((workout) => workout.activities.length > 1);
 
   const [reps, setReps] = useState<number>(0);
-  const [workoutType, setWorkoutType] = useState<ExerciseType | null>("strength");
+  const [workoutType, setWorkoutType] = useState<ExerciseType | null>(
+    "strength"
+  );
   const [workoutGraphType, setWorkoutGraphType] = useState<GraphType>("Reps");
   const [selectedExercise, setSelectedExercise] = useState<string | null>(null);
 
@@ -44,19 +35,29 @@ export function WorkoutChart() {
     });
 
   const exerciseNames = useMemo(
-    () => pastWorkouts
+    () =>
+      pastWorkouts
         .flatMap((workout) => workout.activities)
         .filter((activity) => activity.type === workoutType)
         .map((exercise) => exercise.name)
-        .filter((name, index, self) => self.indexOf(name) === index), [pastWorkouts, workoutType]);
+        .filter((name, index, self) => self.indexOf(name) === index),
+    [pastWorkouts, workoutType]
+  );
 
-  const options = workoutType === "strength" ? ["Reps", "Sets", "Weight"] : ["Distance", "Duration"];
+  const options =
+    workoutType === "strength"
+      ? ["Reps", "Sets", "Weight"]
+      : ["Distance", "Duration"];
 
   const repCounts = useMemo(
     () => [
-      ...new Set(pastWorkouts
+      ...new Set(
+        pastWorkouts
           .flatMap((workout) => workout.activities)
-          .filter((exercise) => exercise.name === selectedExercise && exercise.type === "strength")
+          .filter(
+            (exercise) =>
+              exercise.name === selectedExercise && exercise.type === "strength"
+          )
           .map((exercise) => exercise as StrengthExercise & StrengthData)
           .map((exercise) => exercise.reps)
           .filter((currReps) => currReps) as number[]
@@ -71,8 +72,8 @@ export function WorkoutChart() {
     }
 
     if (
-      !workoutData || 
-      Object.entries(workoutData?.graphData ?? {}).length === 0 ||  
+      !workoutData ||
+      Object.entries(workoutData?.graphData ?? {}).length === 0 ||
       pastWorkouts
         .flatMap((workout) => workout.activities)
         .map((activity) => activity.type === workoutType).length === 0
@@ -95,37 +96,10 @@ export function WorkoutChart() {
     );
 
     return (
-      <VictoryChart
-        height={400}
-        width={350}
-        theme={VictoryTheme.material}
-        containerComponent={<VictoryVoronoiContainer />}
-      >
-        <Defs>
-          {/*
-          // @ts-ignore */}
-          <LinearGradient id="gradient" x2="0" y2="1">
-            <Stop
-              offset="100%"
-              stopColor={theme.colors.primary[500]}
-              stopOpacity="0"
-            />
-            <Stop
-              offset="50%"
-              stopColor={theme.colors.primary[300]}
-              stopOpacity="0.1"
-            />
-            <Stop
-              offset="0%"
-              stopColor={theme.colors.primary[500]}
-              stopOpacity="0.2"
-            />
-          </LinearGradient>
-        </Defs>
+      <VictoryChart style={{ parent: { maxWidth: "100%" } }}>
         <VictoryArea
           interpolation="natural"
           labelComponent={<VictoryTooltip renderInPortal={false} />}
-          labels={({ datum }) => `${datum.label}: ${datum.y}`}
           domainPadding={{ x: 2 }}
           domain={{ y: [0, highestValue * 1.2] }}
           style={{
@@ -133,7 +107,6 @@ export function WorkoutChart() {
               fill: "url(#gradient)",
               strokeWidth: 3,
               zIndex: 1,
-              stroke: theme.colors.primary[500],
               width: 10,
             },
           }}
@@ -158,80 +131,97 @@ export function WorkoutChart() {
         />
       </VictoryChart>
     );
-  }, [workoutDataLoading, workoutData, pastWorkouts, selectedExercise, theme.colors.primary, workoutType]);
+  }, [
+    workoutDataLoading,
+    workoutData,
+    pastWorkouts,
+    selectedExercise,
+    workoutType,
+  ]);
 
   return (
     <Card w="90%" marginTop={4}>
-      </XStack>
-        <Heading size="md">Workout Graphs</Heading>
+      <XStack>
+        <Heading>Workout Graphs</Heading>
 
         <YStack w="55%" marginLeft={1}>
           <Dropdown
-            selectedValue={workoutType || ""}
-            onValueChange={(val) => {
-              if (val === "") {
+            data={[
+              {
+                label: "Clear",
+                value: "",
+              },
+              {
+                label: "Strength",
+                value: "strength",
+              },
+              {
+                label: "Cardio",
+                value: "cardio",
+              },
+            ]}
+            labelExtractor={(item: any) => item.label}
+            placeholder="Type"
+            value={workoutType ?? ""}
+            onChangeValue={(item: any) => {
+              if (item.value === "") {
                 setWorkoutType(null);
                 setSelectedExercise(null);
               } else {
-                setWorkoutType(val);
+                setWorkoutType(item.value);
               }
             }}
-          >
-            <Select.Item label="Clear" value="" />
-            <Select.Item label="Strength" value="strength" />
-            <Select.Item label="Cardio" value="cardio" />
-          </Dropdown>
+          />
 
           <Dropdown
-            selectedValue={selectedExercise ?? ""}
-            onValueChange={setSelectedExercise}
+            value={selectedExercise ?? ""}
+            data={exerciseNames.map((name) => ({
+              label: name,
+              value: name,
+            }))}
+            labelExtractor={(item: any) => item.label}
+            onChangeValue={(item: any) => setSelectedExercise(item.value)}
             isDisabled={!exerciseNames.length || workoutType === null}
             placeholder="Select an exercise"
-          >
-            {exerciseNames.map((name) => (
-              <Select.Item key={`${name}-exercise-item`} label={name} value={name} />
-            ))}
-          </Dropdown>
+          />
 
           <Dropdown
-            selectedValue={workoutGraphType ?? ""}
-            onValueChange={(val) => {
-              if (val === "weight") {
+            value={workoutGraphType ?? ""}
+            data={options.map((name) => ({
+              label: name,
+              value: name,
+            }))}
+            labelExtractor={(item: any) => item.label}
+            onChangeValue={(item: any) => {
+              if (item === "weight") {
                 setReps(0);
               }
-              setWorkoutGraphType(val as GraphType);
+              setWorkoutGraphType(item as GraphType);
             }}
             isDisabled={!selectedExercise}
             placeholder="Select unit type"
-          >
-            {options.map((name) => (
-              <Select.Item key={`${name}-unit-item`} label={name} value={name} />
-            ))}
-          </Dropdown>
+          />
 
           {workoutType === "strength" &&
             selectedExercise !== null &&
             workoutGraphType.toLocaleLowerCase() === "weight" && (
               <Dropdown
-                selectedValue={reps.toString()}
-                onValueChange={(val) => setReps(Number(val))}
+                value={reps.toString()}
+                data={repCounts.map((count) => ({
+                  label: count.toString(),
+                  value: count,
+                }))}
+                labelExtractor={(item: any) => item.label}
+                onChangeValue={(item: any) => setReps(item.value)}
                 placeholder="Select rep range"
-              >
-                {repCounts.map((count) => (
-                  <Select.Item
-                  key={`${count}-reps-item`}
-                    label={count.toString()}
-                    value={count.toString()}
-                  />
-                ))}
-              </Dropdown>
+              />
             )}
         </YStack>
       </XStack>
 
-      <Center marginLeft="auto" marginRight="auto">
+      <Stack marginLeft="auto" marginRight="auto">
         {content}
-      </Center>
+      </Stack>
     </Card>
   );
 }

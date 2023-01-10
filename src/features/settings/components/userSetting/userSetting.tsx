@@ -1,6 +1,6 @@
 import { RadioButton } from "components";
 import React from "react";
-import { Card, HStack, Text } from "tamagui";
+import { Card, Text, XStack } from "tamagui";
 
 import { SettingSection } from "../../settingsSections";
 
@@ -24,7 +24,6 @@ export function UserSetting({ item, onChange, value }: Props) {
           ml={2}
           mb={1}
           key={`${key(option)}-stack`}
-          textAlign="center"
           alignItems="center"
           space={2}
         >

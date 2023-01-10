@@ -1,17 +1,14 @@
 import { RawEditUserRequest, useEditUser, useGetUser } from "api";
-import { Avatar, Button, FormLabel, Screen } from "components";
+import { Avatar, FormLabel, Input, Screen, Select } from "components";
 import React, { useEffect, useMemo, useState } from "react";
-import { Box, Select, useColorModeValue, useTheme, VStack } from "tamagui";
+import { Button, Stack, YStack } from "tamagui";
 import { Badge, Image, Title } from "types";
 
-import { UserField } from "./components/userField/userField";
 import { UserSetting } from "./components/userSetting/userSetting";
 import { SettingSection, settingsSections } from "./settingsSections";
 
 function SettingsInternal() {
   const { data: user } = useGetUser();
-  const theme = useTheme();
-  const bg = useColorModeValue(theme.colors.white, theme.colors.gray[900]);
 
   const initialState = useMemo(
     () =>
@@ -79,135 +76,124 @@ function SettingsInternal() {
         <FormLabel>Profile</FormLabel>
 
         <YStack w="100%" space={2} alignItems="center">
-          <UserField
+          <Input
+            type="text"
             value={userDetails.username}
             placeholder="Username"
-            onChange={(text) =>
+            onChangeText={(text) =>
               setUserDetails((prev) => ({
                 ...prev,
                 username: text,
               }))
             }
-            icon="account"
           />
 
-          <UserField
+          <Input
+            type="text"
             placeholder="Email"
             value={userDetails.email}
-            onChange={(text) =>
+            onChangeText={(text) =>
               setUserDetails((prev) => ({
                 ...prev,
                 email: text,
               }))
             }
-            icon="email"
           />
 
-          <UserField
+          <Input
+            type="text"
             placeholder="Height"
             value={userDetails.height}
-            suffix={userDetails.measurementUnit === "metric" ? "cm" : "in"}
-            onChange={(text) =>
+            onChangeText={(text) =>
               setUserDetails((prev) => ({
                 ...prev,
                 height: parseInt(text, 10),
               }))
             }
-            icon="ruler"
           />
 
-          <UserField
+          <Input
+            type="text"
             placeholder="Weight"
             value={userDetails.weight}
-            suffix={userDetails.weightUnit === "pounds" ? "lbs" : "kg"}
-            onChange={(text) =>
+            onChangeText={(text) =>
               setUserDetails((prev) => ({
                 ...prev,
                 weight: parseInt(text, 10),
               }))
             }
-            icon="scale"
           />
 
-          <UserField
+          <Input
+            type="text"
             placeholder="Age"
             value={userDetails.age}
-            onChange={(text) =>
+            onChangeText={(text) =>
               setUserDetails((prev) => ({
                 ...prev,
                 age: parseInt(text, 10),
               }))
             }
-            icon="cake"
           />
 
           <Select
             w="90%"
-            rounded={10}
-            backgroundColor={bg}
-            variant="filled"
+            data={user.inventory.map((item) => {
+              if (item.rewardType === "title") {
+                return {
+                  label: item.name,
+                  value: item.id,
+                };
+              }
+              return null;
+            })}
             placeholder="Select a title"
-            selectedValue={userDetails.title?.id.toString()}
-            onValueChange={(val) => {
+            value={{
+              label: userDetails.title?.id.toString() ?? "",
+              value: userDetails.title?.id ?? "",
+            }}
+            labelExtractor={(item) => item?.label ?? ""}
+            onChangeValue={(val) => {
               setUserDetails((prev) => ({
                 ...prev,
                 title: user.inventory.find(
-                  (item) => item.id.toString() === val
+                  (item) => item.id === val?.value
                 ) as Title | null,
               }));
             }}
-          >
-            <Select.Item label="None" value="null" />
-            {user.inventory.map((item) => {
-              if (item.rewardType === "title") {
-                return (
-                  <Select.Item
-                    key={item.id}
-                    label={item.name}
-                    value={item.id.toString()}
-                  />
-                );
-              }
-              return null;
-            })}
-          </Select>
+          />
 
           <Select
             w="90%"
-            rounded={10}
-            backgroundColor={bg}
-            variant="filled"
             placeholder="Select a badge"
-            selectedValue={userDetails.badge?.id.toString()}
-            onValueChange={(val) => {
-              setUserDetails((prev) => ({
-                ...prev,
-                badge: user.inventory.find(
-                  (item) => item.id.toString() === val
-                ) as Badge | null,
-              }));
-            }}
-          >
-            <Select.Item label="None" value="null" />
-            {user.inventory.map((item) => {
+            data={user.inventory.map((item) => {
               if (item.rewardType === "badge") {
-                return (
-                  <Select.Item
-                    key={item.id}
-                    label={item.name}
-                    value={item.id.toString()}
-                  />
-                );
+                return {
+                  label: item.name,
+                  value: item.id,
+                };
               }
               return null;
             })}
-          </Select>
+            labelExtractor={(item) => item?.label ?? ""}
+            value={{
+              label: userDetails.badge?.id.toString() ?? "",
+              value: userDetails.badge?.id ?? "",
+            }}
+            onChangeValue={(val) => {
+              setUserDetails((prev) => ({
+                ...prev,
+                badge: user.inventory.find(
+                  (item) => item.id === val?.value
+                ) as Badge | null,
+              }));
+            }}
+          />
         </YStack>
       </Stack>
 
       <Button
-        style={{ width: "90%", marginTop: 10 }}
-        isLoading={isLoading}
+        w="%90"
         onPress={() =>
           mutate({
             ...userDetails,
@@ -226,4 +212,4 @@ function SettingsInternal() {
   );
 }
 
-export const SettingsScreen = React.memo(SettingsInternal);
+export const Settings = React.memo(SettingsInternal);

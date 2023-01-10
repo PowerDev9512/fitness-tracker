@@ -1,5 +1,5 @@
 import React from "react";
-import { HStack, Text } from "tamagui";
+import { Text, XStack } from "tamagui";
 
 interface Props {
   name: string;

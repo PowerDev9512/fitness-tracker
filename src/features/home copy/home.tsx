@@ -8,7 +8,7 @@ import { Login } from "./components/login/login";
 
 export const Home = ({
   navigation,
-}: NativeStackScreenProps<StackNavigatorParams, "home">) => {
+}: NativeStackScreenProps<MainStackParams, "Home">) => {
   return (
     <Screen>
       <Heading mt={10}> Welcome to Pocket Coach! </Heading>

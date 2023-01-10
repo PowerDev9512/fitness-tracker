@@ -1,11 +1,6 @@
-import styled from "styled-components/native";
-import { KeyboardAvoidingView } from "tamagui";
+import { KeyboardAvoidingView } from "react-native";
+import { styled } from "tamagui";
 
-export const Container = styled(KeyboardAvoidingView)`
-  align-items: center;
-  width: 100%;
-  padding: 20px;
-  margin-top: 10px;
-  margin-left: auto;
-  margin-right: auto;
-`;
+export const Container = styled(KeyboardAvoidingView, {
+  flex: 1,
+});

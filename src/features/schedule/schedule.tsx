@@ -1,8 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
 import { useEditWorkout, useGetUser } from "api";
-import { Button, Carousel, Screen } from "components";
+import { Carousel, Screen } from "components";
 import React from "react";
-import { Text, useTheme, View } from "tamagui";
+import { Button, Stack, Text } from "tamagui";
 import { ScheduledWorkout } from "types";
 import { getScheduledWorkouts } from "utils";
 
@@ -11,7 +11,6 @@ import { ScheduledWorkoutCard } from "./components/scheduledWorkoutCard/schedule
 export function Schedule() {
   const { isLoading: editLoading, mutate: editWorkout } = useEditWorkout();
   const naviagtion = useNavigation();
-  const theme = useTheme();
   const { data: user } = useGetUser();
 
   const scheduledWorkouts = getScheduledWorkouts(user);
@@ -51,7 +50,6 @@ export function Schedule() {
         position="absolute"
         bottom={85}
         right={5}
-        rounded="full"
         width={60}
         height={60}
         onPress={() => naviagtion.navigate("Create" as never)}

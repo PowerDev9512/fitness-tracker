@@ -93,4 +93,4 @@ function RegisterScreen() {
 }
 
 const MemoizedScreen = React.memo(RegisterScreen);
-export { MemoizedScreen as RegisterScreen };
+export { MemoizedScreen as Register };

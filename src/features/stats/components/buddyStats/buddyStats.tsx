@@ -1,12 +1,12 @@
 import { useGetUser } from "api";
 import { Accordion } from "components";
 import React from "react";
-import { Box, Card, FlatList, Progress, Text, useTheme } from "tamagui";
+import { FlatList } from "react-native";
+import { Card, Progress, Stack, Text } from "tamagui";
 import { titleCase } from "utils";
 
 export function BuddyStats() {
   const { data: user } = useGetUser();
-  const theme = useTheme();
 
   if (!user) {
     return null;

@@ -1,6 +1,6 @@
 import { FormInput, FormLabel, RadioButton } from "components";
 import React from "react";
-import { HStack, View } from "tamagui";
+import { Stack, XStack } from "tamagui";
 
 import { RegisterProps } from "../../register";
 import * as SC from "../../register.styles";

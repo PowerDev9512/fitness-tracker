@@ -1,9 +1,11 @@
 import "expo-dev-client";
 
 import { useFonts } from "expo-font";
+import Toast from "react-native-toast-message";
 
-import { NativeNavigation } from "./navigation";
+import { MainStack } from "./navigation/mainStack";
 import { Provider } from "./provider";
+import { toastConfig } from "./toast.config";
 
 const App = () => {
   const [loaded] = useFonts({
@@ -17,7 +19,8 @@ const App = () => {
 
   return (
     <Provider>
-      <NativeNavigation />
+      <MainStack />
+      <Toast config={toastConfig} />
     </Provider>
   );
 };

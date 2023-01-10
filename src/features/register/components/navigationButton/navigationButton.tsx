@@ -1,7 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
-import { Button } from "components";
 import React from "react";
-import { HStack } from "tamagui";
+import { Button, XStack } from "tamagui";
 
 interface Props {
   currentIndex: number;
@@ -59,9 +58,8 @@ export function NavigationButton({
           </Button>
           <Button
             style={{ width: "44%" }}
-            isDisabled={disabled}
+            disabled={disabled}
             onPress={onSubmit}
-            isLoading={loading}
           >
             Submit
           </Button>

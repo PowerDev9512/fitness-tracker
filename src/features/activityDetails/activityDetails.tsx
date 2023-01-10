@@ -26,7 +26,7 @@ interface Props {
 
 type WorkoutAndActivity = { activity: Activity } & Omit<Workout, "activities">;
 
-export const ActivityDetailsScreen = ({ route }: Props) => {
+export const ActivityDetails = ({ route }: Props) => {
   const { data: user } = useGetUser();
   const navigation = useNavigation();
   const { width } = useWindowDimensions();

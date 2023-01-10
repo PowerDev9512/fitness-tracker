@@ -6,6 +6,7 @@
     "paths": {
       "components": ["./src/components"],
       "store": ["./src/store"],
+      "features": ["./src/features"],
       "api": ["./src/api"],
       "types": ["./src/types"],
       "utils": ["./src/utils"],

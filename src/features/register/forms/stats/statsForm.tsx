@@ -1,6 +1,6 @@
-import { Autocomplete, Button, FormInput, FormLabel } from "components";
+import { Autocomplete, FormInput, FormLabel } from "components";
 import React from "react";
-import { HStack, View } from "tamagui";
+import { Button, Stack, XStack } from "tamagui";
 import { createMeasurementFormatter, createWeightFormatter } from "utils";
 
 import { Exercise } from "../../../../types/domain";
@@ -142,7 +142,7 @@ export function StatsForm({ form, exercises }: Props) {
       {maxes}
       <Button
         style={{ marginTop: 20, width: "100%" }}
-        isDisabled={selectedExercise === null}
+        disabled={selectedExercise === null}
         onPress={() => {
           createNewMax(selectedExercise ?? ({} as Exercise));
           setSelectedExercise(null);

@@ -49,7 +49,7 @@ const InternalAccordion = ({
 
   return (
     <Stack>
-      </XStack>
+      <XStack>
         <Heading accessibilityLabel={title}>{title}</Heading>
         {secondTitle && (
           <Heading fontWeight="medium" ml="auto" mt="auto">

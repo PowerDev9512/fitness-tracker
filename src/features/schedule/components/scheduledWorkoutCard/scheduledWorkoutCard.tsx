@@ -1,5 +1,6 @@
-import { Button, WorkoutCard } from "components";
+import { WorkoutCard } from "components";
 import React from "react";
+import { Button } from "tamagui";
 import { ScheduledWorkout } from "types";
 
 interface Props {
