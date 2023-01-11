@@ -1,11 +1,11 @@
 import { useGetUser } from "api";
-import { Accordion } from "components";
+import { Accordion, MainCard } from "components";
 import React from "react";
 import { FlatList } from "react-native";
-import { Card, Progress, Stack, Text } from "tamagui";
+import { Progress, Stack, Text } from "tamagui";
 import { titleCase } from "utils";
 
-export function BuddyStats() {
+export const BuddyStats = () => {
   const { data: user } = useGetUser();
 
   if (!user) {
@@ -13,7 +13,7 @@ export function BuddyStats() {
   }
 
   const createStats = (name: string, state: number, index: number) => (
-    <Stack key={`${name}-${index}-container`} marginTop="2">
+    <Stack key={`${name}-${index}-container`} marginTop="$2">
       <Text key={`${name}-${index}-text`}>
         {titleCase(name)}: {state} / 10
       </Text>
@@ -27,7 +27,7 @@ export function BuddyStats() {
   const level = user.workoutBuddy.data.levelStats.overall;
 
   return (
-    <Card w="90%" marginTop={4}>
+    <MainCard>
       <Accordion title="Stats" secondTitle={`Level ${level}`}>
         <FlatList
           data={anatomy}
@@ -37,6 +37,6 @@ export function BuddyStats() {
           keyExtractor={(item, index) => `${item.muscleGroup}-${index}`}
         />
       </Accordion>
-    </Card>
+    </MainCard>
   );
-}
+};

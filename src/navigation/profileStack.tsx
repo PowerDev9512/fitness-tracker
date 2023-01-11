@@ -1,10 +1,13 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 import { History, Schedule, Stats } from "features";
 import React from "react";
+import { useTheme } from "tamagui";
 
 const Tab = createMaterialTopTabNavigator();
 
-export function ProfileStack() {
+export const ProfileStack = () => {
+  const theme = useTheme();
+
   const screens = [
     {
       name: "History",
@@ -22,10 +25,12 @@ export function ProfileStack() {
 
   return (
     <Tab.Navigator
+      style={{ backgroundColor: theme.backgroundStrong.val }}
       screenOptions={(props) => ({
         swipeEnabled: false,
         tabBarIndicator: () => null,
         tabBarStyle: {
+          backgroundColor: "white",
           elevation: 0,
           shadowOpacity: 0,
           height: 50,
@@ -46,4 +51,4 @@ export function ProfileStack() {
       ))}
     </Tab.Navigator>
   );
-}
+};

@@ -2,7 +2,7 @@ import { RadioButton } from "components";
 import React from "react";
 import { Card, Text, XStack } from "tamagui";
 
-import { SettingSection } from "../../settingsSections";
+import { SettingSection } from "../settingsSections";
 
 interface Props {
   item: SettingSection;
@@ -10,12 +10,12 @@ interface Props {
   value: string;
 }
 
-export function UserSetting({ item, onChange, value }: Props) {
+export const UserSetting = ({ item, onChange, value }: Props) => {
   const key = (opt: { title: string; value: string }) =>
     `${item.key}-${opt.value}-${value}`;
 
   return (
-    <Card w="95%" mx="auto" my={2} px={2}>
+    <Card w="100%" mx="auto" my="$2" p="$2">
       <Text ml={2} mb={2}>
         {item.title}
       </Text>
@@ -37,4 +37,4 @@ export function UserSetting({ item, onChange, value }: Props) {
       ))}
     </Card>
   );
-}
+};

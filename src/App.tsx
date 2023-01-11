@@ -1,6 +1,7 @@
 import "expo-dev-client";
 
 import { useFonts } from "expo-font";
+import React from "react";
 import Toast from "react-native-toast-message";
 
 import { MainStack } from "./navigation/mainStack";

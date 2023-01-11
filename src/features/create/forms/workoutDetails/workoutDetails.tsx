@@ -1,7 +1,7 @@
 import { useGetUser } from "api";
-import { FormLabel } from "components";
+import { Button, FormLabel } from "components";
 import React, { useMemo } from "react";
-import { Button, Card, Heading, Stack, Text, XStack, YStack } from "tamagui";
+import { Card, Heading, Stack, Text, XStack, YStack } from "tamagui";
 import {
   CardioData,
   CardioExercise,

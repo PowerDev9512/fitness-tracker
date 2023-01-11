@@ -1,17 +1,19 @@
 import { useNavigation } from "@react-navigation/native";
+import { Bell } from "@tamagui/lucide-icons";
 import { useGetUser } from "api";
+import { IconButton } from "components";
 import React from "react";
-import { Button, Stack, Text } from "tamagui";
+import { Stack, Text } from "tamagui";
 
-export default function NotificationBell() {
+export default () => {
   const { data: user } = useGetUser();
   const navigation = useNavigation();
 
   return (
     <>
-      <Button
+      <IconButton
         onPress={() => navigation.navigate("Notifications" as never)}
-        icon={<NotificationBell />}
+        icon={Bell}
       />
       {(user?.friendRequests ?? 0) > 0 && (
         <Stack
@@ -22,7 +24,7 @@ export default function NotificationBell() {
           width={4}
           height={4}
         >
-          <Text pb={1} textAlign="center" color="white" fontSize="xs">
+          <Text pb={1} textAlign="center" color="white" fontSize={8}>
             {user?.friendRequests.length}
           </Text>
         </Stack>

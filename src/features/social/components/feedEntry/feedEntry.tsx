@@ -9,7 +9,7 @@ interface Props {
   onPress: (user: User) => void;
 }
 
-export function FeedEntry({ message: item, onPress }: Props) {
+export const FeedEntry = ({ message: item, onPress }: Props) => {
   if (!item?.user?.username) {
     return <Skeleton />;
   }
@@ -33,4 +33,4 @@ export function FeedEntry({ message: item, onPress }: Props) {
       </Card>
     </Pressable>
   );
-}
+};

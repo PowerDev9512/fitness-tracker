@@ -12,11 +12,11 @@ interface Props {
   defaultIndex?: number | undefined;
 }
 
-export function Carousel({
+export const Carousel = ({
   renderItem,
   items,
   defaultIndex = undefined,
-}: Props) {
+}: Props) => {
   const { width, height } = Dimensions.get("window");
   const [activeIndex, setActiveIndex] = useState(items.length - 1);
 
@@ -41,4 +41,4 @@ export function Carousel({
       />
     </GestureHandlerRootView>
   );
-}
+};

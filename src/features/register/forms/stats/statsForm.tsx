@@ -1,6 +1,6 @@
-import { Autocomplete, FormInput, FormLabel } from "components";
+import { Autocomplete, Button, FormInput, FormLabel } from "components";
 import React from "react";
-import { Button, Stack, XStack } from "tamagui";
+import { Stack, XStack } from "tamagui";
 import { createMeasurementFormatter, createWeightFormatter } from "utils";
 
 import { Exercise } from "../../../../types/domain";
@@ -11,7 +11,7 @@ type Props = RegisterProps & {
   exercises: Exercise[];
 };
 
-export function StatsForm({ form, exercises }: Props) {
+export const StatsForm = ({ form, exercises }: Props) => {
   const weightFormatter = createWeightFormatter(form.values.weightUnit);
   const measurementFormatter = createMeasurementFormatter(
     form.values.measurementUnit
@@ -141,7 +141,8 @@ export function StatsForm({ form, exercises }: Props) {
       />
       {maxes}
       <Button
-        style={{ marginTop: 20, width: "100%" }}
+        mt="$20"
+        w="100%"
         disabled={selectedExercise === null}
         onPress={() => {
           createNewMax(selectedExercise ?? ({} as Exercise));
@@ -153,4 +154,4 @@ export function StatsForm({ form, exercises }: Props) {
       </Button>
     </SC.Container>
   );
-}
+};

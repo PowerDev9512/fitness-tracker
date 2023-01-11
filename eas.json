@@ -1,47 +1,36 @@
 {
   "cli": {
-    "version": ">= 0.52.0"
+    "version": ">= 0.57.0"
   },
   "build": {
-    "betaAPK": {
-      "android": {
-        "buildType": "apk"
-      },
-      "developmentClient": false,
-      "env": {
-        "APP_VARIANT": "beta"
-      },
-      "releaseChannel": "beta"
-    },
-    "betaAAB": {
+    "development": {
+      "distribution": "internal",
       "android": {
         "buildType": "app-bundle"
       },
-      "developmentClient": false,
-      "env": {
-        "APP_VARIANT": "beta"
+      "ios": {
+        "buildConfiguration": "Debug"
       },
-      "releaseChannel": "beta"
-    },
-    "development": {
-      "android": {
-        "buildType": "apk"
-      },
-      "distribution": "internal",
-      "developmentClient": true,
-      "env": {
-        "APP_VARIANT": "development"
-      },
-      "releaseChannel": "development"
+      "channel": "development"
     },
     "production": {
+      "distribution": "store",
       "android": {
         "buildType": "app-bundle"
       },
-      "releaseChannel": "production"
+      "ios": {
+        "buildConfiguration": "Release"
+      },
+      "channel": "production"
     }
   },
   "submit": {
-    "production": {}
+    "production": {
+      "android": {
+        "track": "internal",
+        "releaseStatus": "draft",
+        "serviceAccountKeyPath": "pc-api-9217576884676944131-660-611aafa20edf.json"
+      }
+    }
   }
 }

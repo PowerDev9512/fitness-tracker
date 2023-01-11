@@ -3,10 +3,11 @@ import { ChevronRight, Edit } from "@tamagui/lucide-icons";
 import { useGetUser } from "api";
 import React, { useState } from "react";
 import { Pressable } from "react-native";
-import { Button, Stack, Text, XStack } from "tamagui";
+import { Stack, Text, XStack } from "tamagui";
 import { StrengthActivity, Workout } from "types";
 import { getWeightFormatter } from "utils";
 
+import { IconButton } from "../../iconButton";
 import { StrengthModal } from "./strengthModal";
 
 interface Props {
@@ -14,7 +15,7 @@ interface Props {
   workout: Workout;
 }
 
-export function StrengthRow({ activity, workout }: Props) {
+export const StrengthRow = ({ activity, workout }: Props) => {
   const navigation = useNavigation();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -70,9 +71,9 @@ export function StrengthRow({ activity, workout }: Props) {
         </Text>
 
         {!workout.completed && !workout.past && (
-          <Button icon={<Edit />} onPress={() => setIsOpen(true)} />
+          <IconButton icon={<Edit />} onPress={() => setIsOpen(true)} />
         )}
       </XStack>
     </>
   );
-}
+};

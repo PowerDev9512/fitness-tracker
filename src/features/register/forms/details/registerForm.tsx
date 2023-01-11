@@ -5,7 +5,7 @@ import { Image } from "types";
 import { RegisterProps } from "../../register";
 import * as SC from "../../register.styles";
 
-export function RegisterForm({ form }: RegisterProps) {
+export const RegisterForm = ({ form }: RegisterProps) => {
   const handleImageChange = (image: Image) => {
     form.setFieldValue("avatar", image);
   };
@@ -66,4 +66,4 @@ export function RegisterForm({ form }: RegisterProps) {
       />
     </SC.Container>
   );
-}
+};

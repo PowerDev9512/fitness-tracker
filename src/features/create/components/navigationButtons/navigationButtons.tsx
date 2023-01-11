@@ -36,7 +36,7 @@ export const NavigationButtons = ({
       {currentIndex === 0 && (
         <XStack justifyContent="center" space={2}>
           <Button onPress={onClickNext}>Add New Activity</Button>
-          <Button onPress={onSubmit} isDisabled={disabled} isLoading={loading}>
+          <Button onPress={onSubmit} disabled={disabled} isLoading={loading}>
             Submit
           </Button>
         </XStack>

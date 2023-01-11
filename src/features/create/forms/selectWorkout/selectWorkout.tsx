@@ -1,6 +1,12 @@
 import { Star } from "@tamagui/lucide-icons";
 import { useExercises } from "api";
-import { Accordion, CachedImage, Skeleton } from "components";
+import {
+  Accordion,
+  CachedImage,
+  FilterOption,
+  Filters,
+  Skeleton,
+} from "components";
 import React, { useCallback, useMemo, useState } from "react";
 import { FlatList, Pressable, ScrollView } from "react-native";
 import { Card, Text, XStack } from "tamagui";

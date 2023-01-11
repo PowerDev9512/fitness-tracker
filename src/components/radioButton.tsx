@@ -6,6 +6,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import { useTheme } from "tamagui";
 
 interface BaseProps {
   value: string;
@@ -15,7 +16,9 @@ interface BaseProps {
 
 type Props = BaseProps & React.ComponentProps<typeof Pressable>;
 
-export function RadioButton({ value, onValueChange, checked }: Props) {
+export const RadioButton = ({ value, onValueChange, checked }: Props) => {
+  const theme = useTheme();
+
   const widthAndHeight = useSharedValue(10);
   const widthAndHeightOuter = useSharedValue(20);
 
@@ -72,7 +75,7 @@ export function RadioButton({ value, onValueChange, checked }: Props) {
             style={[
               style,
               {
-                backgroundColor: "$primary500",
+                backgroundColor: theme.primary500.val,
                 borderRadius: 10,
               },
             ]}
@@ -81,4 +84,4 @@ export function RadioButton({ value, onValueChange, checked }: Props) {
       </Animated.View>
     </Pressable>
   );
-}
+};

@@ -1,12 +1,12 @@
 import { useConfirmFriendRequest, useGetUser, useGetUsers } from "api";
-import { Avatar, Screen } from "components";
+import { Avatar, Button, Screen } from "components";
 import React, { useCallback, useEffect } from "react";
 import { FlatList } from "react-native";
-import { Button, Card, Text, XStack } from "tamagui";
+import { Card, Text, XStack } from "tamagui";
 
 import { useRejectFriendRequest } from "../../api/social/useRejectFriendRequest";
 
-export function Notifications() {
+export const Notifications = () => {
   const [actionedId, setActionedId] = React.useState<number | null>(null);
   const { data: user, isLoading: userLoading } = useGetUser();
   const { data: batchedUsers } = useGetUsers(user?.friendRequests ?? []);
@@ -47,7 +47,7 @@ export function Notifications() {
           }
 
           return (
-            <Card pt={-5} w="90%" mx="auto" mt={2}>
+            <Card pt={-5} w="$18" mx="auto" mt={2}>
               <XStack>
                 <Avatar user={currentUser} size="md" callback={() => null} />
                 <Text mt={7} ml={2}>
@@ -69,4 +69,4 @@ export function Notifications() {
       />
     </Screen>
   );
-}
+};

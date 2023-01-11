@@ -5,17 +5,17 @@ import {
   QueryClientProvider,
 } from "@tanstack/react-query";
 import * as React from "react";
+import Toast from "react-native-toast-message";
 
-import { Toast } from "../components/toast/toast";
 import { log } from "../utils/helpers";
 
 const onErrorHandler = (err: unknown) => {
   log(err, "error");
 
-  Toast({
-    title: "An error has occured",
-    colorScheme: "error",
-    description: "Please try again shortly!",
+  Toast.show({
+    text1: "An error has occured",
+    type: "error",
+    text2: "Please try again shortly!",
   });
 };
 

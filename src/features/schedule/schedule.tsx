@@ -1,14 +1,15 @@
 import { useNavigation } from "@react-navigation/native";
+import { PlusCircle } from "@tamagui/lucide-icons";
 import { useEditWorkout, useGetUser } from "api";
-import { Carousel, Screen } from "components";
+import { Carousel, IconButton, Screen } from "components";
 import React from "react";
-import { Button, Stack, Text } from "tamagui";
+import { Stack, Text } from "tamagui";
 import { ScheduledWorkout } from "types";
 import { getScheduledWorkouts } from "utils";
 
 import { ScheduledWorkoutCard } from "./components/scheduledWorkoutCard/scheduledWorkoutCard";
 
-export function Schedule() {
+export const Schedule = () => {
   const { isLoading: editLoading, mutate: editWorkout } = useEditWorkout();
   const naviagtion = useNavigation();
   const { data: user } = useGetUser();
@@ -38,7 +39,7 @@ export function Schedule() {
     scheduledWorkouts.length > 0 ? (
       <Carousel renderItem={renderItem} items={scheduledWorkouts} />
     ) : (
-      <Text fontSize="md" mt={10}>
+      <Text fontSize={16} mt={10}>
         No workouts scheduled
       </Text>
     );
@@ -46,18 +47,17 @@ export function Schedule() {
   return (
     <Screen loading={editLoading}>
       {content}
-      <Button
+      <IconButton
         position="absolute"
+        circular
+        color="$primary500"
         bottom={85}
-        right={5}
-        width={60}
+        right={30}
+        width={120}
         height={60}
+        icon={<PlusCircle size={60} />}
         onPress={() => naviagtion.navigate("Create" as never)}
-      >
-        <Text textAlign="center" fontSize={40} color="white">
-          {"\n"}+
-        </Text>
-      </Button>
+      />
     </Screen>
   );
-}
+};

@@ -11,13 +11,14 @@ export const Home = ({
 }: NativeStackScreenProps<MainStackParams, "Home">) => {
   return (
     <Screen>
-      <Heading mt={10}> Welcome to Pocket Coach! </Heading>
+      <Heading fontSize="$8"> Welcome to Pocket Coach! </Heading>
       <Text> Sign in or register below to get started! </Text>
       <Image
         accessibilityLabel="Sign Up Logo"
-        width={200}
-        height={200}
-        src={require("../../../assets/images/otherlogo.png")}
+        width={300}
+        height={325}
+        mx="auto"
+        src={require("../../assets/images/otherlogo.png")}
         style={{ backgroundColor: "transparent" }}
       />
       <Login />

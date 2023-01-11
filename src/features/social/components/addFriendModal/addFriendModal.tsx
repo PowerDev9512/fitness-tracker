@@ -1,7 +1,7 @@
 import { useSendFriendRequest } from "api";
-import { Avatar, Loading, Modal } from "components";
+import { Avatar, Button, Loading, Modal } from "components";
 import React, { useEffect } from "react";
-import { Button, Card, Heading, Text, XStack, YStack } from "tamagui";
+import { Card, Heading, Text, XStack, YStack } from "tamagui";
 import { User } from "types";
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
   onClose: () => void;
 }
 
-export function AddFriendModal({ friend, user, loading, onClose }: Props) {
+export const AddFriendModal = ({ friend, user, loading, onClose }: Props) => {
   const {
     mutate: addFriend,
     isLoading: adding,
@@ -76,4 +76,4 @@ export function AddFriendModal({ friend, user, loading, onClose }: Props) {
       )}
     </Modal>
   );
-}
+};

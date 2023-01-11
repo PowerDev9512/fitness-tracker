@@ -30,7 +30,7 @@ export interface RegisterProps {
   form: FormikProps<RegisterValues>;
 }
 
-function RegisterScreen() {
+const RegisterScreen = () => {
   const { data: exercises } = useExercises({ retrieveImages: false });
   const { isLoading: registering, mutate: register } = useRegister();
   const [index, setIndex] = useState(0);
@@ -90,7 +90,7 @@ function RegisterScreen() {
       </Formik>
     </Screen>
   );
-}
+};
 
 const MemoizedScreen = React.memo(RegisterScreen);
 export { MemoizedScreen as Register };

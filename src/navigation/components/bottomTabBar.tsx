@@ -1,21 +1,25 @@
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
+import { IconButton } from "components";
 import React from "react";
-import { Pressable } from "react-native";
 import { Stack, Text, XStack } from "tamagui";
 
-export function BottomTabBar({
+export const BottomTabBar = ({
   state,
   descriptors,
   navigation,
-}: BottomTabBarProps) {
+}: BottomTabBarProps) => {
   return (
     <Stack
-      flex={1}
-      flexDirection="row"
-      position="absolute"
+      pos="absolute"
       bottom={0}
+      backgroundColor="white"
       left={0}
       right={0}
+      p="$2"
+      borderTopLeftRadius={20}
+      borderTopRightRadius={20}
+      flex={1}
+      flexDirection="row"
       overflow="hidden"
     >
       {state.routes.map((route, index) => {
@@ -45,12 +49,12 @@ export function BottomTabBar({
         };
 
         return (
-          <Pressable
+          <IconButton
             key={`tab-${route.key}`}
+            mx="auto"
             accessibilityRole="button"
             accessibilityState={isFocused ? { selected: true } : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
-            android_ripple={{ color: "rgba(0, 0, 0, .32)" }}
             testID={options.tabBarTestID}
             onPress={onPress}
             onLongPress={onLongPress}
@@ -68,9 +72,9 @@ export function BottomTabBar({
                 {title}
               </Text>
             </XStack>
-          </Pressable>
+          </IconButton>
         );
       })}
     </Stack>
   );
-}
+};

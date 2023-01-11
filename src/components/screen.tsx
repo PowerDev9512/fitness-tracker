@@ -1,3 +1,4 @@
+import React from "react";
 import { ScrollView, styled, YStack } from "tamagui";
 
 import { Loading } from "./loading";
@@ -15,6 +16,8 @@ const ScreenInternal = styled(YStack, {
   flex: 1,
   padding: "$4",
   space: "$true",
+  alignContent: "center",
+  alignItems: "center",
 });
 
 const ScrollScreenInternal = styled(ScrollView, {
@@ -25,6 +28,13 @@ const ScrollScreenInternal = styled(ScrollView, {
   space: "$true",
 });
 
+ScrollScreenInternal.defaultProps = {
+  contentContainerStyle: {
+    alignContent: "center",
+    alignItems: "center",
+  },
+};
+
 export const Screen = ({
   children,
   scrollable = false,
@@ -33,7 +43,7 @@ export const Screen = ({
 }: Props) => {
   if (scrollable) {
     return (
-      <ScrollScreenInternal mb={extraSpace ? 10 : 0}>
+      <ScrollScreenInternal mb={extraSpace ? "$5" : "$0"}>
         {loading && <Loading />}
         {!loading && children}
       </ScrollScreenInternal>
@@ -41,7 +51,7 @@ export const Screen = ({
   }
 
   return (
-    <ScreenInternal mb={extraSpace ? 10 : 0}>
+    <ScreenInternal mb={extraSpace ? "$5" : "$0"}>
       {loading && <Loading />}
       {!loading && children}
     </ScreenInternal>

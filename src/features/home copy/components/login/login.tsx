@@ -1,10 +1,8 @@
-import { useNavigation } from "@react-navigation/native";
 import { useLogin } from "api";
 import { Button, FormInput } from "components";
 import { Formik } from "formik";
-import React, { useEffect } from "react";
-import { useStore } from "store";
-import { View } from "tamagui";
+import React from "react";
+import { Stack } from "tamagui";
 
 import * as SC from "./login.styles";
 import { LoginSchema } from "./loginSchema";
@@ -14,20 +12,12 @@ export interface LoginValues {
   password: string;
 }
 
-export function Login() {
-  const { isLoading, mutate } = useLogin();
-  const { userId } = useStore();
-  const navigation = useNavigation();
+export const Login = () => {
+  const { mutate } = useLogin();
 
   const onSubmit = ({ email, password }: LoginValues) => {
     mutate({ email, password });
   };
-
-  useEffect(() => {
-    if ((userId ?? -1) >= 0) {
-      navigation.navigate("Drawer" as never);
-    }
-  }, [navigation, userId]);
 
   return (
     <Stack w="100%">
@@ -71,12 +61,10 @@ export function Login() {
               value={values.password}
               name="Password"
             />
-            <Button isLoading={isLoading} onPress={handleSubmit}>
-              Sign In
-            </Button>
+            <Button onClick={() => handleSubmit()}>Sign In</Button>
           </SC.Container>
         )}
       </Formik>
     </Stack>
   );
-}
+};

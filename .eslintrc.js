@@ -32,6 +32,13 @@ module.exports = {
     "simple-import-sort/exports": "warn",
     "simple-import-sort/imports": "warn",
     "import/namespace": "off",
+    "react/function-component-definition": [
+      "warn",
+      {
+        namedComponents: "arrow-function",
+        unnamedComponents: "arrow-function",
+      },
+    ],
   },
   overrides: [
     {

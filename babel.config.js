@@ -2,9 +2,20 @@
 
 module.exports = function (api) {
   api.cache(true);
+  const moduleResolverOptions = {
+    alias: {
+      components: "./src/components",
+      store: "./src/store",
+      types: "./src/types",
+      api: "./src/api",
+      utils: "./src/utils",
+      features: "./src/features",
+    },
+  };
   return {
     presets: [["babel-preset-expo", { jsxRuntime: "automatic" }]],
     plugins: [
+      ["module-resolver", moduleResolverOptions],
       [
         "@tamagui/babel-plugin",
         {

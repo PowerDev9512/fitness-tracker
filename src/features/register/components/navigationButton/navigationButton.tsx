@@ -1,6 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
+import { Button } from "components";
 import React from "react";
-import { Button, XStack } from "tamagui";
+import { XStack } from "tamagui";
 
 interface Props {
   currentIndex: number;
@@ -10,13 +11,13 @@ interface Props {
   loading?: boolean;
 }
 
-export function NavigationButton({
+export const NavigationButton = ({
   disabled,
   currentIndex,
   setIndex,
   onSubmit,
   loading = false,
-}: Props) {
+}: Props) => {
   const navigation = useNavigation();
 
   const onClickNext = () => {
@@ -67,4 +68,4 @@ export function NavigationButton({
       )}
     </>
   );
-}
+};

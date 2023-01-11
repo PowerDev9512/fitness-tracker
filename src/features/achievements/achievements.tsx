@@ -1,8 +1,8 @@
 import { useGetUser, useRecordAchievement, useUserAchievements } from "api";
-import { Button, FilterOption, Filters, Screen } from "components";
+import { FilterOption, Filters, Screen } from "components";
 import React, { useEffect, useState } from "react";
 import { FlatList } from "react-native";
-import { Card, Stack } from "tamagui";
+import { Button, Card, Stack } from "tamagui";
 import { AchievementTypes, MuscleGroups, Reward } from "types";
 
 import { AchievementRow } from "./components/achievementRow/achievementRow";
@@ -78,14 +78,13 @@ export const Achievements = () => {
                 <AchievementRow user={user} achievement={achievement} />
                 {achievement.isCompleted && (
                   <Button
-                    style={{ marginTop: 10 }}
+                    mt="$10"
                     onPress={() =>
                       recordAchievement({
                         userId: user.id,
                         achievementId: achievement.id,
                       })
                     }
-                    isLoading={recordingAchievement}
                     key={`${achievement.title}-button`}
                   >
                     Claim

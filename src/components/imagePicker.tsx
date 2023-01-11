@@ -16,12 +16,12 @@ interface BaseProps {
 
 type Props = BaseProps & React.ComponentProps<typeof Pressable>;
 
-export function ImagePicker({
+export const ImagePicker = ({
   children,
   callbacks,
   disabled = false,
   ...props
-}: Props) {
+}: Props) => {
   const [permissions, requestPermission] = useMediaLibraryPermissions();
 
   const pickImage = () => {
@@ -64,4 +64,4 @@ export function ImagePicker({
       {children}
     </Pressable>
   );
-}
+};

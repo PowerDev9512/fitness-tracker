@@ -24,11 +24,11 @@ export function FormLabel({
       content = (
         <Text
           accessibilityLabel={`${children} label`}
-          // color={color}
+          color={color}
           textAlign={textAlign}
-          mb={1}
+          mb={2}
           fontSize={16}
-          fontWeight="semibold"
+          fontWeight="bold"
           {...props}
         >
           {children}
@@ -40,8 +40,8 @@ export function FormLabel({
         <Text
           accessibilityLabel={`${children} label`}
           textAlign={textAlign}
-          fontSize="xs"
-          color="$red400"
+          fontSize={12}
+          color="red"
         >
           {children}
         </Text>

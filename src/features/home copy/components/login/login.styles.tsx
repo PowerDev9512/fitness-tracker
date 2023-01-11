@@ -1,15 +1,12 @@
-import styled from "styled-components/native";
-import { VStack } from "tamagui";
+import { styled, YStack } from "tamagui";
 
-export const Container = styled(VStack)`
-  align-items: center;
-  padding: 20px;
-  margin-top: 10px;
-  margin-left: auto;
-  margin-right: auto;
-`;
+export const Container = styled(YStack, {
+  space: 4,
+  width: "90%",
+  alignContent: "center",
+  marginHorizontal: "auto",
+});
 
 Container.defaultProps = {
   space: 4,
-  w: "3/4",
 };

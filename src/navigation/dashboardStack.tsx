@@ -25,7 +25,12 @@ export const DashboardStack = () => {
         name="Social"
         component={Social}
         options={{
-          tabBarIcon: ({ focused }: IconProps) => <MessageCircle size={24} />,
+          tabBarIcon: ({ focused }: IconProps) => (
+            <MessageCircle
+              color={focused ? "$primary500" : "black"}
+              size={24}
+            />
+          ),
         }}
       />
       <Tab.Screen
@@ -33,7 +38,7 @@ export const DashboardStack = () => {
         component={ProfileStack}
         options={{
           tabBarIcon: ({ focused }: IconProps) => (
-            <User color={focused ? "white" : "black"} size={24} />
+            <User color={focused ? "$primary500" : "black"} size={24} />
           ),
         }}
       />
@@ -42,10 +47,10 @@ export const DashboardStack = () => {
         component={Settings}
         options={{
           tabBarIcon: ({ focused }: IconProps) => (
-            <Settings2 color={focused ? "white" : "black"} size={24} />
+            <Settings2 color={focused ? "$primary500" : "black"} size={24} />
           ),
         }}
       />
     </Tab.Navigator>
   );
-}
+};

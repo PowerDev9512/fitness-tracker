@@ -10,7 +10,7 @@ interface Props {
   user: User;
 }
 
-export function AchievementRow({ achievement, user }: Props) {
+export const AchievementRow = ({ achievement, user }: Props) => {
   const weightFormatter = getWeightFormatter(user);
 
   const createReward = (reward: Reward) => (
@@ -20,7 +20,7 @@ export function AchievementRow({ achievement, user }: Props) {
   const createTitle = useMemo(
     () => (
       <XStack key={`${achievement.title}-stack`} space={2}>
-        <Text key={`${achievement.title}-title`} w="35%" fontSize="sm">
+        <Text key={`${achievement.title}-title`} w="35%" fontSize={12}>
           {titleCase(achievement.title)}
         </Text>
         <Text
@@ -42,16 +42,16 @@ export function AchievementRow({ achievement, user }: Props) {
       return (
         <>
           <XStack key={`${achievement.title}-streak-stack`} mt={2}>
-            <Text key={`${achievement.title}-streak-title`} fontSize="sm">
+            <Text key={`${achievement.title}-streak-title`} fontSize={16}>
               {achievement.progress}
             </Text>
-            <Text key={`${achievement.title}-streak-subtitle`} fontSize="sm">
+            <Text key={`${achievement.title}-streak-subtitle`} fontSize={12}>
               /{achievement.targetStreak}
             </Text>
             <Text
               key={`${achievement.title}-streak-subbertitle`}
               ml="auto"
-              fontSize="sm"
+              fontSize={12}
             >
               Unlocks {achievement.rewards.map(createReward)}
             </Text>
@@ -75,12 +75,12 @@ export function AchievementRow({ achievement, user }: Props) {
           <XStack key={`${achievement.title}-weight-stack`} mt={2}>
             <Text
               key={`${achievement.title}-weight-title`}
-              fontSize="sm"
+              fontSize={12}
               w="35%"
             >{`${percentOfGoal} for ${achievement.targetMuscleGroup}`}</Text>
             <Text
               key={`${achievement.title}-weight-description`}
-              fontSize="sm"
+              fontSize={12}
               ml="auto"
             >
               Unlocks {achievement.rewards.map(createReward)}
@@ -102,4 +102,4 @@ export function AchievementRow({ achievement, user }: Props) {
       {createText}
     </>
   );
-}
+};

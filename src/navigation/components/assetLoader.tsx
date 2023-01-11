@@ -13,7 +13,7 @@ interface Props {
   setProgress: (progress: (prev: Progress) => Progress) => void;
 }
 
-export function AssetLoader({ progress, setProgress }: Props) {
+export const AssetLoader = ({ progress, setProgress }: Props) => {
   const [missingAssets, setMissingAssets] = useState<Exercise[]>([]);
 
   const { data: exercises, isLoading: exercisesLoading } = useExercises({
@@ -81,13 +81,13 @@ export function AssetLoader({ progress, setProgress }: Props) {
     <Stack h="100%">
       <XStack mt={10} space={2} justifyContent="center">
         <Spinner accessibilityLabel="Loading page" />
-        <Heading color="$primary500" fontSize="md">
+        <Heading color="$primary500" fontSize={16}>
           Downloading assets
         </Heading>
-        <Heading color="$primary500" fontSize="md">
+        <Heading color="$primary500" fontSize={16}>
           {progress.current}/{progress.total}
         </Heading>
       </XStack>
     </Stack>
   );
-}
+};

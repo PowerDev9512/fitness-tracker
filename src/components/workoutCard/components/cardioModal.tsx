@@ -1,9 +1,10 @@
 import { Camera } from "@tamagui/lucide-icons";
 import { useEditWorkout, useGetUser } from "api";
 import React, { useState } from "react";
-import { Button, Text, TextArea, XStack, YStack } from "tamagui";
+import { Text, TextArea, XStack, YStack } from "tamagui";
 import { CardioActivity, Workout } from "types";
 
+import { Button } from "../../button";
 import { ImagePicker } from "../../imagePicker";
 import { Input } from "../../input";
 import { Modal } from "../../modal";
@@ -15,7 +16,7 @@ interface Props {
   isOpen: boolean;
 }
 
-export function CardioModal({ workout, activity, onClose, isOpen }: Props) {
+export const CardioModal = ({ workout, activity, onClose, isOpen }: Props) => {
   const { data: user } = useGetUser();
 
   const [distance, setDistance] = useState(activity.distance);
@@ -70,7 +71,7 @@ export function CardioModal({ workout, activity, onClose, isOpen }: Props) {
             />
             <XStack>
               <Text my="auto">{image ? "Image added" : "No image added"}</Text>
-              <ImagePicker ml="auto" callbacks={[setImage]}>
+              <ImagePicker callbacks={[setImage]}>
                 <Camera />
               </ImagePicker>
             </XStack>
@@ -109,4 +110,4 @@ export function CardioModal({ workout, activity, onClose, isOpen }: Props) {
       </Modal.Content>
     </Modal>
   );
-}
+};

@@ -39,7 +39,7 @@ export interface CreateWorkoutProps {
   form: FormikProps<CreateWorkoutValues>;
 }
 
-export function CreateWorkout() {
+export const CreateWorkout = () => {
   const navigation = useNavigation();
   const { data: user } = useGetUser();
   const { data: workoutNames } = useGetWorkoutNames({
@@ -116,7 +116,6 @@ export function CreateWorkout() {
             <Stack w="90%">
               {index === 0 && (
                 <Autocomplete
-                  variant="unstyled"
                   ml={-1.5}
                   mt={2}
                   borderWidth={0}
@@ -160,4 +159,4 @@ export function CreateWorkout() {
       </Formik>
     </Screen>
   );
-}
+};

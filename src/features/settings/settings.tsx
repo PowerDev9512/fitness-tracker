@@ -1,13 +1,21 @@
 import { RawEditUserRequest, useEditUser, useGetUser } from "api";
-import { Avatar, FormLabel, Input, Screen, Select } from "components";
+import {
+  Avatar,
+  Button,
+  FormLabel,
+  Input,
+  Screen,
+  Select,
+  SelectData,
+} from "components";
 import React, { useEffect, useMemo, useState } from "react";
-import { Button, Stack, YStack } from "tamagui";
+import { Stack, YStack } from "tamagui";
 import { Badge, Image, Title } from "types";
 
-import { UserSetting } from "./components/userSetting/userSetting";
+import { UserSetting } from "./components/userSetting";
 import { SettingSection, settingsSections } from "./settingsSections";
 
-function SettingsInternal() {
+const SettingsInternal = () => {
   const { data: user } = useGetUser();
 
   const initialState = useMemo(
@@ -30,13 +38,33 @@ function SettingsInternal() {
     [user]
   );
 
-  const { mutate, isLoading } = useEditUser();
+  const { mutate: update, isLoading: isUpdating } = useEditUser();
   const [userDetails, setUserDetails] =
     useState<RawEditUserRequest>(initialState);
 
   useEffect(() => {
     setUserDetails(initialState);
   }, [initialState]);
+
+  const titleOptions = useMemo(() => {
+    return (user?.inventory ?? [])
+      .filter((item) => item.rewardType === "title")
+      .map((title) => title as Title)
+      .map((title) => ({
+        label: title.name,
+        value: title.id,
+      })) as SelectData<number>[];
+  }, [user]);
+
+  const badgeOptions = useMemo(() => {
+    return (user?.inventory ?? [])
+      .filter((item) => item.rewardType === "badge")
+      .map((badge) => badge as Badge)
+      .map((badge) => ({
+        label: badge.name,
+        value: badge.id,
+      })) as SelectData<number>[];
+  }, [user]);
 
   if (!user || !userDetails) {
     return null;
@@ -52,7 +80,7 @@ function SettingsInternal() {
         )?.[0][1] ?? ""
       ).toString()}
       onChange={(val) => {
-        mutate({ ...userDetails, [item.key]: val });
+        update({ ...userDetails, [item.key]: val });
       }}
     />
   );
@@ -72,10 +100,11 @@ function SettingsInternal() {
         }}
       />
 
-      <Stack>
-        <FormLabel>Profile</FormLabel>
-
+      <Stack w="100%" space={2} alignItems="center">
         <YStack w="100%" space={2} alignItems="center">
+          <FormLabel mr="auto" variant="title">
+            Username
+          </FormLabel>
           <Input
             type="text"
             value={userDetails.username}
@@ -88,6 +117,9 @@ function SettingsInternal() {
             }
           />
 
+          <FormLabel mr="auto" variant="title">
+            Email
+          </FormLabel>
           <Input
             type="text"
             placeholder="Email"
@@ -100,6 +132,9 @@ function SettingsInternal() {
             }
           />
 
+          <FormLabel mr="auto" variant="title">
+            Height
+          </FormLabel>
           <Input
             type="text"
             placeholder="Height"
@@ -112,6 +147,9 @@ function SettingsInternal() {
             }
           />
 
+          <FormLabel mr="auto" variant="title">
+            Weight
+          </FormLabel>
           <Input
             type="text"
             placeholder="Weight"
@@ -124,6 +162,9 @@ function SettingsInternal() {
             }
           />
 
+          <FormLabel mr="auto" variant="title">
+            Age
+          </FormLabel>
           <Input
             type="text"
             placeholder="Age"
@@ -136,55 +177,41 @@ function SettingsInternal() {
             }
           />
 
+          <FormLabel mr="auto" variant="title">
+            Title
+          </FormLabel>
           <Select
-            w="90%"
-            data={user.inventory.map((item) => {
-              if (item.rewardType === "title") {
-                return {
-                  label: item.name,
-                  value: item.id,
-                };
-              }
-              return null;
-            })}
+            w="100%"
+            data={titleOptions}
             placeholder="Select a title"
-            value={{
-              label: userDetails.title?.id.toString() ?? "",
-              value: userDetails.title?.id ?? "",
-            }}
-            labelExtractor={(item) => item?.label ?? ""}
-            onChangeValue={(val) => {
+            value={titleOptions.find(
+              (item) => item.value === userDetails.title?.id
+            )}
+            onChangeValue={(val: number) => {
               setUserDetails((prev) => ({
                 ...prev,
                 title: user.inventory.find(
-                  (item) => item.id === val?.value
+                  (item) => item.id === val
                 ) as Title | null,
               }));
             }}
           />
 
+          <FormLabel mr="auto" variant="title">
+            Badge
+          </FormLabel>
           <Select
-            w="90%"
+            w="100%"
             placeholder="Select a badge"
-            data={user.inventory.map((item) => {
-              if (item.rewardType === "badge") {
-                return {
-                  label: item.name,
-                  value: item.id,
-                };
-              }
-              return null;
-            })}
-            labelExtractor={(item) => item?.label ?? ""}
-            value={{
-              label: userDetails.badge?.id.toString() ?? "",
-              value: userDetails.badge?.id ?? "",
-            }}
-            onChangeValue={(val) => {
+            data={badgeOptions}
+            value={badgeOptions.find(
+              (item) => item.value === userDetails.badge?.id
+            )}
+            onChangeValue={(val: number) => {
               setUserDetails((prev) => ({
                 ...prev,
                 badge: user.inventory.find(
-                  (item) => item.id === val?.value
+                  (item) => item.id === val
                 ) as Badge | null,
               }));
             }}
@@ -193,9 +220,10 @@ function SettingsInternal() {
       </Stack>
 
       <Button
-        w="%90"
+        w="100%"
+        isLoading={isUpdating}
         onPress={() =>
-          mutate({
+          update({
             ...userDetails,
             userId: user.id,
           })
@@ -204,12 +232,12 @@ function SettingsInternal() {
         Save
       </Button>
 
-      <Stack w="95%" mt={2}>
+      <Stack w="100%" mt={2}>
         <FormLabel ml={2}>Settings</FormLabel>
         {settingsSections.data.map(createSettingSection)}
       </Stack>
     </Screen>
   );
-}
+};
 
 export const Settings = React.memo(SettingsInternal);

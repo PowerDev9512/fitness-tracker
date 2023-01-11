@@ -40,7 +40,7 @@ const IncrementBarInternal = ({
             borderBottomLeftRadius: leftBorderRadius,
             borderTopRightRadius: rightBorderRadius,
             borderBottomRightRadius: rightBorderRadius,
-            backgroundColor: increment > 0 ? "$primary500" : "$red500",
+            backgroundColor: increment > 0 ? "$primary500" : "red",
             borderWidth: 1,
             borderColor: "white",
           }}
@@ -83,7 +83,7 @@ const IncrementBarInternal = ({
       <XStack mt="auto">
         <FormLabel mt={1}>{name}</FormLabel>
         {titleAccessory && (
-          <Text fontSize="xs" ml="auto">
+          <Text fontSize={8} ml="auto">
             {titleAccessory}
           </Text>
         )}

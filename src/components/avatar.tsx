@@ -15,14 +15,14 @@ interface BaseProps {
 
 type Props = BaseProps & React.ComponentProps<typeof Pressable>;
 
-export function Avatar({
+export const Avatar = ({
   user,
   size,
   callback,
   badge,
   editable = false,
   ...props
-}: Props) {
+}: Props) => {
   const [image, setImage] = useState<ImageType | undefined>(undefined);
 
   const placeholderName = user?.username ?? "User";
@@ -135,4 +135,4 @@ export function Avatar({
       {avatarImage}
     </Pressable>
   );
-}
+};

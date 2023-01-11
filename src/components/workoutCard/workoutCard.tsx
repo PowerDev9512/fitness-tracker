@@ -23,7 +23,7 @@ interface Props {
   footer: React.ReactNode | null;
 }
 
-export function WorkoutCard({ workout, footer }: Props) {
+export const WorkoutCard = ({ workout, footer }: Props) => {
   const [deleting, setDeleting] = useState(false);
 
   const { data: user } = useGetUser();
@@ -50,13 +50,13 @@ export function WorkoutCard({ workout, footer }: Props) {
         <>
           {workout.completed && (
             <Badge side="right" background={false}>
-              <Check size={25} color="$green500" />
+              <Check size={25} color="green" />
             </Badge>
           )}
 
           {!workout.completed && (
             <Badge side="right" background={false}>
-              <Cross size={25} color="$red500" />
+              <Cross size={25} color="red" />
             </Badge>
           )}
         </>
@@ -68,7 +68,7 @@ export function WorkoutCard({ workout, footer }: Props) {
     () =>
       footer && (
         <>
-          <Separator marginTop={4} marginBottom={3} bg="$gray200" />
+          <Separator mt="$3" mb="$4" bg="$gray200" />
           {footer}
         </>
       ),
@@ -120,19 +120,19 @@ export function WorkoutCard({ workout, footer }: Props) {
             deleteWorkout({ userId: user?.id ?? -1, workoutId: workout.id });
           }}
         >
-          <Trash size={25} color="$red500" />
+          <Trash size={25} color="red" />
         </Badge>
 
         {badges}
 
         <Card accessibilityLabel="workout-card" height="90%" width={350}>
-          <Heading justifyContent="center" textAlign="center" marginTop="1">
+          <Heading justifyContent="center" textAlign="center" mt="$1">
             {workout.name}
           </Heading>
-          <Text justifyContent="center" textAlign="center" marginBottom="1">
+          <Text justifyContent="center" textAlign="center" mb="$1">
             {dateFormat(new Date(workout.time), "dddd, mmmm dS")}
           </Text>
-          <Separator mt="4" mb="6" />
+          <Separator mt="$4" mb="$6" />
 
           {mainContent}
 
@@ -141,4 +141,4 @@ export function WorkoutCard({ workout, footer }: Props) {
       </YStack>
     </Stack>
   );
-}
+};

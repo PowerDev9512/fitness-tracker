@@ -5,7 +5,9 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
-import { Button, Heading, ScrollView, Stack, XStack } from "tamagui";
+import { Heading, ScrollView, Stack, XStack } from "tamagui";
+
+import { IconButton } from "./iconButton";
 
 interface Props {
   children: React.ReactNode;
@@ -34,7 +36,8 @@ const InternalAccordion = ({
     transform: [{ rotate: `${rotateAnimation.value}deg` }],
     marginLeft: "auto",
     marginRight: "auto",
-    marginTop: 8,
+    marginTop: 6,
+    marginBottom: -8,
   }));
 
   const handlePress = () => {
@@ -52,7 +55,7 @@ const InternalAccordion = ({
       <XStack>
         <Heading accessibilityLabel={title}>{title}</Heading>
         {secondTitle && (
-          <Heading fontWeight="medium" ml="auto" mt="auto">
+          <Heading fontSize={20} fontWeight="medium" ml="auto">
             {secondTitle}
           </Heading>
         )}
@@ -63,13 +66,13 @@ const InternalAccordion = ({
       </Animated.View>
 
       <Animated.View style={rotateStyle}>
-        <Button
+        <IconButton
           icon={isOpen ? ChevronDown : ChevronDown}
           onPress={handlePress}
         />
       </Animated.View>
     </Stack>
   );
-}
+};
 
 export const Accordion = React.memo(InternalAccordion);

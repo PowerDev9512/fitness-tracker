@@ -12,7 +12,7 @@ const DrawerStackInternal = () => {
   const createNotificationBell = useCallback(() => <NotificationBell />, []);
 
   return (
-    <Drawer.Navigator drawerContent={MainDrawer}>
+    <Drawer.Navigator initialRouteName="Dashboard" drawerContent={MainDrawer}>
       <Drawer.Screen
         options={{
           headerRight: createNotificationBell,
@@ -23,6 +23,6 @@ const DrawerStackInternal = () => {
       <Drawer.Screen name="Achievements" component={Achievements} />
     </Drawer.Navigator>
   );
-}
+};
 
 export const DrawerStack = React.memo(DrawerStackInternal);

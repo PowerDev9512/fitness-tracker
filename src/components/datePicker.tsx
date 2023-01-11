@@ -7,7 +7,7 @@ interface Props {
   mode: "date" | "time" | "datetime";
 }
 
-export function DatePicker({ mode, date, setDate }: Props) {
+export const DatePicker = ({ mode, date, setDate }: Props) => {
   const minDate = new Date();
 
   const handleDateChange = (newDate: Date) => {
@@ -19,7 +19,7 @@ export function DatePicker({ mode, date, setDate }: Props) {
     <DatePickerBase
       accessibilityLabel="date picker"
       style={{ alignSelf: "center" }}
-      textColor="$black"
+      textColor="black"
       androidVariant="nativeAndroid"
       date={date}
       onDateChange={handleDateChange}
@@ -27,4 +27,4 @@ export function DatePicker({ mode, date, setDate }: Props) {
       minimumDate={minDate}
     />
   );
-}
+};

@@ -5,7 +5,7 @@ import { Stack, XStack } from "tamagui";
 import { RegisterProps } from "../../register";
 import * as SC from "../../register.styles";
 
-export function BuddyForm({ form }: RegisterProps) {
+export const BuddyForm = ({ form }: RegisterProps) => {
   return (
     <SC.Container>
       <FormInput
@@ -54,4 +54,4 @@ export function BuddyForm({ form }: RegisterProps) {
       </Stack>
     </SC.Container>
   );
-}
+};

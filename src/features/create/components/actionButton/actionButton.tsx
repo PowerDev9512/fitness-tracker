@@ -10,8 +10,8 @@ type Props = BaseProps & Omit<React.ComponentProps<typeof Button>, "children">;
 
 export const ActionButton = ({ title, ...rest }: Props) => {
   return (
-    <Button {...rest} variant="link">
-      <Text color="black" fontSize="2xs">
+    <Button {...rest}>
+      <Text color="black" fontSize={8}>
         {title}
       </Text>
     </Button>

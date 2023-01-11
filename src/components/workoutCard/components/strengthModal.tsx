@@ -1,9 +1,10 @@
 import { Camera } from "@tamagui/lucide-icons";
 import { useEditWorkout, useGetUser } from "api";
 import React, { useState } from "react";
-import { Button, Text, TextArea, XStack, YStack } from "tamagui";
+import { Text, TextArea, XStack, YStack } from "tamagui";
 import { StrengthActivity, Workout } from "types";
 
+import { Button } from "../../button";
 import { ImagePicker } from "../../imagePicker";
 import { Input } from "../../input";
 import { Modal } from "../../modal";
@@ -15,7 +16,12 @@ interface Props {
   isOpen: boolean;
 }
 
-export function StrengthModal({ workout, activity, onClose, isOpen }: Props) {
+export const StrengthModal = ({
+  workout,
+  activity,
+  onClose,
+  isOpen,
+}: Props) => {
   const { data: user } = useGetUser();
 
   const [sets, setSets] = useState(activity.sets);
@@ -85,7 +91,7 @@ export function StrengthModal({ workout, activity, onClose, isOpen }: Props) {
                 {" "}
                 {image ? "Image added" : "No image added"}{" "}
               </Text>
-              <ImagePicker ml="auto" callbacks={[setImage]}>
+              <ImagePicker callbacks={[setImage]}>
                 <Camera />
               </ImagePicker>
             </XStack>
@@ -125,4 +131,4 @@ export function StrengthModal({ workout, activity, onClose, isOpen }: Props) {
       </Modal.Content>
     </Modal>
   );
-}
+};

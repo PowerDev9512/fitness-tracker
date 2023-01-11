@@ -10,11 +10,11 @@ import React, { useCallback } from "react";
 import { useStore } from "store";
 import { Text, XStack, YStack } from "tamagui";
 
-export function MainDrawer({
+export const MainDrawer = ({
   state,
   navigation,
   descriptors,
-}: DrawerContentComponentProps) {
+}: DrawerContentComponentProps) => {
   const { setUserId } = useStore();
   const { data: user } = useGetUser();
 
@@ -54,4 +54,4 @@ export function MainDrawer({
       <DrawerItem label="Logout" onPress={() => setUserId(-1)} />
     </DrawerContentScrollView>
   );
-}
+};

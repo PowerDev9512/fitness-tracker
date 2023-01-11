@@ -17,7 +17,7 @@ interface Props {
   type?: "text" | "password";
 }
 
-export function FormInput({
+export const FormInput = ({
   name,
   value,
   onChangeText,
@@ -28,9 +28,9 @@ export function FormInput({
   helpText = undefined,
   required = false,
   type = "text",
-}: Props) {
+}: Props) => {
   return (
-    <YStack width="100%">
+    <YStack w="100%">
       <XStack>
         {!hideLabel && <FormLabel>{name}</FormLabel>}
         {required && !hideLabel && <FormLabel variant="error"> *</FormLabel>}
@@ -39,6 +39,7 @@ export function FormInput({
       <Input
         accessibilityLabel={`${name} input`}
         mb={2}
+        w="100%"
         type={type}
         value={value}
         onBlur={onBlur}
@@ -47,8 +48,7 @@ export function FormInput({
       />
 
       {helpText && <Label>{helpText}</Label>}
-
       {error && <FormLabel variant="error">{error}</FormLabel>}
     </YStack>
   );
-}
+};

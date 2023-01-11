@@ -6,7 +6,7 @@ import { Heading, Text } from "tamagui";
 import { BuddyStats } from "./components/buddyStats/buddyStats";
 import { WorkoutChart } from "./components/workoutChart/workoutChart";
 
-export function Stats() {
+export const Stats = () => {
   const { data: user } = useGetUser();
 
   const streakText =
@@ -16,10 +16,10 @@ export function Stats() {
 
   return (
     <Screen loading={!user}>
-      <Heading marginTop="5"> Welcome back, {user?.username} </Heading>
+      <Heading size="$9"> Hello, {user?.username} </Heading>
 
-      <Text fontSize="md" fontWeight="semibold" textAlign="center" mb={4}>
-        Its time to get your workout on
+      <Text fontSize={16} fontWeight="semibold" textAlign="center" mb={4}>
+        Its time to get your workout on!
         {streakText}
       </Text>
 
@@ -27,4 +27,4 @@ export function Stats() {
       <WorkoutChart />
     </Screen>
   );
-}
+};

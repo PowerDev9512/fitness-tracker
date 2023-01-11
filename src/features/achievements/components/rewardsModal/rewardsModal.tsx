@@ -9,7 +9,7 @@ interface Props {
   onClose: () => void;
 }
 
-export function RewardsModal({ rewards, onClose }: Props) {
+export const RewardsModal = ({ rewards, onClose }: Props) => {
   return (
     <Modal isOpen={rewards.length > 0} onClose={onClose}>
       <Modal.Content>
@@ -19,7 +19,7 @@ export function RewardsModal({ rewards, onClose }: Props) {
           {rewards.map((reward) => {
             if (reward.rewardType === "experience") {
               return (
-                <Text key={`${reward.id}`} fontSize="sm">
+                <Text key={`${reward.id}`} fontSize={12}>
                   <>
                     {reward.amount} {reward.strengthLevel} XP
                   </>
@@ -29,14 +29,14 @@ export function RewardsModal({ rewards, onClose }: Props) {
 
             if (reward.rewardType === "title") {
               return (
-                <Text key={`${reward.id}`} fontSize="sm">
+                <Text key={`${reward.id}`} fontSize={12}>
                   <> Title unlocked! &quot;{titleCase(reward.name)}&quot; </>
                 </Text>
               );
             }
 
             return (
-              <Text key={`${reward.id}`} fontSize="sm" color="gray.500">
+              <Text key={`${reward.id}`} fontSize={12} color="gray.500">
                 Unkown Reward
               </Text>
             );
@@ -48,4 +48,4 @@ export function RewardsModal({ rewards, onClose }: Props) {
       </Modal.Content>
     </Modal>
   );
-}
+};

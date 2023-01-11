@@ -1,8 +1,8 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
+import Toast from "react-native-toast-message";
 import { ApiError, User } from "types";
 import { log } from "utils";
 
-import { Toast } from "../components/toast/toast";
 import { client } from "./client";
 import { ApiUser, ApiUserToUser } from "./types";
 
@@ -15,9 +15,9 @@ export function handleError(err: unknown) {
 
     log(errorMessage, "error");
 
-    Toast({
-      title: "An error has occured",
-      colorScheme: "error",
+    Toast.show({
+      text1: "An error has occured",
+      type: "error",
     });
   }
 }

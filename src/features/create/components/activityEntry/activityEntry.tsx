@@ -1,7 +1,8 @@
 import { Delete } from "@tamagui/lucide-icons";
 import { useGetUser } from "api";
+import { IconButton } from "components";
 import React from "react";
-import { Button, Text, XStack } from "tamagui";
+import { Text, XStack } from "tamagui";
 import { Activity } from "types";
 import { getDistanceFormatter, getWeightFormatter } from "utils";
 
@@ -10,7 +11,7 @@ interface Props {
   deleteActivity: () => void;
 }
 
-export function ActivityEntry({ activity, deleteActivity }: Props) {
+export const ActivityEntry = ({ activity, deleteActivity }: Props) => {
   const { data: user } = useGetUser();
 
   const weightFormatter = getWeightFormatter(user);
@@ -51,7 +52,7 @@ export function ActivityEntry({ activity, deleteActivity }: Props) {
   return (
     <XStack key={`${activity.name}-hstack`} alignItems="center">
       {createChild(activity)}
-      <Button
+      <IconButton
         onPress={deleteActivity}
         key={`${activity.name}-delete-button`}
         ml="auto"
@@ -59,4 +60,4 @@ export function ActivityEntry({ activity, deleteActivity }: Props) {
       />
     </XStack>
   );
-}
+};

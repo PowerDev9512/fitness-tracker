@@ -14,7 +14,7 @@ interface BaseProps<T> {
 type Props<T> = BaseProps<T> &
   Omit<React.ComponentProps<typeof BaseInput>, keyof BaseProps<T>>;
 
-export function Autocomplete<T>(props: Props<T>) {
+export const Autocomplete = <T extends unknown>(props: Props<T>) => {
   const { data, value, onChange, keyExtractor } = props;
   const [showList, setShowList] = useState(false);
 
@@ -46,7 +46,7 @@ export function Autocomplete<T>(props: Props<T>) {
       <Stack>
         <Input
           {...textProps}
-          placeholder={textProps?.placeholder || "Search"}
+          placeholder={textProps?.placeholder ?? "Search"}
           accessibilityLabel={`${value} input`}
           type="text"
           placeholderTextColor="$gray400"
@@ -82,4 +82,4 @@ export function Autocomplete<T>(props: Props<T>) {
       )}
     </Stack>
   );
-}
+};

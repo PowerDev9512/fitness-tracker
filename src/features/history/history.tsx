@@ -1,4 +1,3 @@
-import { MaterialTopTabBarProps } from "@react-navigation/material-top-tabs";
 import { useGetUser } from "api";
 import { Carousel, Screen, WorkoutCard } from "components";
 import React from "react";
@@ -6,7 +5,7 @@ import { Stack, Text } from "tamagui";
 import { CompletedWorkout } from "types";
 import { getPastWorkouts } from "utils";
 
-export const History = ({ navigation }: MaterialTopTabBarProps) => {
+export const History = () => {
   const { data: user } = useGetUser();
 
   const pastWorkouts = getPastWorkouts(user);
@@ -25,7 +24,7 @@ export const History = ({ navigation }: MaterialTopTabBarProps) => {
         defaultIndex={pastWorkouts.length - 1}
       />
     ) : (
-      <Text fontSize="md" mt={10}>
+      <Text fontSize={16} mt={10}>
         {" "}
         No past workouts exist{" "}
       </Text>
