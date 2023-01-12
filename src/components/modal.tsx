@@ -1,4 +1,6 @@
-import { Button, Stack, styled } from "tamagui";
+import React from "react";
+import { Modal as ModalBase } from "react-native";
+import { Stack, styled } from "tamagui";
 
 interface BaseProps {
   isOpen: boolean;
@@ -8,28 +10,21 @@ interface BaseProps {
 
 type Props = BaseProps & React.ComponentProps<typeof ModalInternal>;
 
-const ModalInternal = styled(Stack, {
+const ModalInternal = styled(ModalBase, {
   name: "MyStack",
-  backgroundColor: "$backgroundStrong",
-  flex: 1,
-  padding: "$4",
-  space: "$true",
+  transparent: true,
+  animationType: "slide",
 });
 
+// todo: replace outer stack with blurview
 export const Modal = ({ isOpen, onClose, children, ...props }: Props) => {
-  return <ModalInternal {...props}>{isOpen && children}</ModalInternal>;
+  return (
+    <ModalInternal onRequestClose={onClose} visible={isOpen} {...props}>
+      <Stack backgroundColor="rgba(0, 0, 0, 0.5)" h="100%" w="100%">
+        <Stack ml="auto" mr="$3.5" w="85%" h="60%" my="auto">
+          {children}
+        </Stack>
+      </Stack>
+    </ModalInternal>
+  );
 };
-
-const content = styled(Stack, {
-  name: "ModalContent",
-});
-
-const closeButton = styled(Button, {
-  name: "ModalCloseButton",
-});
-
-Modal.Content = content;
-Modal.CloseButton = closeButton;
-Modal.Header = content;
-Modal.Body = content;
-Modal.Footer = content;

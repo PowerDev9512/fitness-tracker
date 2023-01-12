@@ -1,17 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
 import { useGetUser } from "api";
+import { MainCard } from "components";
 import dateFormat from "dateformat";
 import React, { useEffect } from "react";
 import { FlatList, useWindowDimensions } from "react-native";
-import {
-  Card,
-  Heading,
-  Image,
-  Separator,
-  Stack,
-  Text,
-  TextArea,
-} from "tamagui";
+import { Heading, Image, Separator, Stack, Text, TextArea } from "tamagui";
 
 import { Screen } from "../../components/screen";
 import { Activity, Workout } from "../../types/domain";
@@ -37,6 +30,7 @@ export const ActivityDetails = ({ route }: Props) => {
         workout.activities.map((activity) => ({ ...workout, activity }))
       )
       .flat() ?? [];
+
   const mainActivity = activities.find(
     (a) => a.activity.id === route.params.mainActivityId
   );
@@ -69,7 +63,7 @@ export const ActivityDetails = ({ route }: Props) => {
 
     return (
       <Stack w={width} key={`${activity.id} View`}>
-        <Card key={`${activity.id} Card`} my={4} mx="auto" w="90%">
+        <MainCard key={`${activity.id} Card`} my={4} mx="auto" w="90%">
           <Heading mx="auto" fontWeight="bold" key={`${activity.id} Title`}>
             {workout.name}
           </Heading>
@@ -82,8 +76,7 @@ export const ActivityDetails = ({ route }: Props) => {
             <Stack key={`${activity.id} Cardio View`}>
               <Text key={`${activity.id} Goal`}>
                 <Text key={`${activity.id} Goal Bold`} fontWeight="bold">
-                  {" "}
-                  Goal{" "}
+                  Goal
                 </Text>
                 {activity.targetDistance} in {activity.targetDuration}
               </Text>
@@ -94,8 +87,7 @@ export const ActivityDetails = ({ route }: Props) => {
                     key={`${activity.id} Actual Sets Bold`}
                     fontWeight="bold"
                   >
-                    {" "}
-                    Result{" "}
+                    Result
                   </Text>
                   {activity.distance} in {activity.duration}
                 </Text>
@@ -108,8 +100,7 @@ export const ActivityDetails = ({ route }: Props) => {
                       key={`${activity.id} Uncompleted Bold`}
                       fontWeight="bold"
                     >
-                      {" "}
-                      Result{" "}
+                      Result
                     </Text>
                     Not completed
                   </Text>
@@ -121,8 +112,7 @@ export const ActivityDetails = ({ route }: Props) => {
             <Stack key={`${activity.id} Strength View`}>
               <Text key={`${activity.id} Sets`}>
                 <Text key={`${activity.id} Sets Bold`} fontWeight="bold">
-                  {" "}
-                  Goal{" "}
+                  Goal
                 </Text>
                 {activity.targetSets} x {activity.targetReps} at{" "}
                 {activity.targetWeight}
@@ -134,8 +124,7 @@ export const ActivityDetails = ({ route }: Props) => {
                     key={`${activity.id} Actual Sets Bold`}
                     fontWeight="bold"
                   >
-                    {" "}
-                    Result{" "}
+                    Result
                   </Text>
                   {activity.sets} x {activity.reps} at {activity.weight}
                 </Text>
@@ -149,8 +138,7 @@ export const ActivityDetails = ({ route }: Props) => {
                       key={`${activity.id} Uncompleted Bold`}
                       fontWeight="bold"
                     >
-                      {" "}
-                      Result{" "}
+                      Result
                     </Text>
                     Not completed
                   </Text>
@@ -179,7 +167,7 @@ export const ActivityDetails = ({ route }: Props) => {
               }}
             />
           )}
-        </Card>
+        </MainCard>
         {isMain && (
           <Text fontWeight="bold" mx="auto" key={`${activity.id} Other`}>
             {" "}

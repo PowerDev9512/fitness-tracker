@@ -40,9 +40,8 @@ export const CardioRow = ({ activity, workout }: Props) => {
         }
       >
         <XStack>
-          <Text fontSize={16} fontWeight="bold">
-            {" "}
-            Goal{" "}
+          <Text mr="$2" fontSize={16} fontWeight="bold">
+            Goal
           </Text>
           <Text my="auto">
             {distanceFormatter(
@@ -57,9 +56,8 @@ export const CardioRow = ({ activity, workout }: Props) => {
       </Pressable>
 
       <XStack>
-        <Text fontSize={16} fontWeight="bold">
-          {" "}
-          Result{" "}
+        <Text mr="$2" fontSize={16} fontWeight="bold">
+          Result
         </Text>
         <Text my="auto">
           {activity.distance || activity.duration

@@ -23,7 +23,7 @@ export const StrengthRow = ({ activity, workout }: Props) => {
   const weightFormatter = getWeightFormatter(user);
 
   return (
-    <>
+    <Stack>
       <StrengthModal
         activity={activity}
         workout={workout}
@@ -40,9 +40,8 @@ export const StrengthRow = ({ activity, workout }: Props) => {
         }
       >
         <XStack>
-          <Text fontSize={16} fontWeight="bold">
-            {" "}
-            Goal{" "}
+          <Text mr="$2" fontSize={16} fontWeight="bold">
+            Goal
           </Text>
           <Text my="auto">
             {weightFormatter(
@@ -57,9 +56,8 @@ export const StrengthRow = ({ activity, workout }: Props) => {
       </Pressable>
 
       <XStack>
-        <Text fontSize={16} fontWeight="bold">
-          {" "}
-          Result{" "}
+        <Text mr="$2" fontSize={16} fontWeight="bold">
+          Result
         </Text>
         <Text my="auto">
           {activity.sets && activity.reps && activity.weight
@@ -74,6 +72,6 @@ export const StrengthRow = ({ activity, workout }: Props) => {
           <IconButton icon={<Edit />} onPress={() => setIsOpen(true)} />
         )}
       </XStack>
-    </>
+    </Stack>
   );
 };

@@ -57,7 +57,7 @@ export const Input = ({
   };
 
   return (
-    <Stack w="100%">
+    <Stack w={props.w ?? props.width ?? "100%"}>
       <InputBase
         accessibilityLabel={`${value} input`}
         value={valueAsString}
@@ -68,6 +68,7 @@ export const Input = ({
         placeholderTextColor="gray"
         color="black"
         {...props}
+        w="100%"
       />
       {createRightElement()}
     </Stack>

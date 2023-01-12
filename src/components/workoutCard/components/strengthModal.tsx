@@ -43,92 +43,78 @@ export const StrengthModal = ({
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <Modal.Content maxWidth="400px">
-        <Modal.CloseButton />
-        <Modal.Header>Update exercise</Modal.Header>
-        <Modal.Body>
-          <YStack space={2}>
-            <Input
-              placeholder={`Sets / ${activity.targetSets}`}
-              rightElement={
-                <Button onPress={() => setSets(activity.targetSets)}>
-                  Fill
-                </Button>
-              }
-              type="text"
-              value={sets ?? undefined}
-              onChangeText={handleChange(setSets)}
-            />
-            <Input
-              placeholder={`Reps / ${activity.targetReps}`}
-              rightElement={
-                <Button onPress={() => setReps(activity.targetReps)}>
-                  Fill
-                </Button>
-              }
-              type="text"
-              value={reps ?? undefined}
-              onChangeText={handleChange(setReps)}
-            />
-            <Input
-              placeholder={`Weight / ${activity.targetWeight}`}
-              rightElement={
-                <Button onPress={() => setWeight(activity.targetWeight)}>
-                  Fill
-                </Button>
-              }
-              type="text"
-              value={weight ?? undefined}
-              onChangeText={handleChange(setWeight)}
-            />
-            <TextArea
-              placeholder="Notes"
-              value={notes ?? undefined}
-              onChangeText={(value) => setNotes(value)}
-            />
-            <XStack>
-              <Text my="auto">
-                {" "}
-                {image ? "Image added" : "No image added"}{" "}
-              </Text>
-              <ImagePicker callbacks={[setImage]}>
-                <Camera />
-              </ImagePicker>
-            </XStack>
-          </YStack>
-        </Modal.Body>
-        <Modal.Footer>
-          <XStack space={2}>
-            <Button onPress={onClose}>Cancel</Button>
-            <Button
-              onPress={() => {
-                editWorkout({
-                  userId: user!.id,
-                  workout: {
-                    ...workout,
-                    activities: workout.activities.map((a) => {
-                      if (a.id === activity.id) {
-                        return {
-                          ...a,
-                          sets,
-                          reps,
-                          weight,
-                          notes,
-                          image,
-                        };
-                      }
-                      return a;
-                    }),
-                  },
-                });
-                onClose();
-              }}
-            >
-              Save
+      <Text>Update exercise</Text>
+      <YStack space={2}>
+        <Input
+          placeholder={`Sets / ${activity.targetSets}`}
+          rightElement={
+            <Button onPress={() => setSets(activity.targetSets)}>Fill</Button>
+          }
+          type="text"
+          value={sets ?? undefined}
+          onChangeText={handleChange(setSets)}
+        />
+        <Input
+          placeholder={`Reps / ${activity.targetReps}`}
+          rightElement={
+            <Button onPress={() => setReps(activity.targetReps)}>Fill</Button>
+          }
+          type="text"
+          value={reps ?? undefined}
+          onChangeText={handleChange(setReps)}
+        />
+        <Input
+          placeholder={`Weight / ${activity.targetWeight}`}
+          rightElement={
+            <Button onPress={() => setWeight(activity.targetWeight)}>
+              Fill
             </Button>
-          </XStack>
-        </Modal.Footer>
-      </Modal.Content>
+          }
+          type="text"
+          value={weight ?? undefined}
+          onChangeText={handleChange(setWeight)}
+        />
+        <TextArea
+          placeholder="Notes"
+          value={notes ?? undefined}
+          onChangeText={(value) => setNotes(value)}
+        />
+        <XStack>
+          <Text my="auto"> {image ? "Image added" : "No image added"} </Text>
+          <ImagePicker callbacks={[setImage]}>
+            <Camera />
+          </ImagePicker>
+        </XStack>
+      </YStack>
+      <XStack space={2}>
+        <Button onPress={onClose}>Cancel</Button>
+        <Button
+          onPress={() => {
+            editWorkout({
+              userId: user!.id,
+              workout: {
+                ...workout,
+                activities: workout.activities.map((a) => {
+                  if (a.id === activity.id) {
+                    return {
+                      ...a,
+                      sets,
+                      reps,
+                      weight,
+                      notes,
+                      image,
+                    };
+                  }
+                  return a;
+                }),
+              },
+            });
+            onClose();
+          }}
+        >
+          Save
+        </Button>
+      </XStack>
     </Modal>
   );
 };

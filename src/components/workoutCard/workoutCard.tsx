@@ -2,19 +2,12 @@ import { Check, Cross, Trash } from "@tamagui/lucide-icons";
 import { useDeleteWorkout, useGetUser } from "api";
 import dateFormat from "dateformat";
 import React, { useMemo, useState } from "react";
-import {
-  Card,
-  Heading,
-  ScrollView,
-  Separator,
-  Stack,
-  Text,
-  YStack,
-} from "tamagui";
+import { Heading, ScrollView, Separator, Stack, Text, YStack } from "tamagui";
 import { Activity, Workout } from "types";
 import { titleCase } from "utils";
 
 import { Badge } from "../badge";
+import { MainCard } from "../mainCard";
 import { CardioRow } from "./components/cardioRow";
 import { StrengthRow } from "./components/strengthRow";
 
@@ -33,11 +26,14 @@ export const WorkoutCard = ({ workout, footer }: Props) => {
     const muscles = Object.keys(activity.muscleGroupStats).map((muscleGroup) =>
       titleCase(muscleGroup)
     );
+
     return (
-      <Stack key={activity.id}>
+      <Stack mb="$2" key={activity.id}>
         <Text mt={2} textAlign="left" fontSize={18} fontWeight="bold">
-          {" "}
-          {activity.name} | {muscles}{" "}
+          {activity.name}{" "}
+        </Text>
+        <Text mb="$1.5" fontSize={14} color="$gray10Dark">
+          {muscles.map((muscle) => muscle).join(", ")}
         </Text>
         {children}
       </Stack>
@@ -78,7 +74,7 @@ export const WorkoutCard = ({ workout, footer }: Props) => {
   const mainContent = useMemo(
     () => (
       <ScrollView>
-        <YStack space={2}>
+        <Stack>
           {workout.activities.map((activity) => {
             switch (activity.type) {
               case "strength":
@@ -103,7 +99,7 @@ export const WorkoutCard = ({ workout, footer }: Props) => {
                 return null;
             }
           })}
-        </YStack>
+        </Stack>
       </ScrollView>
     ),
     [workout]
@@ -125,19 +121,19 @@ export const WorkoutCard = ({ workout, footer }: Props) => {
 
         {badges}
 
-        <Card accessibilityLabel="workout-card" height="90%" width={350}>
+        <MainCard accessibilityLabel="workout-card" width={350}>
           <Heading justifyContent="center" textAlign="center" mt="$1">
             {workout.name}
           </Heading>
           <Text justifyContent="center" textAlign="center" mb="$1">
             {dateFormat(new Date(workout.time), "dddd, mmmm dS")}
           </Text>
-          <Separator mt="$4" mb="$6" />
+          <Separator mt="$4" mb="$3" />
 
           {mainContent}
 
           {footerContent}
-        </Card>
+        </MainCard>
       </YStack>
     </Stack>
   );

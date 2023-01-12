@@ -41,6 +41,7 @@ const lightTheme = createTheme({
   background: tokens.color.$gray100,
   backgroundStrong: tokens.color.$gray300,
   primary500: tokens.color.$blue500,
+  primary300: tokens.color.$blue300,
 });
 
 type BaseTheme = typeof lightTheme;
@@ -49,6 +50,7 @@ const darkTheme: BaseTheme = createTheme({
   background: tokens.color.$gray900,
   backgroundStrong: tokens.color.$gray800,
   primary500: tokens.color.$purple500,
+  primary300: tokens.color.$purple300,
 });
 
 const allThemes = {

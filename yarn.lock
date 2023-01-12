@@ -2660,6 +2660,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-community/blur@npm:^4.3.0":
+  version: 4.3.0
+  resolution: "@react-native-community/blur@npm:4.3.0"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 1fb168a88d5901f0c86cf537a51e272ddd63b057cec4fb102f2e3a4b50f16d04fc0575567de7440dfab01d090fb3863cec74055538141f96e7d7bc8835101ac0
+  languageName: node
+  linkType: hard
+
 "@react-native-community/cli-clean@npm:^9.2.1":
   version: 9.2.1
   resolution: "@react-native-community/cli-clean@npm:9.2.1"
@@ -8458,6 +8468,7 @@ __metadata:
     "@babel/core": ^7.19.3
     "@google/semantic-release-replace-plugin": 1.1.0
     "@manypkg/cli": 0.19.2
+    "@react-native-community/blur": ^4.3.0
     "@react-navigation/bottom-tabs": ^6.5.3
     "@react-navigation/drawer": ^6.5.7
     "@react-navigation/material-top-tabs": ^6.5.2

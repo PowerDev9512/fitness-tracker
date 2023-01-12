@@ -49,27 +49,28 @@ export const Social = () => {
         onClose={() => setSearchedUser(null)}
       />
 
-      <XStack mt={5} alignItems="center" space={4}>
+      <XStack space="$3" w="90%">
         <Input
           w="65%"
           placeholder="Search for friends"
-          mx="auto"
           value={search}
           onChangeText={setSearch}
           type="text"
         />
         <Button
+          w="30%"
           onPress={() => {
             const foundUser = searchableUsers.find(
               (item) => item.username.toLowerCase() === search.toLowerCase()
             );
+
             if (foundUser) {
               setSearchedUserId(foundUser.id);
             } else {
               Toast.show({
                 text1: "User not found",
                 text2: "Please try a different username",
-                type: "warning",
+                type: "error",
               });
             }
           }}

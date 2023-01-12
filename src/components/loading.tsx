@@ -1,5 +1,5 @@
 import React from "react";
-import { Heading, Spinner, Stack, XStack } from "tamagui";
+import { Spinner, Stack, Text, XStack } from "tamagui";
 
 interface Props {
   message?: string;
@@ -14,9 +14,9 @@ export const Loading = ({ message }: Props) => {
           accessibilityLabel="Loading page"
           color="$primary500"
         />
-        <Heading ml={3} textAlign="center" color="$primary500" fontSize={24}>
+        <Text ml={3} textAlign="center" color="$primary500" fontSize={24}>
           {message ?? "Loading..."}
-        </Heading>
+        </Text>
       </XStack>
     </Stack>
   );

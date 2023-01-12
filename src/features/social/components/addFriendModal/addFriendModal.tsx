@@ -1,7 +1,7 @@
 import { useSendFriendRequest } from "api";
-import { Avatar, Button, Loading, Modal } from "components";
+import { Avatar, Button, Loading, MainCard, Modal } from "components";
 import React, { useEffect } from "react";
-import { Card, Heading, Text, XStack, YStack } from "tamagui";
+import { Card, Heading, Stack, Text, XStack, YStack } from "tamagui";
 import { User } from "types";
 
 interface Props {
@@ -31,48 +31,39 @@ export const AddFriendModal = ({ friend, user, loading, onClose }: Props) => {
   const isFriend = user.friends?.includes(user.id);
 
   return (
-    <Modal isOpen={!!friend} onClose={() => null}>
-      <Modal.CloseButton />
+    <Modal isOpen={!!friend} onClose={onClose}>
       {loading && <Loading message="Loading user" />}
       {!loading && (
-        <Modal.Content>
-          <Modal.Header>
-            <YStack alignItems="center">
-              <Heading> {friend.username} </Heading>
-              <Text>Level {friend.workoutBuddy.data.levelStats.overall} </Text>
-              <Text> {friend.title?.name ?? ""} </Text>
-            </YStack>
-          </Modal.Header>
-          <Modal.Body>
-            <Card alignItems="center">
-              <Avatar callback={() => null} user={friend} size="xl" />
-            </Card>
-          </Modal.Body>
-          <Modal.Footer>
-            <XStack space={2}>
-              <Button m={-10} onPress={onClose}>
-                Close
+        <MainCard alignItems="center">
+          <YStack mb="$4" alignItems="center">
+            <Heading> {friend.username} </Heading>
+            <Text>Level {friend.workoutBuddy.data.levelStats.overall} </Text>
+            <Text> {friend.title?.name ?? ""} </Text>
+          </YStack>
+
+          <Avatar callback={() => null} user={friend} size="xl" />
+
+          <XStack ml="auto" mt="$4">
+            <Button variant="link" onPress={onClose}>Close</Button>
+
+            {!isFriend && (
+              <Button
+                disabled={adding}
+                onPress={() => {
+                  addFriend({ friendId: user.id });
+                }}
+              >
+                Add Friend
               </Button>
+            )}
 
-              {!isFriend && (
-                <Button
-                  disabled={adding}
-                  onPress={() => {
-                    addFriend({ friendId: user.id });
-                  }}
-                >
-                  Add Friend
-                </Button>
-              )}
-
-              {isFriend && (
-                <Button disabled={adding} onPress={() => null}>
-                  Remove Friend
-                </Button>
-              )}
-            </XStack>
-          </Modal.Footer>
-        </Modal.Content>
+            {isFriend && (
+              <Button disabled={adding} onPress={() => null}>
+                Remove Friend
+              </Button>
+            )}
+          </XStack>
+        </MainCard>
       )}
     </Modal>
   );

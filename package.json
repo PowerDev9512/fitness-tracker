@@ -13,6 +13,7 @@
     "upgrade:tamagui": "manypkg upgrade tamagui && manypkg upgrade @tamagui && manypkg upgrade tamagui-loader"
   },
   "dependencies": {
+    "@react-native-community/blur": "^4.3.0",
     "@react-navigation/bottom-tabs": "^6.5.3",
     "@react-navigation/drawer": "^6.5.7",
     "@react-navigation/material-top-tabs": "^6.5.2",
