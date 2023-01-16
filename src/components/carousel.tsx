@@ -27,13 +27,13 @@ export const Carousel = ({
         vertical
         pagingEnabled
         width={width}
-        height={height}
-        scrollAnimationDuration={500}
+        height={height * 0.825}
+        scrollAnimationDuration={1000}
         data={items}
         defaultIndex={defaultIndex}
         mode="parallax"
         modeConfig={{
-          parallaxScrollingScale: 0.9,
+          parallaxScrollingScale: 0.92,
           parallaxScrollingOffset: 375,
         }}
         onSnapToItem={(index) => setActiveIndex(index)}

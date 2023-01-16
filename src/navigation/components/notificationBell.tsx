@@ -13,6 +13,8 @@ export default () => {
     <>
       <IconButton
         onPress={() => navigation.navigate("Notifications" as never)}
+        scaleIcon={1.5}
+        mt="$1"
         icon={Bell}
       />
       {(user?.friendRequests ?? 0) > 0 && (

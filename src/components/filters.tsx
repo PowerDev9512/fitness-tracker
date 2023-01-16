@@ -26,7 +26,7 @@ export const Filters = ({ filters, setFilters, filterOptions }: Props) => {
   ) => (
     <Select
       key={`${key}-select`}
-      w={`1/${filterOptions.length}`}
+      w="33.25%"
       mb={2}
       borderWidth={0}
       value={{
@@ -34,13 +34,12 @@ export const Filters = ({ filters, setFilters, filterOptions }: Props) => {
         value: filters[key] ?? "",
       }}
       placeholder={placeholder}
-      labelExtractor={(item) => item.label}
       data={options.map((option) => ({
         label: titleCase(option),
         value: option,
       }))}
       onChangeValue={(itemValue) =>
-        setFilters({ ...filters, [key]: itemValue.value })
+        setFilters({ ...filters, [key]: itemValue })
       }
     />
   );

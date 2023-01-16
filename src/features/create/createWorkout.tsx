@@ -8,9 +8,9 @@ import { Activity, ExerciseType, ScheduledWorkout } from "types";
 
 import { NavigationButtons } from "./components/navigationButtons/navigationButtons";
 import { CreateWorkoutSchema } from "./createWorkoutSchema";
-import { ActivityDetails } from "./forms/activityDetails/activityDetails";
-import { SelectWorkout } from "./forms/selectWorkout/selectWorkout";
-import { WorkoutDetails } from "./forms/workoutDetails/workoutDetails";
+import { ActivityDetails } from "./forms/activityDetails";
+import { SelectWorkout } from "./forms/selectWorkout";
+import { WorkoutDetails } from "./forms/workoutDetails";
 
 export interface CreateWorkoutValues {
   workout: ScheduledWorkout;
@@ -113,16 +113,26 @@ export const CreateWorkout = () => {
           ].filter((e) => e !== "");
 
           return (
-            <Stack w="90%">
+            <Stack w="100%">
               {index === 0 && (
                 <Autocomplete
-                  ml={-1.5}
-                  mt={2}
-                  borderWidth={0}
-                  backgroundColor="transparent"
-                  fontWeight="bold"
-                  fontSize={24}
-                  placeholder="Workout name"
+                  inputProps={{
+                    fontWeight: "bold",
+                    fontSize: 32,
+                    placeholder: "Workout name",
+                    borderWidth: 0,
+                    backgroundColor: "transparent",
+                    textDecorationStyle: undefined,
+                    focusStyle: {
+                      borderWidth: 0,
+                      backgroundColor: "transparent",
+                    },
+                  }}
+                  viewProps={{
+                    borderWidth: 0,
+                    backgroundColor: "transparent",
+                    mb: "$1",
+                  }}
                   value={form.values.workout.name}
                   data={workoutNames?.workoutNames ?? []}
                   keyExtractor={(item: string) => item}

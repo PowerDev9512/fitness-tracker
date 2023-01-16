@@ -1,4 +1,4 @@
-import { Button } from "components";
+import { Button, IconButton } from "components";
 import React from "react";
 import { Text } from "tamagui";
 
@@ -10,10 +10,10 @@ type Props = BaseProps & Omit<React.ComponentProps<typeof Button>, "children">;
 
 export const ActionButton = ({ title, ...rest }: Props) => {
   return (
-    <Button {...rest}>
-      <Text color="black" fontSize={8}>
+    <IconButton {...rest}>
+      <Text color="black" fontSize={12}>
         {title}
       </Text>
-    </Button>
+    </IconButton>
   );
 };

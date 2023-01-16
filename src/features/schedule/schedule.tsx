@@ -1,9 +1,9 @@
 import { useNavigation } from "@react-navigation/native";
-import { PlusCircle } from "@tamagui/lucide-icons";
+import { Plus, PlusCircle } from "@tamagui/lucide-icons";
 import { useEditWorkout, useGetUser } from "api";
 import { Carousel, IconButton, Screen } from "components";
 import React from "react";
-import { Stack, Text } from "tamagui";
+import { Circle, Stack, Text } from "tamagui";
 import { ScheduledWorkout } from "types";
 import { getScheduledWorkouts } from "utils";
 
@@ -50,12 +50,25 @@ export const Schedule = () => {
       <IconButton
         position="absolute"
         circular
-        color="$primary500"
-        bottom={85}
-        right={30}
+        color="$backgroundStrong"
+        bottom={92}
+        right={37.5}
         width={120}
         height={60}
-        icon={<PlusCircle size={60} />}
+        scaleIcon={3}
+        icon={Plus}
+        zIndex={3}
+        onPress={() => naviagtion.navigate("Create" as never)}
+      />
+      <Circle
+        position="absolute"
+        circular
+        backgroundColor="$primary500"
+        bottom={85}
+        right={30}
+        width={60}
+        height={60}
+        zIndex={2}
         onPress={() => naviagtion.navigate("Create" as never)}
       />
     </Screen>

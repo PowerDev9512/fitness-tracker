@@ -4,24 +4,24 @@ import { Input as BaseInput, Stack, Text } from "tamagui";
 
 import { Input } from "./input";
 
-interface BaseProps<T> {
+interface Props<T> {
   data: T[];
   keyExtractor: (item: T) => string;
   value: string;
   onChange: (value: string) => void;
+  inputProps?: React.ComponentProps<typeof BaseInput>;
+  viewProps?: React.ComponentProps<typeof Stack>;
 }
 
-type Props<T> = BaseProps<T> &
-  Omit<React.ComponentProps<typeof BaseInput>, keyof BaseProps<T>>;
-
-export const Autocomplete = <T extends unknown>(props: Props<T>) => {
-  const { data, value, onChange, keyExtractor } = props;
+export const Autocomplete = <T extends unknown>({
+  data,
+  keyExtractor,
+  value,
+  onChange,
+  inputProps,
+  viewProps,
+}: Props<T>) => {
   const [showList, setShowList] = useState(false);
-
-  const textProps = useMemo(() => {
-    const { data: _, value: __, onChange: ___, ...rest } = props;
-    return rest;
-  }, [props]);
 
   const filteredData = useMemo(
     () =>
@@ -42,11 +42,10 @@ export const Autocomplete = <T extends unknown>(props: Props<T>) => {
   );
 
   return (
-    <Stack {...textProps}>
+    <Stack {...viewProps}>
       <Stack>
         <Input
-          {...textProps}
-          placeholder={textProps?.placeholder ?? "Search"}
+          placeholder={inputProps?.placeholder ?? "Search"}
           accessibilityLabel={`${value} input`}
           type="text"
           placeholderTextColor="$gray400"
@@ -54,6 +53,7 @@ export const Autocomplete = <T extends unknown>(props: Props<T>) => {
           onBlur={() => setShowList(false)}
           value={value}
           onChangeText={(e: string) => onChange(e)}
+          {...inputProps}
         />
       </Stack>
 

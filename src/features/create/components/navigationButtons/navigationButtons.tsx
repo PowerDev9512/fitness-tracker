@@ -32,22 +32,37 @@ export const NavigationButtons = ({
   }, [setIndex]);
 
   return (
-    <Stack mt={5} mb={2}>
+    <Stack mt="$5" mb="$2">
       {currentIndex === 0 && (
         <XStack justifyContent="center" space={2}>
-          <Button onPress={onClickNext}>Add New Activity</Button>
-          <Button onPress={onSubmit} disabled={disabled} isLoading={loading}>
+          <Button w="50%" onPress={onClickNext}>
+            Add New Activity
+          </Button>
+          <Button
+            w="50%"
+            onPress={onSubmit}
+            disabled={disabled}
+            isLoading={loading}
+          >
             Submit
           </Button>
         </XStack>
       )}
 
-      {currentIndex === 1 && <Button onPress={onClickPrevious}>Back</Button>}
+      {currentIndex === 1 && (
+        <Button w="100%" onPress={onClickPrevious}>
+          Back
+        </Button>
+      )}
 
       {currentIndex === 2 && (
         <XStack space={2} justifyContent="center">
-          <Button onPress={onCancel}>Cancel</Button>
-          <Button onPress={onAddActivity}>Add Activity</Button>
+          <Button w="50%" onPress={onCancel}>
+            Cancel
+          </Button>
+          <Button w="50%" onPress={onAddActivity}>
+            Add Activity
+          </Button>
         </XStack>
       )}
     </Stack>

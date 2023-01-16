@@ -10,9 +10,9 @@ import {
 } from "types";
 import { getDistanceFormatter, getWeightFormatter } from "utils";
 
-import { ActionButton } from "../../components/actionButton/actionButton";
-import { IncrementBar } from "../../components/incrementBar/incrementBar";
-import { CreateWorkoutProps } from "../../createWorkout";
+import { ActionButton } from "../components/actionButton/actionButton";
+import { IncrementBar } from "../components/incrementBar/incrementBar";
+import { CreateWorkoutProps } from "../createWorkout";
 
 export const WorkoutDetails = ({ form }: CreateWorkoutProps) => {
   const { activity } = form.values;
@@ -107,7 +107,7 @@ export const WorkoutDetails = ({ form }: CreateWorkoutProps) => {
 
   const maxFields = useMemo(
     () => (
-      <Stack mt={4}>
+      <Stack p="$3" mt={4}>
         <Heading mt={2}>Training Maxes</Heading>
         {!max && (
           <Text>
@@ -188,7 +188,7 @@ export const WorkoutDetails = ({ form }: CreateWorkoutProps) => {
 
   return (
     <Card mt={4}>
-      <FormLabel fontWeight="bold" fontSize={24}>
+      <FormLabel pl="$3" pt="$2" mr="auto" fontWeight="bold" fontSize={32}>
         {activity.name}
       </FormLabel>
       {activitySpecificFields}

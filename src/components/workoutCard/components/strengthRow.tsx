@@ -39,7 +39,7 @@ export const StrengthRow = ({ activity, workout }: Props) => {
           )
         }
       >
-        <XStack>
+        <XStack alignContent="center" alignItems="center">
           <Text mr="$2" fontSize={16} fontWeight="bold">
             Goal
           </Text>
@@ -49,17 +49,17 @@ export const StrengthRow = ({ activity, workout }: Props) => {
               false
             )}
           </Text>
-          <Stack ml="auto" mt={2}>
+          <Stack ml="auto">
             <ChevronRight />
           </Stack>
         </XStack>
       </Pressable>
 
-      <XStack>
+      <XStack mt="$-2" alignContent="center" alignItems="center">
         <Text mr="$2" fontSize={16} fontWeight="bold">
           Result
         </Text>
-        <Text my="auto">
+        <Text>
           {activity.sets && activity.reps && activity.weight
             ? weightFormatter(
                 `${activity.sets} x ${activity.reps} at ${activity.weight}`,

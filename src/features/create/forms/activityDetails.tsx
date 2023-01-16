@@ -3,9 +3,9 @@ import React, { useMemo } from "react";
 import { Card, Separator, Slider, Stack, Text } from "tamagui";
 import { titleCase } from "utils";
 
-import { StrengthData, StrengthExercise } from "../../../../types/domain";
-import { ActivityEntry } from "../../components/activityEntry/activityEntry";
-import { CreateWorkoutProps } from "../../createWorkout";
+import { StrengthData, StrengthExercise } from "../../../types/domain";
+import { ActivityEntry } from "../components/activityEntry/activityEntry";
+import { CreateWorkoutProps } from "../createWorkout";
 
 export const ActivityDetails = ({ form }: CreateWorkoutProps) => {
   const { date, repeat } = form.values;
@@ -89,11 +89,11 @@ export const ActivityDetails = ({ form }: CreateWorkoutProps) => {
   return (
     <Stack>
       <FormLabel>Summary</FormLabel>
-      <Card my={2} py={-1}>
+      <Card my="$2" p="$2">
         {summary !== "" && (
           <>
-            <Text mt={2}>{summary}</Text>
-            <Separator mt={2} />
+            <Text mt="$2">{summary}</Text>
+            <Separator mt="$2" />
           </>
         )}
 
@@ -106,30 +106,41 @@ export const ActivityDetails = ({ form }: CreateWorkoutProps) => {
             />
           ))
         ) : (
-          <Text py={4}>No exercises added yet</Text>
+          <Text py="$1">No exercises added yet</Text>
         )}
       </Card>
 
       <FormLabel>Workout date</FormLabel>
-      <Card mb={4}>
+      <Card mb="$4">
         <DatePicker date={date} setDate={setDate} mode="date" />
       </Card>
 
       <Text fontSize={16} fontWeight="semibold" textAlign="left">
         Schedule this for {repeat} {repeat === 1 ? "week" : "weeks"}
       </Text>
-      <Card mt={4} px={10}>
+
+      <Card mt="$2" px="$10">
         <Slider
-          defaultValue={[repeat]}
+          defaultValue={[1]}
+          value={[repeat]}
           onValueChange={setRepeat}
           max={10}
           min={1}
           step={1}
+          size="$4"
+          w="100%"
+          h={40}
         >
-          <Slider.Track>
+          <Slider.Track backgroundColor="$gray400">
             <Slider.TrackActive />
           </Slider.Track>
-          <Slider.Thumb circular index={0} />
+          <Slider.Thumb
+            bordered
+            elevate
+            circular
+            index={0}
+            backgroundColor="$gray700"
+          />
         </Slider>
       </Card>
     </Stack>

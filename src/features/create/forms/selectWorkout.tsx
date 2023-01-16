@@ -13,7 +13,7 @@ import { Card, Text, XStack } from "tamagui";
 import { Equipments, Exercise, ExerciseTypes, MuscleGroups } from "types";
 import { titleCase } from "utils";
 
-import { CreateWorkoutProps } from "../../createWorkout";
+import { CreateWorkoutProps } from "../createWorkout";
 
 interface BaseProps {
   incrementIndex: () => void;
@@ -123,7 +123,7 @@ export const SelectWorkout = ({ form, incrementIndex }: Props) => {
                 {exercise.userHasMax && (
                   <Star
                     color="$primary500"
-                    size={20}
+                    size={25}
                     style={{ marginLeft: "auto" }}
                   />
                 )}
@@ -163,7 +163,7 @@ export const SelectWorkout = ({ form, incrementIndex }: Props) => {
       muscleGroup.exercises.length > 0;
 
     const createCard = (muscleGroup: MuscleGroupData) => (
-      <Card my={2} key={`card-${muscleGroup.name}`}>
+      <Card my="$2" p="$2.5" key={`card-${muscleGroup.name}`}>
         <Accordion
           title={titleCase(muscleGroup.name)}
           secondTitle={`${muscleGroup.exercises.length} exercises`}
@@ -182,7 +182,7 @@ export const SelectWorkout = ({ form, incrementIndex }: Props) => {
   return (
     <ScrollView
       nestedScrollEnabled
-      style={{ marginTop: 10 }}
+      style={{ marginTop: 10, width: "100%" }}
       stickyHeaderIndices={[0]}
     >
       <Filters

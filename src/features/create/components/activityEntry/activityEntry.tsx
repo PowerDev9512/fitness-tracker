@@ -50,12 +50,14 @@ export const ActivityEntry = ({ activity, deleteActivity }: Props) => {
   };
 
   return (
-    <XStack key={`${activity.name}-hstack`} alignItems="center">
+    <XStack p="$2" key={`${activity.name}-hstack`} alignItems="center">
       {createChild(activity)}
       <IconButton
         onPress={deleteActivity}
         key={`${activity.name}-delete-button`}
         ml="auto"
+        mr="$-4"
+        scaleIcon={1.5}
         icon={<Delete key={`${activity.name}-delete-icon`} color="$gray500" />}
       />
     </XStack>

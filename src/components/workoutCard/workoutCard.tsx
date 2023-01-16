@@ -106,8 +106,8 @@ export const WorkoutCard = ({ workout, footer }: Props) => {
   );
 
   return (
-    <Stack>
-      <YStack height="100%">
+    <Stack h="100%">
+      <YStack h="100%">
         <Badge
           side="left"
           loading={deleting}
@@ -121,7 +121,7 @@ export const WorkoutCard = ({ workout, footer }: Props) => {
 
         {badges}
 
-        <MainCard accessibilityLabel="workout-card" width={350}>
+        <MainCard accessibilityLabel="workout-card" w={350}>
           <Heading justifyContent="center" textAlign="center" mt="$1">
             {workout.name}
           </Heading>

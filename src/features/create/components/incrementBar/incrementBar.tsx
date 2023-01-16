@@ -1,4 +1,4 @@
-import { FormLabel, Input } from "components";
+import { Button, FormLabel, Input } from "components";
 import React, { useCallback, useMemo } from "react";
 import { Stack, Text, XStack } from "tamagui";
 
@@ -28,22 +28,17 @@ const IncrementBarInternal = ({
       const rightBorderRadius = isLast ? 10 : 0;
 
       return (
-        <Stack
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
+        <Button
           w="20%"
           key={`${increment}-${index}`}
-          style={{
-            borderRadius: 0,
-            borderTopLeftRadius: leftBorderRadius,
-            borderBottomLeftRadius: leftBorderRadius,
-            borderTopRightRadius: rightBorderRadius,
-            borderBottomRightRadius: rightBorderRadius,
-            backgroundColor: increment > 0 ? "$primary500" : "red",
-            borderWidth: 1,
-            borderColor: "white",
-          }}
+          borderRadius={0}
+          borderTopLeftRadius={leftBorderRadius}
+          borderBottomLeftRadius={leftBorderRadius}
+          borderTopRightRadius={rightBorderRadius}
+          borderBottomRightRadius={rightBorderRadius}
+          backgroundColor={increment > 0 ? "$primary500" : "red"}
+          borderWidth={1}
+          borderColor="white"
         >
           <Text
             key={`${increment}-${index}-text`}
@@ -55,7 +50,7 @@ const IncrementBarInternal = ({
           >
             {increment > 0 ? `+${increment}` : increment}
           </Text>
-        </Stack>
+        </Button>
       );
     },
     [increments.length, onChange, "primary", "white", "red", value]
@@ -81,25 +76,27 @@ const IncrementBarInternal = ({
   return (
     <Stack w="100%">
       <XStack mt="auto">
-        <FormLabel mt={1}>{name}</FormLabel>
+        <FormLabel pl="$3" mt="$2">
+          {name}
+        </FormLabel>
         {titleAccessory && (
           <Text fontSize={8} ml="auto">
             {titleAccessory}
           </Text>
         )}
       </XStack>
-      <XStack alignContent="center">
+      <XStack mx="auto" alignContent="center">
         {positiveIncrements}
         <Input
-          w={16}
-          rounded={0}
           value={value.toString()}
           onChangeText={handleInputChange}
           placeholder="0"
           borderColor="white"
           type="text"
+          borderRadius={0}
+          backgroundColor="white"
+          w="15%"
           textAlign="center"
-          h="99%"
         />
         {negativeIncrements}
       </XStack>
