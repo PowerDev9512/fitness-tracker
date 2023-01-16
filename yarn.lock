@@ -2885,6 +2885,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@react-native-segmented-control/segmented-control@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "@react-native-segmented-control/segmented-control@npm:2.4.0"
+  peerDependencies:
+    react: ">=16.0"
+    react-native: ">=0.62"
+  checksum: a7d6b243116bf1aa8e98dc0514f83a169c2e3881ec5b435bf8eab2fc2c125b7b15a53d81c1d46ab5889950cb6f5c1351708b5a3f7c5759421c0fdb73839fce3a
+  languageName: node
+  linkType: hard
+
 "@react-native/assets@npm:1.0.0":
   version: 1.0.0
   resolution: "@react-native/assets@npm:1.0.0"
@@ -8469,6 +8479,7 @@ __metadata:
     "@google/semantic-release-replace-plugin": 1.1.0
     "@manypkg/cli": 0.19.2
     "@react-native-community/blur": ^4.3.0
+    "@react-native-segmented-control/segmented-control": ^2.4.0
     "@react-navigation/bottom-tabs": ^6.5.3
     "@react-navigation/drawer": ^6.5.7
     "@react-navigation/material-top-tabs": ^6.5.2

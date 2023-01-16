@@ -235,3 +235,35 @@ export function UserToApiUser(user: User): ApiUser {
     friends: user.friends,
   };
 }
+
+export const ErrorCodes: { [key: number]: string } = {
+  1: "The requested user does not exist",
+  2: "The requested activity does not exist",
+  3: "We've failed to load your exercises, please try again later",
+  4: "An unknown error has occurred, please try again later",
+  5: "The achievement you are trying to claim has already been claimed, please refresh the page",
+  6: "The achievement you are trying to claim does not exist",
+  7: "The achievement you are trying to claim is not available to you",
+  8: "We've failed to claim the rewards for this achievement, please try again later",
+  9: "The password you have entered is incorrect",
+  10: "The username or email you have entered is already in use",
+  11: "The username or email you have entered is already in use",
+  12: "The username or email you have entered is already in use",
+  13: "The friend you are interacting with does not exist",
+  14: "The friend you are adding is already your friend",
+  15: "The friend you are adding already has a pending request from you",
+  16: "The friend you are deleting is not your friend",
+  17: "The friend request you are interacting with does not exist",
+  18: "An unknown error has occurred, please try again later",
+  19: "The requested exercise does not exist",
+  20: "The requested workout does not exist",
+};
+
+export type ApiError = {
+  message: string;
+  code: keyof typeof ErrorCodes;
+};
+
+export function isApiError(error: any[]): error is ApiError[] {
+  return error.length > 0 && error[0].code !== undefined;
+}

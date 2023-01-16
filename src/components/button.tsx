@@ -32,7 +32,7 @@ export const Button = ({
 
   return isLoading ? (
     <Stack>
-      <Spinner mx="auto" pos="absolute" />
+      <Spinner mx="auto" pos="absolute" backgroundColor={color} />
       <BaseButton color={textColor} backgroundColor={color} {...props} />
     </Stack>
   ) : (

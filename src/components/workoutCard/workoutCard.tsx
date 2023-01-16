@@ -1,4 +1,4 @@
-import { Check, Cross, Trash } from "@tamagui/lucide-icons";
+import { Check, Cross, Trash, Trash2 } from "@tamagui/lucide-icons";
 import { useDeleteWorkout, useGetUser } from "api";
 import dateFormat from "dateformat";
 import React, { useMemo, useState } from "react";
@@ -107,7 +107,7 @@ export const WorkoutCard = ({ workout, footer }: Props) => {
 
   return (
     <Stack>
-      <YStack height="85%">
+      <YStack height="100%">
         <Badge
           side="left"
           loading={deleting}
@@ -116,7 +116,7 @@ export const WorkoutCard = ({ workout, footer }: Props) => {
             deleteWorkout({ userId: user?.id ?? -1, workoutId: workout.id });
           }}
         >
-          <Trash size={25} color="red" />
+          <Trash2 size={25} color="red" />
         </Badge>
 
         {badges}

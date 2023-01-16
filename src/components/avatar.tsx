@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Pressable } from "react-native";
 import FastImage from "react-native-fast-image";
+import { Stack } from "tamagui";
 import { Badge, Image as ImageType, User } from "types";
 
 import { ImagePicker } from "./imagePicker";
@@ -13,7 +14,7 @@ interface BaseProps {
   editable?: boolean;
 }
 
-type Props = BaseProps & React.ComponentProps<typeof Pressable>;
+type Props = BaseProps & React.ComponentProps<typeof Stack>;
 
 export const Avatar = ({
   user,
@@ -67,10 +68,8 @@ export const Avatar = ({
       borderWidth: 2,
     };
 
-    let tempImage = null;
-
-    if (avatar) {
-      tempImage = (
+    const tempImage =
+      avatar !== null && avatar !== undefined ? (
         <FastImage
           style={style}
           accessibilityLabel={`Avatar for ${placeholderName}`}
@@ -78,9 +77,7 @@ export const Avatar = ({
             uri: `data:image/${avatar.fileExtension};base64,${avatar.bytes}`,
           }}
         />
-      );
-    } else {
-      tempImage = (
+      ) : (
         <FastImage
           style={style}
           accessibilityLabel={`Avatar for ${placeholderName}`}
@@ -89,7 +86,6 @@ export const Avatar = ({
           }}
         />
       );
-    }
 
     return (
       <ImagePicker
@@ -130,9 +126,11 @@ export const Avatar = ({
   }, [height, placeholderName, userBadge, width]);
 
   return (
-    <Pressable {...props}>
-      {badgeImage}
-      {avatarImage}
+    <Pressable>
+      <Stack {...props}>
+        {badgeImage}
+        {avatarImage}
+      </Stack>
     </Pressable>
   );
 };

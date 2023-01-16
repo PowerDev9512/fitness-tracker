@@ -13,6 +13,7 @@ export const Home = ({
     <Screen>
       <Heading fontSize="$8"> Welcome to Pocket Coach! </Heading>
       <Text> Sign in or register below to get started! </Text>
+
       <Image
         accessibilityLabel="Sign Up Logo"
         width={300}
@@ -21,7 +22,9 @@ export const Home = ({
         src={require("../../assets/images/otherlogo.png")}
         style={{ backgroundColor: "transparent" }}
       />
+
       <Login />
+
       <Pressable onPress={() => navigation.navigate("Register" as never)}>
         <Text>
           Don&apos;t have an account?

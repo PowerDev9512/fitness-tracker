@@ -19,9 +19,14 @@ export function useGetFeed(): UseQueryResult<GetFeedResponse, unknown> {
   const { data: user } = useGetUser();
 
   return useQuery(["feed", user?.id], async () => {
+    if (!user) {
+      return [];
+    }
+
     const { data } = await client.get<GetFeedRawResponse>(
       `/users/${user?.id}/feed`
     );
+
     return data.messages.map(
       (message) =>
         ({

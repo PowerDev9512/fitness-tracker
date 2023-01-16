@@ -11,6 +11,7 @@
       "ios": {
         "buildConfiguration": "Debug"
       },
+      "credentialsSource": "remote",
       "channel": "development"
     },
     "production": {

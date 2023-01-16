@@ -1,3 +1,4 @@
+import { BlurView } from "@react-native-community/blur";
 import React from "react";
 import { Modal as ModalBase } from "react-native";
 import { Stack, styled } from "tamagui";
@@ -16,14 +17,21 @@ const ModalInternal = styled(ModalBase, {
   animationType: "slide",
 });
 
-// todo: replace outer stack with blurview
 export const Modal = ({ isOpen, onClose, children, ...props }: Props) => {
   return (
-    <ModalInternal onRequestClose={onClose} visible={isOpen} {...props}>
-      <Stack backgroundColor="rgba(0, 0, 0, 0.5)" h="100%" w="100%">
-        <Stack ml="auto" mr="$3.5" w="85%" h="60%" my="auto">
-          {children}
-        </Stack>
+    <ModalInternal
+      animationType="fade"
+      onRequestClose={onClose}
+      visible={isOpen}
+      {...props}
+    >
+      <Stack
+        backgroundColor="rgba(0, 0, 0, 0.7)"
+        flex={1}
+        justifyContent="center"
+        alignItems="center"
+      >
+        {children}
       </Stack>
     </ModalInternal>
   );

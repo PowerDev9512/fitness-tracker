@@ -66,10 +66,6 @@ const SettingsInternal = () => {
       })) as SelectData<number>[];
   }, [user]);
 
-  if (!user || !userDetails) {
-    return null;
-  }
-
   const createSettingSection = (item: SettingSection) => (
     <UserSetting
       item={item}
@@ -84,6 +80,10 @@ const SettingsInternal = () => {
       }}
     />
   );
+
+  if (!user || !userDetails) {
+    return null;
+  }
 
   return (
     <Screen scrollable extraSpace>

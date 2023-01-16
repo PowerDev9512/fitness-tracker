@@ -16,7 +16,9 @@ export function useGetUser(
 ): UseQueryResult<GetUserResponse, unknown> {
   const { userId, setUserId } = useStore();
 
-  return useQuery(["user", userId], async () => {
+  const cacheKey = otherUserId ? ["user", otherUserId] : ["user", userId];
+
+  return useQuery(cacheKey, async () => {
     if (!otherUserId) {
       if (!userId || userId < 0) {
         return null;
@@ -31,9 +33,11 @@ export function useGetUser(
       if (otherUserId < 0) {
         return null;
       }
+
       const { data } = await client.get<GetUserRawResponse>(
         `/users/${otherUserId}`
       );
+
       return ApiUserToUser(data.user);
     }
   });
