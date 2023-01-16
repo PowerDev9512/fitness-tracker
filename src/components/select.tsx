@@ -57,7 +57,7 @@ export const Select = <T extends unknown>({
         </Sheet>
       </Adapt>
 
-      <SelectBase.Content zIndex={200_000}>
+      <SelectBase.Content zIndex={200000}>
         <SelectBase.ScrollUpButton
           ai="center"
           jc="center"
