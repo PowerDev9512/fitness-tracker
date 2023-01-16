@@ -1,12 +1,6 @@
 import { Check, ChevronDown, ChevronUp } from "@tamagui/lucide-icons";
 import React from "react";
-import {
-  Adapt,
-  LinearGradient,
-  Select as SelectBase,
-  Sheet,
-  YStack,
-} from "tamagui";
+import { Adapt, Select as SelectBase, Sheet, YStack } from "tamagui";
 
 export type SelectData<T> = {
   label: string;
@@ -74,13 +68,6 @@ export const Select = <T extends unknown>({
           <YStack zi={10}>
             <ChevronUp size={20} />
           </YStack>
-          <LinearGradient
-            start={[0, 0]}
-            end={[0, 1]}
-            fullscreen
-            colors={["$background", "$backgroundTransparent"]}
-            br="$4"
-          />
         </SelectBase.ScrollUpButton>
 
         <SelectBase.Viewport minWidth={200}>
@@ -113,13 +100,6 @@ export const Select = <T extends unknown>({
           <YStack zi={10}>
             <ChevronDown size={20} />
           </YStack>
-          <LinearGradient
-            start={[0, 0]}
-            end={[0, 1]}
-            fullscreen
-            colors={["$transparent", "$background"]}
-            br="$4"
-          />
         </SelectBase.ScrollDownButton>
       </SelectBase.Content>
     </SelectBase>
