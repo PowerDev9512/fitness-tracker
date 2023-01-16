@@ -10,6 +10,7 @@ import { Provider } from "./provider";
 import { toastConfig } from "./toast.config";
 
 LogBox.ignoreLogs(["Require cycle: node_modules/victory"]);
+LogBox.ignoreLogs(["warning: matchMedia implementation is not provided."]);
 LogBox.ignoreLogs([
   "Please report: Excessive number of pending callbacks: 501.",
 ]);

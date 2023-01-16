@@ -1,7 +1,8 @@
 import { Eye, EyeOff } from "@tamagui/lucide-icons";
-import { Button } from "components";
 import React, { useState } from "react";
 import { Input as InputBase, Stack } from "tamagui";
+
+import { Button } from "./button";
 
 interface InputProps {
   value: string | number | undefined;
