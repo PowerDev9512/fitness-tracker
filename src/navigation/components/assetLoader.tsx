@@ -14,43 +14,43 @@ interface Props {
 }
 
 export const AssetLoader = ({ progress, setProgress }: Props) => {
-  const [missingAssets, setMissingAssets] = useState<Exercise[]>([]);
+  const [missingAssets, setMissingAssets] = useState<Exercise[] | null>(null);
 
   const { data: exercises, isLoading: exercisesLoading } = useExercises({
     retrieveImages: false,
   });
 
   useEffect(() => {
-    if (exercisesLoading || !exercises) {
+    if (!exercises) {
       return;
     }
 
-    const tasks = exercises.map(async (exercise) => {
-      const fileName = `${Dirs.DocumentDir}/${exercise.muscleGroupImageId}.png`;
-      const exists = await RNFetchBlob.fs.exists(fileName);
-      return { exists, exercise };
-    });
+    const missingExercises = exercises
+      .map((exercise) => {
+        const fileName = `${Dirs.DocumentDir}/${exercise.muscleGroupImageId}.png`;
+        const exists = RNFetchBlob.fs.exists(fileName);
+        return { exists, exercise };
+      })
+      .filter((r) => !r.exists)
+      .map((r) => r.exercise);
 
-    Promise.all(tasks.splice(0, 2))
-      .then((results) =>
-        results.filter((r) => !r.exists).map((r) => r.exercise)
-      )
-      .then((missing) => setMissingAssets(missing));
+    setMissingAssets(missingExercises);
   }, [exercisesLoading, exercises]);
 
   const { data: exercisesWithImages } = useExercises({
     retrieveImages: true,
-    shouldFetch: missingAssets.length > 0,
+    shouldFetch: missingAssets !== null && missingAssets.length > 0,
   });
 
   useEffect(() => {
-    if (missingAssets.length > 0) {
+    if (missingAssets && missingAssets.length > 0) {
       setProgress(() => ({ current: 0, total: missingAssets.length }));
 
       missingAssets.forEach((exercise) => {
         const matchingExercise = exercisesWithImages?.find(
           (e) => e.muscleGroupImageId === exercise.muscleGroupImageId
         );
+
         if (matchingExercise) {
           const fileName = `${Dirs.DocumentDir}/${matchingExercise.muscleGroupImage.id}.png`;
           RNFetchBlob.fs.writeFile(
@@ -68,7 +68,7 @@ export const AssetLoader = ({ progress, setProgress }: Props) => {
       setProgress((prev) => ({ current: prev.total, total: prev.total }));
     }
 
-    if (missingAssets.length === 0 && exercises) {
+    if (!missingAssets) {
       setProgress(() => ({ current: 0, total: 0 }));
     }
   }, [missingAssets, exercises, setProgress, exercisesWithImages]);
