@@ -1,7 +1,7 @@
 import { useSendFriendRequest } from "api";
-import { Avatar, Button, Loading, MainCard, Modal } from "components";
+import { Avatar, Button, Card, Heading, Loading, Modal } from "components";
 import React, { useEffect } from "react";
-import { Heading, Text, XStack, YStack } from "tamagui";
+import { Text, XStack, YStack } from "tamagui";
 import { User } from "types";
 
 interface Props {
@@ -40,7 +40,7 @@ export const AddFriendModal = ({ friend, user, loading, onClose }: Props) => {
 
   return (
     <Modal isOpen={friend !== null} onClose={onClose}>
-      <MainCard alignItems="center">
+      <Card alignItems="center">
         <YStack mb="$4" alignItems="center">
           <Heading> {friend.username} </Heading>
           <Text>Level {friend.workoutBuddy.data.levelStats.overall} </Text>
@@ -71,7 +71,7 @@ export const AddFriendModal = ({ friend, user, loading, onClose }: Props) => {
             </Button>
           )}
         </XStack>
-      </MainCard>
+      </Card>
     </Modal>
   );
 };

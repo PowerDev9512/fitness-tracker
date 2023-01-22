@@ -34,18 +34,44 @@ const tokens = createTokens({
     $gray700: "#52606d",
     $gray800: "#3e4c59",
     $gray900: "#323f4b",
+    $gray1000: "#1f2933",
+    $white: "#ffffff",
+    $black: "#000000",
+    $red100: "#ff8a8a",
+    $red200: "#ff6b6b",
+    $red300: "#ff4d4d",
+    $red400: "#ff2e2e",
+    $red500: "#ff0f0f",
+    $red600: "#e60e0e",
+    $red700: "#cc0d0d",
+    $red800: "#b20c0c",
+    $red900: "#990b0b",
+    $green100: "#8aff8a",
+    $green200: "#6bff6b",
+    $green300: "#4dff4d",
+    $green400: "#2eff2e",
+    $green500: "#0fff0f",
+    $green600: "#0ee60e",
+    $green700: "#0dcc0d",
+    $green800: "#0cb20c",
+    $green900: "#0b990b",
   },
 });
 
 const lightTheme = createTheme({
   background: tokens.color.$gray100,
-  backgroundStrong: tokens.color.$gray300,
+  backgroundStrong: tokens.color.$gray200,
+  backgroundAccent: tokens.color.$white,
   gray200: tokens.color.$gray200,
   gray400: tokens.color.$gray400,
   gray500: tokens.color.$gray500,
   gray700: tokens.color.$gray700,
   primary500: tokens.color.$blue500,
   primary300: tokens.color.$blue300,
+  black: tokens.color.$black,
+  white: tokens.color.$white,
+  green: tokens.color.$green100,
+  red: tokens.color.$red300,
 });
 
 type BaseTheme = typeof lightTheme;
@@ -53,12 +79,17 @@ type BaseTheme = typeof lightTheme;
 const darkTheme: BaseTheme = createTheme({
   background: tokens.color.$gray900,
   backgroundStrong: tokens.color.$gray800,
+  backgroundAccent: tokens.color.$gray700,
   gray200: tokens.color.$gray600,
   gray400: tokens.color.$gray600,
   gray500: tokens.color.$gray500,
   gray700: tokens.color.$gray400,
   primary500: tokens.color.$purple500,
   primary300: tokens.color.$purple300,
+  black: tokens.color.$gray400,
+  white: tokens.color.$gray900,
+  green: tokens.color.$green500,
+  red: tokens.color.$red500,
 });
 
 const allThemes = {

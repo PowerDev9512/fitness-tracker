@@ -1,10 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
 import { useGetUser } from "api";
-import { MainCard } from "components";
+import { Card, Heading } from "components";
 import dateFormat from "dateformat";
 import React, { useEffect } from "react";
 import { FlatList, useWindowDimensions } from "react-native";
-import { Heading, Image, Separator, Stack, Text, TextArea } from "tamagui";
+import { Image, Separator, Stack, Text, TextArea } from "tamagui";
 
 import { Screen } from "../../components/screen";
 import { Activity, Workout } from "../../types/domain";
@@ -63,8 +63,8 @@ export const ActivityDetails = ({ route }: Props) => {
 
     return (
       <Stack w={width} key={`${activity.id} View`}>
-        <MainCard key={`${activity.id} Card`} my={4} mx="auto" w="90%">
-          <Heading mx="auto" fontWeight="bold" key={`${activity.id} Title`}>
+        <Card key={`${activity.id} Card`} my={4} mx="auto" w="90%">
+          <Heading mx="auto" key={`${activity.id} Title`}>
             {workout.name}
           </Heading>
           <Text mx="auto" key={`${activity.id} Time`}>
@@ -167,7 +167,7 @@ export const ActivityDetails = ({ route }: Props) => {
               }}
             />
           )}
-        </MainCard>
+        </Card>
         {isMain && (
           <Text fontWeight="bold" mx="auto" key={`${activity.id} Other`}>
             {" "}

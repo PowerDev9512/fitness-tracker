@@ -1,7 +1,7 @@
-import { Avatar, Skeleton } from "components";
+import { Avatar, Card, Heading, Skeleton } from "components";
 import React, { useMemo } from "react";
 import { Pressable } from "react-native";
-import { Card, Heading, Text, XStack, YStack } from "tamagui";
+import { Text, XStack, YStack } from "tamagui";
 import { Message, User } from "types";
 
 interface Props {
@@ -32,8 +32,8 @@ export const FeedEntry = ({ message: item, onPress }: Props) => {
 
   return (
     <Pressable onPress={() => onPress(item.user)}>
-      <Card bg="$primary300">
-        <Card w="100%" bg="white">
+      <Card mx="auto" bg="$primary300">
+        <Card mt="$-2" w="100%" bg="white">
           <XStack>
             <Avatar p="$3" callback={() => null} user={item.user} size="md" />
             <YStack>

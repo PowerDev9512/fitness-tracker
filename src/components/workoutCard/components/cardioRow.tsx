@@ -69,7 +69,13 @@ export const CardioRow = ({ activity, workout }: Props) => {
         </Text>
 
         {!workout.completed && !workout.past && (
-          <IconButton icon={<Edit />} onPress={() => setIsOpen(true)} />
+          <IconButton
+            icon="ios-pencil"
+            ml="$2"
+            size={20}
+            color="$gray700"
+            onPress={() => setIsOpen(true)}
+          />
         )}
       </XStack>
     </>

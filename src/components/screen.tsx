@@ -4,7 +4,6 @@ import { ScrollView, styled, YStack } from "tamagui";
 import { Loading } from "./loading";
 
 interface Props {
-  loading?: boolean;
   extraSpace?: boolean;
   scrollable?: boolean;
   children: React.ReactNode;
@@ -39,21 +38,16 @@ export const Screen = ({
   children,
   scrollable = false,
   extraSpace = false,
-  loading = false,
 }: Props) => {
   if (scrollable) {
     return (
       <ScrollScreenInternal mb={extraSpace ? "$5" : "$0"}>
-        {loading && <Loading />}
-        {!loading && children}
+        {children}
       </ScrollScreenInternal>
     );
   }
 
   return (
-    <ScreenInternal mb={extraSpace ? "$5" : "$0"}>
-      {loading && <Loading />}
-      {!loading && children}
-    </ScreenInternal>
+    <ScreenInternal mb={extraSpace ? "$5" : "$0"}>{children}</ScreenInternal>
   );
 };

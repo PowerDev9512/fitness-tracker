@@ -1,8 +1,8 @@
 import { useGetUser, useRecordAchievement, useUserAchievements } from "api";
-import { FilterOption, Filters, Screen } from "components";
+import { Card, FilterOption, Filters, Screen } from "components";
 import React, { useEffect, useState } from "react";
 import { FlatList } from "react-native";
-import { Button, Card, Stack } from "tamagui";
+import { Button, Stack } from "tamagui";
 import { AchievementTypes, MuscleGroups, Reward } from "types";
 
 import { AchievementRow } from "./components/achievementRow/achievementRow";
@@ -60,10 +60,10 @@ export const Achievements = () => {
   });
 
   return (
-    <Screen loading={isLoading}>
+    <Screen>
       <RewardsModal rewards={rewards} onClose={() => setRewards([])} />
       {!isLoading && (
-        <Stack mx="auto" mt={4}>
+        <Stack mx="auto" w="124%" mt={4}>
           <Filters
             filterOptions={filterOptions}
             filters={filters}
@@ -74,7 +74,7 @@ export const Achievements = () => {
             data={filteredAchievements}
             keyExtractor={(item) => item.title}
             renderItem={({ item: achievement }) => (
-              <Card key={`${achievement.title}-box`} my={4}>
+              <Card p="$4" key={`${achievement.title}-box`} my={4}>
                 <AchievementRow user={user} achievement={achievement} />
                 {achievement.isCompleted && (
                   <Button

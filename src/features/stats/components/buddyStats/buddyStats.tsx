@@ -1,5 +1,5 @@
 import { useGetUser } from "api";
-import { Accordion, MainCard } from "components";
+import { Accordion, Card } from "components";
 import React from "react";
 import { FlatList } from "react-native";
 import { Progress, Stack, Text } from "tamagui";
@@ -17,7 +17,9 @@ export const BuddyStats = () => {
       <Text key={`${name}-${index}-text`}>
         {titleCase(name)}: {state} / 10
       </Text>
-      <Progress key={`${name}-${index}-progress`} value={state} max={10} />
+      <Progress key={`${name}-${index}-progress`} value={state} max={10}>
+        <Progress.Indicator animation="bouncy" />
+      </Progress>
     </Stack>
   );
 
@@ -27,7 +29,7 @@ export const BuddyStats = () => {
   const level = user.workoutBuddy.data.levelStats.overall;
 
   return (
-    <MainCard>
+    <Card p="$4">
       <Accordion title="Stats" secondTitle={`Level ${level}`}>
         <FlatList
           data={anatomy}
@@ -37,6 +39,6 @@ export const BuddyStats = () => {
           keyExtractor={(item, index) => `${item.muscleGroup}-${index}`}
         />
       </Accordion>
-    </MainCard>
+    </Card>
   );
 };

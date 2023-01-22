@@ -1,13 +1,14 @@
-import { Check, Cross, Trash, Trash2 } from "@tamagui/lucide-icons";
 import { useDeleteWorkout, useGetUser } from "api";
 import dateFormat from "dateformat";
 import React, { useMemo, useState } from "react";
-import { Heading, ScrollView, Separator, Stack, Text, YStack } from "tamagui";
+import Icon from "react-native-vector-icons/Ionicons";
+import { ScrollView, Separator, Stack, Text, useTheme, YStack } from "tamagui";
 import { Activity, Workout } from "types";
 import { titleCase } from "utils";
 
 import { Badge } from "../badge";
-import { MainCard } from "../mainCard";
+import { Card } from "../card";
+import { Heading } from "../heading";
 import { CardioRow } from "./components/cardioRow";
 import { StrengthRow } from "./components/strengthRow";
 
@@ -18,6 +19,7 @@ interface Props {
 
 export const WorkoutCard = ({ workout, footer }: Props) => {
   const [deleting, setDeleting] = useState(false);
+  const theme = useTheme();
 
   const { data: user } = useGetUser();
   const { mutate: deleteWorkout } = useDeleteWorkout();
@@ -46,13 +48,17 @@ export const WorkoutCard = ({ workout, footer }: Props) => {
         <>
           {workout.completed && (
             <Badge side="right" background={false}>
-              <Check size={25} color="green" />
+              <Icon
+                name="ios-checkmark-sharp"
+                size={30}
+                color={theme.green.val}
+              />
             </Badge>
           )}
 
           {!workout.completed && (
             <Badge side="right" background={false}>
-              <Cross size={25} color="red" />
+              <Icon name="ios-close-sharp" size={30} color={theme.red.val} />
             </Badge>
           )}
         </>
@@ -64,7 +70,7 @@ export const WorkoutCard = ({ workout, footer }: Props) => {
     () =>
       footer && (
         <>
-          <Separator mt="$3" mb="$4" bg="$gray200" />
+          <Separator mt="auto" mb="$4" bg="$gray200" />
           {footer}
         </>
       ),
@@ -116,13 +122,13 @@ export const WorkoutCard = ({ workout, footer }: Props) => {
             deleteWorkout({ userId: user?.id ?? -1, workoutId: workout.id });
           }}
         >
-          <Trash2 size={25} color="red" />
+          <Icon name="trash-bin-sharp" size={25} color={theme.red.val} />
         </Badge>
 
         {badges}
 
-        <MainCard accessibilityLabel="workout-card" w={350}>
-          <Heading justifyContent="center" textAlign="center" mt="$1">
+        <Card p="$4" accessibilityLabel="workout-card" w={350} minHeight={400}>
+          <Heading textAlign="center" justifyContent="center" mt="$1">
             {workout.name}
           </Heading>
           <Text justifyContent="center" textAlign="center" mb="$1">
@@ -133,7 +139,7 @@ export const WorkoutCard = ({ workout, footer }: Props) => {
           {mainContent}
 
           {footerContent}
-        </MainCard>
+        </Card>
       </YStack>
     </Stack>
   );

@@ -4415,6 +4415,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/react-native-vector-icons@npm:^6.4.13":
+  version: 6.4.13
+  resolution: "@types/react-native-vector-icons@npm:6.4.13"
+  dependencies:
+    "@types/react": "*"
+    "@types/react-native": ^0.70
+  checksum: e954807f7229a84ba6aa15c6952a987e0b45406e501131c0d73fdaa3fe634301d466e22eec8bb23d9c509eb39043fae9cad4ca685b125dc4d6d603dc46b789f7
+  languageName: node
+  linkType: hard
+
+"@types/react-native@npm:^0.70":
+  version: 0.70.9
+  resolution: "@types/react-native@npm:0.70.9"
+  dependencies:
+    "@types/react": "*"
+  checksum: 52b362f518c8a912174ae7cda1b20532bee11c2767794efcc0300650b750f72bcd8852435105559155f202504a742fe6e50f4e3cc4c1a9836dea9db132410ce3
+  languageName: node
+  linkType: hard
+
 "@types/react-native@npm:~0.70.6":
   version: 0.70.8
   resolution: "@types/react-native@npm:0.70.8"
@@ -8500,6 +8519,7 @@ __metadata:
     "@types/dateformat": ^5.0.0
     "@types/react": ~18.0.24
     "@types/react-native": ~0.70.6
+    "@types/react-native-vector-icons": ^6.4.13
     axios: ^1.2.2
     babel-plugin-module-resolver: ^4.1.0
     babel-plugin-transform-inline-environment-variables: 0.4.4
@@ -8532,9 +8552,11 @@ __metadata:
     react-native-reanimated-carousel: ^3.2.0
     react-native-safe-area-context: 4.4.1
     react-native-screens: ~3.18.0
+    react-native-size-scaling: ^0.5.1
     react-native-svg: 13.4.0
     react-native-tab-view: ^3.3.4
     react-native-toast-message: ^2.1.5
+    react-native-vector-icons: ^9.2.0
     react-native-web: ~0.18.7
     react-query: ^3.39.2
     rn-fetch-blob: ^0.12.0
@@ -13579,6 +13601,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-size-scaling@npm:^0.5.1":
+  version: 0.5.1
+  resolution: "react-native-size-scaling@npm:0.5.1"
+  peerDependencies:
+    react: "*"
+    react-native: "*"
+  checksum: 45690f9b2d43ebe816919870243fa293d4364b1de48ec5b4a65e5779885561b6c7e1e7c09db7ab0d90f851d8a24ae9fab49a7b4a43fa38829d074a9abd9c02ae
+  languageName: node
+  linkType: hard
+
 "react-native-svg@npm:13.4.0":
   version: 13.4.0
   resolution: "react-native-svg@npm:13.4.0"
@@ -13612,6 +13644,19 @@ __metadata:
     react: "*"
     react-native: "*"
   checksum: 01005d77357f8bfd2f255f7ba18906e7475381013556eff4c9fed04a64448eae240fa32d5bfdd1dee73de36bfbca0b510185cc75785f83bef49c55786eae5e29
+  languageName: node
+  linkType: hard
+
+"react-native-vector-icons@npm:^9.2.0":
+  version: 9.2.0
+  resolution: "react-native-vector-icons@npm:9.2.0"
+  dependencies:
+    prop-types: ^15.7.2
+    yargs: ^16.1.1
+  bin:
+    fa5-upgrade: bin/fa5-upgrade.sh
+    generate-icon: bin/generate-icon.js
+  checksum: 222baf88c3f269234c08a41680e6400a4bf1f4c170f7c2ffac34b2c1c089cdb1084223db2a7d9cc54ee212eec20ff1478f3f482df19062e3057c328642da0be2
   languageName: node
   linkType: hard
 
@@ -17074,7 +17119,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:^16.2.0":
+"yargs@npm:^16.1.1, yargs@npm:^16.2.0":
   version: 16.2.0
   resolution: "yargs@npm:16.2.0"
   dependencies:

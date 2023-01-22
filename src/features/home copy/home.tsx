@@ -5,14 +5,18 @@ import { Pressable } from "react-native";
 import { Heading, Image, Text } from "tamagui";
 
 import { Login } from "./components/login/login";
+import { Header, SubHeader } from "./components/login/login.styles";
 
 export const Home = ({
   navigation,
 }: NativeStackScreenProps<MainStackParams, "Home">) => {
   return (
     <Screen>
-      <Heading fontSize="$8"> Welcome to Pocket Coach! </Heading>
-      <Text> Sign in or register below to get started! </Text>
+      <Header> Pocket Coach </Header>
+      <SubHeader>
+        {" "}
+        Sign in or register below to start your fitness journey{" "}
+      </SubHeader>
 
       <Image
         accessibilityLabel="Sign Up Logo"

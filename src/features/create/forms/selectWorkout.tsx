@@ -3,13 +3,14 @@ import { useExercises } from "api";
 import {
   Accordion,
   CachedImage,
+  Card,
   FilterOption,
   Filters,
   Skeleton,
 } from "components";
 import React, { useCallback, useMemo, useState } from "react";
 import { FlatList, Pressable, ScrollView } from "react-native";
-import { Card, Text, XStack } from "tamagui";
+import { Text, XStack } from "tamagui";
 import { Equipments, Exercise, ExerciseTypes, MuscleGroups } from "types";
 import { titleCase } from "utils";
 
@@ -182,7 +183,7 @@ export const SelectWorkout = ({ form, incrementIndex }: Props) => {
   return (
     <ScrollView
       nestedScrollEnabled
-      style={{ marginTop: 10, width: "100%" }}
+      style={{ marginTop: 10, width: "110%" }}
       stickyHeaderIndices={[0]}
     >
       <Filters

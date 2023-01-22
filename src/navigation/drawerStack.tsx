@@ -1,21 +1,23 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Achievements } from "features";
-import React, { useCallback } from "react";
+import React from "react";
 
 import { MainDrawer } from "./components/mainDrawer";
-import NotificationBell from "./components/notificationBell";
+import { NavigationHeader } from "./components/navigationHeader";
 import { DashboardStack } from "./dashboardStack";
 
 const Drawer = createDrawerNavigator();
 
 const DrawerStackInternal = () => {
-  const createNotificationBell = useCallback(() => <NotificationBell />, []);
+  const createNavigationHeader = () => {
+    return (props: any) => <NavigationHeader loggedIn {...props} />;
+  };
 
   return (
     <Drawer.Navigator initialRouteName="Dashboard" drawerContent={MainDrawer}>
       <Drawer.Screen
         options={{
-          headerRight: createNotificationBell,
+          header: createNavigationHeader(),
         }}
         name="Dashboard"
         component={DashboardStack}

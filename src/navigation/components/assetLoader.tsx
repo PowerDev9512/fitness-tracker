@@ -1,9 +1,9 @@
 import { useExercises } from "api";
-import { Loading } from "components";
+import { Heading, Loading } from "components";
 import React, { useEffect, useState } from "react";
 import { Dirs } from "react-native-file-access";
 import RNFetchBlob from "rn-fetch-blob";
-import { Heading, Spinner, Stack, XStack } from "tamagui";
+import { Spinner, Stack, XStack } from "tamagui";
 import { Exercise } from "types";
 
 type Progress = { current: number; total: number };

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { Progress, Text, XStack } from "tamagui";
 import { Reward, User, UserAchievement } from "types";
 import { getWeightFormatter, titleCase } from "utils";
@@ -10,6 +10,12 @@ interface Props {
   user: User;
 }
 
+type TextEntry = {
+  text: string;
+  max: number;
+  key: string;
+} | null;
+
 export const AchievementRow = ({ achievement, user }: Props) => {
   const weightFormatter = getWeightFormatter(user);
 
@@ -19,8 +25,8 @@ export const AchievementRow = ({ achievement, user }: Props) => {
 
   const createTitle = useMemo(
     () => (
-      <XStack key={`${achievement.title}-stack`} space={2}>
-        <Text key={`${achievement.title}-title`} w="35%" fontSize={12}>
+      <XStack key={`${achievement.title}-stack`} mb="$2" space={2}>
+        <Text key={`${achievement.title}-title`} w="35%" fontSize={16}>
           {titleCase(achievement.title)}
         </Text>
         <Text
@@ -37,32 +43,14 @@ export const AchievementRow = ({ achievement, user }: Props) => {
     [achievement]
   );
 
-  const createText = useMemo(() => {
+  const createTextEntry = useMemo(() => {
     if (achievement.achievementType === "streak") {
-      return (
-        <>
-          <XStack key={`${achievement.title}-streak-stack`} mt={2}>
-            <Text key={`${achievement.title}-streak-title`} fontSize={16}>
-              {achievement.progress}
-            </Text>
-            <Text key={`${achievement.title}-streak-subtitle`} fontSize={12}>
-              /{achievement.targetStreak}
-            </Text>
-            <Text
-              key={`${achievement.title}-streak-subbertitle`}
-              ml="auto"
-              fontSize={12}
-            >
-              Unlocks {achievement.rewards.map(createReward)}
-            </Text>
-          </XStack>
-          <Progress
-            key={`${achievement.title}-streak-progress`}
-            value={user.workoutBuddy.data.streak}
-            max={achievement.targetStreak}
-          />
-        </>
-      );
+      return {
+        text: `${achievement.progress}/${achievement.targetStreak} days`,
+        progress: achievement.progress,
+        max: achievement.targetStreak,
+        key: "streak",
+      };
     }
 
     if (achievement.achievementType === "weight") {
@@ -70,16 +58,37 @@ export const AchievementRow = ({ achievement, user }: Props) => {
         `${achievement.progress}/${achievement.targetWeight}`,
         false
       );
+
+      return {
+        text: `${percentOfGoal} for ${achievement.targetMuscleGroup}`,
+        progress: achievement.progress,
+        max: achievement.targetWeight,
+        key: "weight",
+        reward: `Unlocks ${achievement.rewards.map(createReward)}`,
+      };
+    }
+
+    return null;
+  }, [achievement, user.workoutBuddy.data.streak]);
+
+  const createText = useCallback(
+    (entry: TextEntry) => {
+      if (!entry) return null;
+
+      const { text, max, key } = entry;
+
       return (
         <>
-          <XStack key={`${achievement.title}-weight-stack`} mt={2}>
+          <XStack key={`${achievement.title}-${key}-stack`} mt={2}>
             <Text
-              key={`${achievement.title}-weight-title`}
+              key={`${achievement.title}-${key}-title`}
               fontSize={12}
               w="35%"
-            >{`${percentOfGoal} for ${achievement.targetMuscleGroup}`}</Text>
+            >
+              {text}
+            </Text>
             <Text
-              key={`${achievement.title}-weight-description`}
+              key={`${achievement.title}-${key}-description`}
               fontSize={12}
               ml="auto"
             >
@@ -87,19 +96,25 @@ export const AchievementRow = ({ achievement, user }: Props) => {
             </Text>
           </XStack>
           <Progress
-            key={`${achievement.title}-weight-progress`}
+            mt="$4"
+            size="$4"
+            backgroundColor="$gray200"
+            key={`${achievement.title}-${key}-progress`}
             value={achievement.progress}
-            max={achievement.targetWeight}
-          />
+            max={max}
+          >
+            <Progress.Indicator animation="bouncy" />
+          </Progress>
         </>
       );
-    }
-  }, [achievement, user.workoutBuddy.data.streak]);
+    },
+    [achievement, user.workoutBuddy.data.streak]
+  );
 
   return (
     <>
       {createTitle}
-      {createText}
+      {createText(createTextEntry)}
     </>
   );
 };

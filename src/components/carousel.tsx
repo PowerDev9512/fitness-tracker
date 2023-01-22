@@ -27,7 +27,7 @@ export const Carousel = ({
         vertical
         pagingEnabled
         width={width}
-        height={height * 0.825}
+        height={height * 0.95}
         scrollAnimationDuration={1000}
         data={items}
         defaultIndex={defaultIndex}

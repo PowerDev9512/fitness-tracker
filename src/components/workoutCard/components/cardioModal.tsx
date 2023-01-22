@@ -5,6 +5,8 @@ import { Text, TextArea, XStack, YStack } from "tamagui";
 import { CardioActivity, Workout } from "types";
 
 import { Button } from "../../button";
+import { Card } from "../../card";
+import { Heading } from "../../heading";
 import { ImagePicker } from "../../imagePicker";
 import { Input } from "../../input";
 import { Modal } from "../../modal";
@@ -37,71 +39,77 @@ export const CardioModal = ({ workout, activity, onClose, isOpen }: Props) => {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <Text>Update exercise</Text>
-      <YStack space={2}>
-        <Input
-          placeholder="Distance"
-          rightElement={
-            <Button onPress={() => setDistance(activity.targetDistance)}>
-              Fill
-            </Button>
-          }
-          type="text"
-          value={distance ?? undefined}
-          onChangeText={handleChange(setDistance)}
-        />
-        <Input
-          placeholder="Duration"
-          rightElement={
-            <Button onPress={() => setDuration(activity.targetDuration)}>
-              Fill
-            </Button>
-          }
-          type="text"
-          value={duration ?? undefined}
-          onChangeText={handleChange(setDuration)}
-        />
-        <TextArea
-          placeholder="Notes"
-          value={notes ?? undefined}
-          onChangeText={(value) => setNotes(value)}
-        />
-        <XStack>
-          <Text my="auto">{image ? "Image added" : "No image added"}</Text>
-          <ImagePicker callbacks={[setImage]}>
-            <Camera />
-          </ImagePicker>
-        </XStack>
-      </YStack>
+      <Card alignItems="center" p="$4">
+        <Heading mr="auto" mb="$4">
+          Update exercise
+        </Heading>
+        <YStack space={2}>
+          <Input
+            placeholder="Distance"
+            rightElement={
+              <Button onPress={() => setDistance(activity.targetDistance)}>
+                Fill
+              </Button>
+            }
+            mb="$4"
+            type="text"
+            value={distance ?? undefined}
+            onChangeText={handleChange(setDistance)}
+          />
+          <Input
+            placeholder="Duration"
+            rightElement={
+              <Button onPress={() => setDuration(activity.targetDuration)}>
+                Fill
+              </Button>
+            }
+            mb="$4"
+            type="text"
+            value={duration ?? undefined}
+            onChangeText={handleChange(setDuration)}
+          />
+          <TextArea
+            placeholder="Notes"
+            value={notes ?? undefined}
+            onChangeText={(value) => setNotes(value)}
+          />
+          <XStack>
+            <Text my="auto">{image ? "Image added" : "No image added"}</Text>
+            <ImagePicker callbacks={[setImage]}>
+              <Camera />
+            </ImagePicker>
+          </XStack>
+        </YStack>
 
-      <XStack space={2}>
-        <Button onPress={onClose}>Cancel</Button>
-        <Button
-          onPress={() => {
-            editWorkout({
-              userId: user!.id,
-              workout: {
-                ...workout,
-                activities: workout.activities.map((a) => {
-                  if (a.id === activity.id) {
-                    return {
-                      ...a,
-                      distance,
-                      duration,
-                      notes,
-                      image,
-                    };
-                  }
-                  return a;
-                }),
-              },
-            });
-            onClose();
-          }}
-        >
-          Save
-        </Button>
-      </XStack>
+        <XStack space={2}>
+          <Button onPress={onClose}>Cancel</Button>
+          <Button
+            onPress={() => {
+              editWorkout({
+                userId: user!.id,
+                workout: {
+                  ...workout,
+                  activities: workout.activities.map((a) => {
+                    if (a.id === activity.id) {
+                      return {
+                        ...a,
+                        distance,
+                        duration,
+                        notes,
+                        image,
+                      };
+                    }
+                    return a;
+                  }),
+                },
+              });
+              onClose();
+            }}
+          >
+            Save
+          </Button>
+        </XStack>
+      </Card>
     </Modal>
   );
 };

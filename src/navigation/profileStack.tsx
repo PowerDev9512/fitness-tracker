@@ -30,7 +30,7 @@ export const ProfileStack = () => {
         swipeEnabled: false,
         tabBarIndicator: () => null,
         tabBarStyle: {
-          backgroundColor: "white",
+          backgroundColor: theme.backgroundAccent.val,
           elevation: 0,
           shadowOpacity: 0,
           height: 50,

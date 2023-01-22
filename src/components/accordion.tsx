@@ -1,12 +1,12 @@
-import { ChevronDown } from "@tamagui/lucide-icons";
 import React, { useState } from "react";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withSpring,
 } from "react-native-reanimated";
-import { Heading, ScrollView, Stack, XStack } from "tamagui";
+import { ScrollView, Stack, XStack } from "tamagui";
 
+import { Heading } from "./heading";
 import { IconButton } from "./iconButton";
 
 interface Props {
@@ -36,7 +36,7 @@ const InternalAccordion = ({
     transform: [{ rotate: `${rotateAnimation.value}deg` }],
     marginLeft: "auto",
     marginRight: "auto",
-    marginTop: 6,
+    marginTop: 16,
     marginBottom: -8,
   }));
 
@@ -54,11 +54,7 @@ const InternalAccordion = ({
     <Stack>
       <XStack>
         <Heading accessibilityLabel={title}>{title}</Heading>
-        {secondTitle && (
-          <Heading fontSize={20} fontWeight="medium" ml="auto">
-            {secondTitle}
-          </Heading>
-        )}
+        {secondTitle && <Heading ml="auto">{secondTitle}</Heading>}
       </XStack>
 
       <Animated.View style={fadeStyle}>
@@ -67,7 +63,9 @@ const InternalAccordion = ({
 
       <Animated.View style={rotateStyle}>
         <IconButton
-          icon={isOpen ? ChevronDown : ChevronDown}
+          icon={isOpen ? "chevron-up" : "chevron-down"}
+          size={24}
+          color="$gray700"
           onPress={handlePress}
         />
       </Animated.View>

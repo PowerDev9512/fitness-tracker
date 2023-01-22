@@ -1,8 +1,8 @@
 import { useConfirmFriendRequest, useGetUser, useGetUsers } from "api";
-import { Avatar, Button, Screen } from "components";
+import { Avatar, Button, Card, Screen } from "components";
 import React, { useCallback, useEffect } from "react";
 import { FlatList } from "react-native";
-import { Card, Text, XStack } from "tamagui";
+import { Text, XStack } from "tamagui";
 
 import { useRejectFriendRequest } from "../../api/social/useRejectFriendRequest";
 
@@ -37,7 +37,7 @@ export const Notifications = () => {
   );
 
   return (
-    <Screen loading={userLoading}>
+    <Screen>
       <FlatList
         data={user?.friendRequests ?? []}
         renderItem={({ item }) => {

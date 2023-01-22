@@ -1,6 +1,6 @@
-import { DatePicker, FormLabel } from "components";
+import { Card, DatePicker, FormLabel } from "components";
 import React, { useMemo } from "react";
-import { Card, Separator, Slider, Stack, Text } from "tamagui";
+import { Separator, Slider, Stack, Text } from "tamagui";
 import { titleCase } from "utils";
 
 import { StrengthData, StrengthExercise } from "../../../types/domain";
@@ -87,7 +87,7 @@ export const ActivityDetails = ({ form }: CreateWorkoutProps) => {
   };
 
   return (
-    <Stack>
+    <Stack w="110%">
       <FormLabel>Summary</FormLabel>
       <Card my="$2" p="$2">
         {summary !== "" && (
@@ -119,7 +119,7 @@ export const ActivityDetails = ({ form }: CreateWorkoutProps) => {
         Schedule this for {repeat} {repeat === 1 ? "week" : "weeks"}
       </Text>
 
-      <Card mt="$2" px="$10">
+      <Card mt="$2">
         <Slider
           defaultValue={[1]}
           value={[repeat]}

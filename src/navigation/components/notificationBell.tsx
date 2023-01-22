@@ -1,5 +1,4 @@
 import { useNavigation } from "@react-navigation/native";
-import { Bell } from "@tamagui/lucide-icons";
 import { useGetUser } from "api";
 import { IconButton } from "components";
 import React from "react";
@@ -10,12 +9,12 @@ export default () => {
   const navigation = useNavigation();
 
   return (
-    <>
+    <Stack ml="$19">
       <IconButton
         onPress={() => navigation.navigate("Notifications" as never)}
-        scaleIcon={1.5}
-        mt="$1"
-        icon={Bell}
+        icon="notifications-outline"
+        size={28}
+        color="$gray700"
       />
       {(user?.friendRequests ?? 0) > 0 && (
         <Stack
@@ -31,6 +30,6 @@ export default () => {
           </Text>
         </Stack>
       )}
-    </>
+    </Stack>
   );
-}
+};

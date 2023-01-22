@@ -8,11 +8,12 @@ import {
   Notifications,
   Register,
 } from "features";
-import React from "react";
+import React, { useCallback } from "react";
 import { useStore } from "store";
 import { Theme } from "tamagui";
 
 import { AssetLoader } from "./components/assetLoader";
+import { NavigationHeader } from "./components/navigationHeader";
 import { DrawerStack } from "./drawerStack";
 
 const Stack = createNativeStackNavigator<MainStackParams>();
@@ -23,6 +24,8 @@ export const MainStack = () => {
   const { userId } = useStore();
   const { data: user, isLoading: userLoading } = useGetUser();
 
+  const userIsLoggedIn = user && (userId ?? -1) >= 0;
+
   if (progress.current < progress.total) {
     return <AssetLoader progress={progress} setProgress={setProgress} />;
   }
@@ -30,8 +33,6 @@ export const MainStack = () => {
   if (userId && userLoading) {
     return <Loading />;
   }
-
-  const userIsLoggedIn = user && (userId ?? -1) >= 0;
 
   return (
     <Theme name={user?.userSettings?.darkMode ? "dark" : "light"}>
@@ -54,6 +55,7 @@ export const MainStack = () => {
             <Stack.Screen name="Notifications" component={Notifications} />
           </Stack.Group>
         )}
+
         {!userIsLoggedIn && (
           <Stack.Group>
             <Stack.Screen

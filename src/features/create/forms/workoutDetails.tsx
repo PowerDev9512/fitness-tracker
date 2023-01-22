@@ -1,7 +1,7 @@
 import { useGetUser } from "api";
-import { Button, FormLabel } from "components";
+import { Button, Card, FormLabel, Heading } from "components";
 import React, { useMemo } from "react";
-import { Card, Heading, Stack, Text, XStack, YStack } from "tamagui";
+import { Stack, Text, XStack, YStack } from "tamagui";
 import {
   CardioData,
   CardioExercise,
@@ -80,6 +80,8 @@ export const WorkoutDetails = ({ form }: CreateWorkoutProps) => {
           onChange={handleActivityUpdate("targetWeight")}
           titleAccessory={
             <ActionButton
+              size={12}
+              color="$gray700"
               title="Set as bodyweight"
               onPress={() =>
                 handleActivityUpdate("targetWeight")(
@@ -187,7 +189,7 @@ export const WorkoutDetails = ({ form }: CreateWorkoutProps) => {
   }
 
   return (
-    <Card mt={4}>
+    <Card w="100%" mt={4}>
       <FormLabel pl="$3" pt="$2" mr="auto" fontWeight="bold" fontSize={32}>
         {activity.name}
       </FormLabel>

@@ -45,30 +45,16 @@ export const Schedule = () => {
     );
 
   return (
-    <Screen loading={editLoading}>
+    <Screen>
       {content}
       <IconButton
         position="absolute"
-        circular
-        color="$backgroundStrong"
         bottom={92}
-        right={37.5}
-        width={120}
-        height={60}
-        scaleIcon={3}
-        icon={Plus}
+        right={10}
+        size={64}
+        color="$primary500"
+        icon="add-circle"
         zIndex={3}
-        onPress={() => naviagtion.navigate("Create" as never)}
-      />
-      <Circle
-        position="absolute"
-        circular
-        backgroundColor="$primary500"
-        bottom={85}
-        right={30}
-        width={60}
-        height={60}
-        zIndex={2}
         onPress={() => naviagtion.navigate("Create" as never)}
       />
     </Screen>

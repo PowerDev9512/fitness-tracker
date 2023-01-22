@@ -1,6 +1,6 @@
-import { RadioButton } from "components";
+import { Card, RadioButton } from "components";
 import React from "react";
-import { Card, Text, XStack } from "tamagui";
+import { Text, XStack } from "tamagui";
 
 import { SettingSection } from "../settingsSections";
 

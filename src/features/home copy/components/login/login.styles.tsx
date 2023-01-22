@@ -1,4 +1,4 @@
-import { styled, YStack } from "tamagui";
+import { Heading, styled, YStack } from "tamagui";
 
 export const Container = styled(YStack, {
   space: 4,
@@ -7,6 +7,16 @@ export const Container = styled(YStack, {
   marginHorizontal: "auto",
 });
 
-Container.defaultProps = {
-  space: 4,
-};
+export const Header = styled(Heading, {
+  size: "$10",
+  fontWeight: "bold",
+  textAlign: "center",
+});
+
+export const SubHeader = styled(Heading, {
+  size: "$6",
+  textAlign: "center",
+  color: "$gray700",
+  mt: "$-4",
+  fontWeight: "normal",
+});

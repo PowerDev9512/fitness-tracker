@@ -4,8 +4,8 @@ import {
   DrawerItem,
   DrawerItemList,
 } from "@react-navigation/drawer";
-import { User } from "@tamagui/lucide-icons";
 import { useGetUser } from "api";
+import { Avatar } from "components";
 import React, { useCallback } from "react";
 import { useStore } from "store";
 import { Text, XStack, YStack } from "tamagui";
@@ -34,8 +34,8 @@ export const MainDrawer = ({
     );
 
     return (
-      <XStack>
-        <User size={40} />
+      <XStack alignItems="center" width="100%">
+        <Avatar mr="$2" size="md" callback={() => null} user={user ?? null} />
         {text}
       </XStack>
     );
@@ -43,7 +43,12 @@ export const MainDrawer = ({
 
   return (
     <DrawerContentScrollView>
-      <DrawerItem label="" onPress={() => null} icon={headerIcon} />
+      <DrawerItem
+        label=""
+        onPress={() => null}
+        icon={headerIcon}
+        pressOpacity={0}
+      />
 
       <DrawerItemList
         state={state}

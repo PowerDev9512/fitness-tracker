@@ -82,7 +82,7 @@ export const Social = () => {
       {feedLoading && <Loading message="Loading social feed" />}
       {!feedLoading && (
         <FlatList
-          style={{ width: "90%" }}
+          style={{ width: "100%" }}
           data={feed ?? []}
           keyExtractor={(item) => item.text + item.user.id + item.date}
           ListHeaderComponent={createHeader}

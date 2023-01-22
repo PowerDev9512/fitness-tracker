@@ -1,7 +1,7 @@
 import { useGetUser, useGetWorkoutData } from "api";
-import { MainCard } from "components";
+import { Card, Heading } from "components";
 import React, { useMemo, useState } from "react";
-import { Heading, Spinner, Stack, Text, XStack, YStack } from "tamagui";
+import { Spinner, Stack, Text, XStack, YStack } from "tamagui";
 import { ExerciseType, GraphType, StrengthData, StrengthExercise } from "types";
 import { getPastWorkouts } from "utils";
 import {
@@ -141,7 +141,7 @@ export const WorkoutChart = () => {
   ]);
 
   return (
-    <MainCard>
+    <Card p="$4">
       <XStack>
         <Heading>Workout Graphs</Heading>
 
@@ -223,6 +223,6 @@ export const WorkoutChart = () => {
       <Stack marginLeft="auto" marginRight="auto">
         {content}
       </Stack>
-    </MainCard>
+    </Card>
   );
 };

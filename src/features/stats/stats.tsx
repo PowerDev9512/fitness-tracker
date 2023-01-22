@@ -1,8 +1,8 @@
 import SegmentedControl from "@react-native-segmented-control/segmented-control";
 import { useGetUser } from "api";
-import { Screen } from "components";
+import { Heading, Screen } from "components";
 import React from "react";
-import { Heading, Text } from "tamagui";
+import { Text, useTheme } from "tamagui";
 
 import { BuddyStats } from "./components/buddyStats/buddyStats";
 import { WorkoutChart } from "./components/workoutChart/workoutChart";
@@ -10,6 +10,7 @@ import { WorkoutChart } from "./components/workoutChart/workoutChart";
 export const Stats = () => {
   const [index, setIndex] = React.useState(0);
   const { data: user } = useGetUser();
+  const theme = useTheme();
 
   const streakText =
     (user?.workoutBuddy?.data?.streak ?? 0) > 0
@@ -17,7 +18,7 @@ export const Stats = () => {
       : null;
 
   return (
-    <Screen loading={!user}>
+    <Screen>
       <Heading mb="$-3" size="$9">
         Hello, {user?.username}
       </Heading>
@@ -28,15 +29,23 @@ export const Stats = () => {
       </Text>
 
       <SegmentedControl
-        style={{ width: "90%", marginBottom: -10, height: 30 }}
+        style={{
+          width: "90%",
+          backgroundColor: theme.background.val,
+          marginBottom: -10,
+          height: 30,
+        }}
         values={["Stats", "Graphs"]}
         selectedIndex={index}
         onChange={(event) => {
           setIndex(event.nativeEvent.selectedSegmentIndex);
         }}
+        backgroundColor={theme.white.val}
         tabStyle={{
+          margin: 2,
           borderColor: "transparent",
           backgroundColor: "transparent",
+          borderRadius: 0,
           height: 30,
         }}
       />

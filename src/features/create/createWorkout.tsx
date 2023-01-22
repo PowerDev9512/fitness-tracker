@@ -86,7 +86,7 @@ export const CreateWorkout = () => {
   };
 
   return (
-    <Screen loading={addLoading}>
+    <Screen>
       <Formik
         validationSchema={CreateWorkoutSchema}
         initialValues={initialValues}

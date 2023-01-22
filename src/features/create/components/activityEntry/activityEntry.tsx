@@ -57,8 +57,9 @@ export const ActivityEntry = ({ activity, deleteActivity }: Props) => {
         key={`${activity.name}-delete-button`}
         ml="auto"
         mr="$-4"
-        scaleIcon={1.5}
-        icon={<Delete key={`${activity.name}-delete-icon`} color="$gray500" />}
+        size={32}
+        color="$gray500"
+        icon="ios-trash-bin"
       />
     </XStack>
   );
