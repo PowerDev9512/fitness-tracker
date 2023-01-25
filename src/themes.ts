@@ -59,37 +59,37 @@ const tokens = createTokens({
 });
 
 const lightTheme = createTheme({
-  background: tokens.color.$gray100,
-  backgroundStrong: tokens.color.$gray200,
-  backgroundAccent: tokens.color.$white,
-  gray200: tokens.color.$gray200,
-  gray400: tokens.color.$gray400,
-  gray500: tokens.color.$gray500,
-  gray700: tokens.color.$gray700,
-  primary500: tokens.color.$blue500,
-  primary300: tokens.color.$blue300,
-  black: tokens.color.$black,
-  white: tokens.color.$white,
-  green: tokens.color.$green100,
-  red: tokens.color.$red300,
+  background: tokens.color.gray100,
+  backgroundStrong: tokens.color.gray200,
+  backgroundAccent: tokens.color.white,
+  gray200: tokens.color.gray200,
+  gray400: tokens.color.gray400,
+  gray500: tokens.color.gray500,
+  gray700: tokens.color.gray700,
+  primary500: tokens.color.blue500,
+  primary300: tokens.color.blue300,
+  black: tokens.color.black,
+  white: tokens.color.white,
+  green: tokens.color.green100,
+  red: tokens.color.red300,
 });
 
 type BaseTheme = typeof lightTheme;
 
 const darkTheme: BaseTheme = createTheme({
-  background: tokens.color.$gray900,
-  backgroundStrong: tokens.color.$gray800,
-  backgroundAccent: tokens.color.$gray700,
-  gray200: tokens.color.$gray600,
-  gray400: tokens.color.$gray600,
-  gray500: tokens.color.$gray500,
-  gray700: tokens.color.$gray400,
-  primary500: tokens.color.$purple500,
-  primary300: tokens.color.$purple300,
-  black: tokens.color.$gray400,
-  white: tokens.color.$gray900,
-  green: tokens.color.$green500,
-  red: tokens.color.$red500,
+  background: tokens.color.gray900,
+  backgroundStrong: tokens.color.gray800,
+  backgroundAccent: tokens.color.gray700,
+  gray200: tokens.color.gray600,
+  gray400: tokens.color.gray600,
+  gray500: tokens.color.gray500,
+  gray700: tokens.color.gray400,
+  primary500: tokens.color.purple500,
+  primary300: tokens.color.purple300,
+  black: tokens.color.gray400,
+  white: tokens.color.gray900,
+  green: tokens.color.green500,
+  red: tokens.color.red500,
 });
 
 const allThemes = {

@@ -1,3 +1,4 @@
+import { LinearGradient } from "@tamagui/linear-gradient";
 import React, { useEffect } from "react";
 import { ViewStyle } from "react-native";
 import Animated, {
@@ -7,9 +8,7 @@ import Animated, {
   withRepeat,
   withTiming,
 } from "react-native-reanimated";
-import { LinearGradient, Stack, styled, useTheme, YStack } from "tamagui";
-
-const AnimatedLinearGradient = Animated.createAnimatedComponent(LinearGradient);
+import { Stack, styled, useTheme, YStack } from "tamagui";
 
 type Props = Omit<React.ComponentProps<typeof YStack>, "children"> & {
   isLoading?: boolean;
@@ -34,7 +33,7 @@ export const Skeleton = ({ isLoading = true, ...props }: Props) => {
 
   useEffect(() => {
     progress.value = withRepeat(
-      withTiming(1, { duration: 1000, easing: Easing.linear }),
+      withTiming(1, { duration: 100, easing: Easing.linear }),
       -1,
       false
     );
@@ -47,14 +46,16 @@ export const Skeleton = ({ isLoading = true, ...props }: Props) => {
 
   return (
     <SkeletonInternal {...props}>
-      <AnimatedLinearGradient
-        w="100%"
-        h="100%"
-        borderRadius={10}
-        start={{ x: start, y: 0 }}
-        end={{ x: end, y: 0 }}
-        colors={[theme.gray200.val, theme.gray400.val, theme.gray200.val]}
-      />
+      <Animated.View>
+        <LinearGradient
+          w="100%"
+          h="100%"
+          borderRadius={10}
+          start={{ x: start, y: 0 }}
+          end={{ x: end, y: 0 }}
+          colors={[theme.gray200.val, theme.gray400.val, theme.gray200.val]}
+        />
+      </Animated.View>
     </SkeletonInternal>
   );
 };
