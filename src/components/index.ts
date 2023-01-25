@@ -14,7 +14,6 @@ export { FormLabel } from "./formLabel";
 export { Heading } from "./heading";
 export { IconButton } from "./iconButton";
 export { Input } from "./input";
-export { Loading } from "./loading";
 export { Modal } from "./modal";
 export { RadioButton } from "./radioButton";
 export { Screen } from "./screen";

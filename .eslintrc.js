@@ -4,6 +4,7 @@ module.exports = {
     "universe/native",
     "universe/shared/typescript-analysis",
     "prettier",
+    "plugin:react-hooks/recommended",
   ],
   plugins: ["simple-import-sort"],
   rules: {

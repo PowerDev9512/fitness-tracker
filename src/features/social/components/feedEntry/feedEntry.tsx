@@ -32,7 +32,7 @@ export const FeedEntry = ({ message: item, onPress }: Props) => {
 
   return (
     <Pressable onPress={() => onPress(item.user)}>
-      <Card mx="auto" bg="$primary300">
+      <Card w="100%" mx="auto" bg="$primary300">
         <Card mt="$-2" w="100%" bg="white">
           <XStack>
             <Avatar p="$3" callback={() => null} user={item.user} size="md" />

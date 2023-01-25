@@ -1,5 +1,5 @@
 import { useExercises } from "api";
-import { Heading, Loading } from "components";
+import { Heading } from "components";
 import React, { useEffect, useState } from "react";
 import { Dirs } from "react-native-file-access";
 import RNFetchBlob from "rn-fetch-blob";
@@ -15,11 +15,25 @@ interface Props {
 
 export const AssetLoader = ({ progress, setProgress }: Props) => {
   const [missingAssets, setMissingAssets] = useState<Exercise[] | null>(null);
+  const [finished, setFinished] = useState(false);
 
   const { data: exercises, isLoading: exercisesLoading } = useExercises({
     retrieveImages: false,
   });
 
+  const { data: exercisesWithImages } = useExercises({
+    retrieveImages: true,
+    shouldFetch: missingAssets !== null && missingAssets.length > 0,
+  });
+
+  // bail out if we're done
+  useEffect(() => {
+    if (finished) {
+      setProgress((prev) => ({ current: prev.total, total: prev.total }));
+    }
+  }, [finished, setProgress]);
+
+  // check for missing assets
   useEffect(() => {
     if (!exercises) {
       return;
@@ -35,13 +49,13 @@ export const AssetLoader = ({ progress, setProgress }: Props) => {
       .map((r) => r.exercise);
 
     setMissingAssets(missingExercises);
+
+    if (missingExercises.length === 0) {
+      setFinished(true);
+    }
   }, [exercisesLoading, exercises]);
 
-  const { data: exercisesWithImages } = useExercises({
-    retrieveImages: true,
-    shouldFetch: missingAssets !== null && missingAssets.length > 0,
-  });
-
+  // create missing assets
   useEffect(() => {
     if (missingAssets && missingAssets.length > 0) {
       setProgress(() => ({ current: 0, total: missingAssets.length }));
@@ -66,23 +80,27 @@ export const AssetLoader = ({ progress, setProgress }: Props) => {
       });
 
       setProgress((prev) => ({ current: prev.total, total: prev.total }));
-    }
-
-    if (!missingAssets) {
-      setProgress(() => ({ current: 0, total: 0 }));
+      setFinished(true);
     }
   }, [missingAssets, exercises, setProgress, exercisesWithImages]);
 
   if (progress.current === -1) {
-    return <Loading />;
+    return (
+      <XStack my="auto" alignContent="center" justifyContent="center">
+        <Heading color="$primary500" fontSize={16}>
+          Checking assets...
+        </Heading>
+        <Spinner accessibilityLabel="Loading page" />
+      </XStack>
+    );
   }
 
   return (
     <Stack h="100%">
-      <XStack mt={10} space={2} justifyContent="center">
+      <XStack my="auto" mt={10} space={2} justifyContent="center">
         <Spinner accessibilityLabel="Loading page" />
         <Heading color="$primary500" fontSize={16}>
-          Downloading assets
+          Downloading assets...
         </Heading>
         <Heading color="$primary500" fontSize={16}>
           {progress.current}/{progress.total}

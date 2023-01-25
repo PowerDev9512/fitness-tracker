@@ -1,5 +1,5 @@
 import { useSendFriendRequest } from "api";
-import { Avatar, Button, Card, Heading, Loading, Modal } from "components";
+import { Avatar, Button, Card, Heading, Modal, Skeleton } from "components";
 import React, { useEffect } from "react";
 import { Text, XStack, YStack } from "tamagui";
 import { User } from "types";
@@ -26,25 +26,18 @@ export const AddFriendModal = ({ friend, user, loading, onClose }: Props) => {
 
   const isFriend = user?.friends?.includes(user.id) ?? false;
 
-  if (user === null || friend === null) {
-    return null;
-  }
-
-  if (loading) {
-    return (
-      <Modal isOpen={friend !== null} onClose={onClose}>
-        <Loading message="Loading user" />
-      </Modal>
-    );
-  }
-
   return (
     <Modal isOpen={friend !== null} onClose={onClose}>
       <Card alignItems="center">
         <YStack mb="$4" alignItems="center">
-          <Heading> {friend.username} </Heading>
-          <Text>Level {friend.workoutBuddy.data.levelStats.overall} </Text>
-          <Text> {friend.title?.name ?? ""} </Text>
+          {loading && <Skeleton />}
+          {!loading && friend && (
+            <>
+              <Heading> {friend.username} </Heading>
+              <Text>Level {friend.workoutBuddy.data.levelStats.overall} </Text>
+              <Text> {friend.title?.name ?? ""} </Text>
+            </>
+          )}
         </YStack>
 
         <Avatar callback={() => null} user={friend} size="xl" />
@@ -56,9 +49,9 @@ export const AddFriendModal = ({ friend, user, loading, onClose }: Props) => {
 
           {!isFriend && (
             <Button
-              disabled={adding}
+              disabled={adding || loading}
               onPress={() => {
-                addFriend({ friendId: user.id });
+                addFriend({ friendId: user?.id ?? -1 });
               }}
             >
               Add Friend

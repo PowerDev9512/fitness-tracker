@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useGetUser } from "api";
-import { Loading } from "components";
+import { Heading } from "components";
 import {
   ActivityDetails,
   CreateWorkout,
@@ -8,12 +8,11 @@ import {
   Notifications,
   Register,
 } from "features";
-import React, { useCallback } from "react";
+import React from "react";
 import { useStore } from "store";
-import { Theme } from "tamagui";
+import { Spinner, Theme, XStack } from "tamagui";
 
 import { AssetLoader } from "./components/assetLoader";
-import { NavigationHeader } from "./components/navigationHeader";
 import { DrawerStack } from "./drawerStack";
 
 const Stack = createNativeStackNavigator<MainStackParams>();
@@ -22,7 +21,7 @@ export const MainStack = () => {
   const [progress, setProgress] = React.useState({ current: -1, total: 0 });
 
   const { userId } = useStore();
-  const { data: user, isLoading: userLoading } = useGetUser();
+  const { data: user } = useGetUser();
 
   const userIsLoggedIn = user && (userId ?? -1) >= 0;
 
@@ -30,8 +29,15 @@ export const MainStack = () => {
     return <AssetLoader progress={progress} setProgress={setProgress} />;
   }
 
-  if (userId && userLoading) {
-    return <Loading />;
+  if (!userIsLoggedIn) {
+    return (
+      <XStack alignContent="center" mx="auto" my="auto">
+        <Heading color="$primary500" fontSize={16}>
+          Logging in...
+        </Heading>
+        <Spinner accessibilityLabel="Loading page" />
+      </XStack>
+    );
   }
 
   return (
