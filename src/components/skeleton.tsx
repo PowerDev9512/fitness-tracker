@@ -1,6 +1,5 @@
 import { LinearGradient } from "@tamagui/linear-gradient";
 import React, { useEffect } from "react";
-import { ViewStyle } from "react-native";
 import Animated, {
   Easing,
   interpolate,
@@ -21,11 +20,6 @@ const SkeletonInternal = styled(Stack, {
   h: "100%",
   borderRadius: 10,
 });
-
-export interface ICustomViewStyle extends ViewStyle {
-  children?: ICustomViewStyle[];
-  key?: number | string;
-}
 
 export const Skeleton = ({ isLoading = true, ...props }: Props) => {
   const theme = useTheme();

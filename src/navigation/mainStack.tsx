@@ -13,6 +13,7 @@ import { useStore } from "store";
 import { Spinner, Theme, XStack } from "tamagui";
 
 import { AssetLoader } from "./components/assetLoader";
+import { MainHeader } from "./components/mainHeader";
 import { DrawerStack } from "./drawerStack";
 
 const Stack = createNativeStackNavigator<MainStackParams>();
@@ -31,7 +32,13 @@ export const MainStack = () => {
 
   if (!userIsLoggedIn) {
     return (
-      <XStack alignContent="center" mx="auto" my="auto">
+      <XStack
+        backgroundColor="$backgroundAccent"
+        alignContent="center"
+        justifyContent="center"
+        mx="auto"
+        my="auto"
+      >
         <Heading color="$primary500" fontSize={16}>
           Logging in...
         </Heading>
@@ -42,7 +49,17 @@ export const MainStack = () => {
 
   return (
     <Theme name={user?.userSettings?.darkMode ? "dark" : "light"}>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          header: (props) => (
+            <MainHeader
+              name={props.route.name}
+              loggedIn={userIsLoggedIn}
+              onBackPress={() => props.navigation.goBack()}
+            />
+          ),
+        }}
+      >
         {userIsLoggedIn && (
           <Stack.Group>
             <Stack.Screen

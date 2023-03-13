@@ -86,7 +86,13 @@ export const AssetLoader = ({ progress, setProgress }: Props) => {
 
   if (progress.current === -1) {
     return (
-      <XStack my="auto" alignContent="center" justifyContent="center">
+      <XStack
+        backgroundColor="$backgroundAccent"
+        alignContent="center"
+        justifyContent="center"
+        mx="auto"
+        my="auto"
+      >
         <Heading color="$primary500" fontSize={16}>
           Checking assets...
         </Heading>
@@ -97,7 +103,13 @@ export const AssetLoader = ({ progress, setProgress }: Props) => {
 
   return (
     <Stack h="100%">
-      <XStack my="auto" mt={10} space={2} justifyContent="center">
+      <XStack
+        backgroundColor="$backgroundAccent"
+        alignContent="center"
+        justifyContent="center"
+        mx="auto"
+        my="auto"
+      >
         <Spinner accessibilityLabel="Loading page" />
         <Heading color="$primary500" fontSize={16}>
           Downloading assets...

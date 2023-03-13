@@ -17,8 +17,8 @@ export const BuddyStats = () => {
       <Text key={`${name}-${index}-text`}>
         {titleCase(name)}: {state} / 10
       </Text>
-      <Progress key={`${name}-${index}-progress`} value={state} max={10}>
-        <Progress.Indicator animation="bouncy" />
+      <Progress key={`${name}-${index}-progress`} value={state * 10}>
+        <Progress.Indicator backgroundColor="$primary500" animation="bouncy" />
       </Progress>
     </Stack>
   );

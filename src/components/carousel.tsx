@@ -18,10 +18,9 @@ export const Carousel = ({
   defaultIndex = undefined,
 }: Props) => {
   const { width, height } = Dimensions.get("window");
-  const [activeIndex, setActiveIndex] = useState(items.length - 1);
 
   return (
-    <GestureHandlerRootView style={{ flex: 1 }}>
+    <GestureHandlerRootView style={{ marginTop: -20 }}>
       <BaseCarousel
         loop={false}
         vertical
@@ -34,9 +33,8 @@ export const Carousel = ({
         mode="parallax"
         modeConfig={{
           parallaxScrollingScale: 0.92,
-          parallaxScrollingOffset: 375,
+          parallaxScrollingOffset: 380,
         }}
-        onSnapToItem={(index) => setActiveIndex(index)}
         renderItem={({ item, index }) => renderItem(item, index)}
       />
     </GestureHandlerRootView>

@@ -12,6 +12,12 @@ import { ProfileStack } from "./profileStack";
 export const DashboardStack = () => {
   const theme = useTheme();
 
+  const getIconColor = useCallback(
+    (routeName: string, selectedTab: string) =>
+      routeName === selectedTab ? theme.white.val : theme.gray300.val,
+    [theme.gray300.val, theme.white.val]
+  );
+
   const styles = StyleSheet.create({
     btnCircleUp: {
       width: 60,
@@ -19,7 +25,7 @@ export const DashboardStack = () => {
       borderRadius: 30,
       alignItems: "center",
       justifyContent: "center",
-      backgroundColor: theme.gray200.val,
+      backgroundColor: theme.primary300.val,
       bottom: 18,
       shadowColor: "#000",
       shadowOffset: {
@@ -38,10 +44,10 @@ export const DashboardStack = () => {
 
       switch (routeName) {
         case "Social":
-          icon = "chatbox-ellipses-outline";
+          icon = "chatbox-ellipses";
           break;
         case "Settings":
-          icon = "settings-outline";
+          icon = "settings";
           break;
       }
 
@@ -49,11 +55,11 @@ export const DashboardStack = () => {
         <Icon
           name={icon}
           size={25}
-          color={routeName === selectedTab ? "black" : theme.gray700.val}
+          color={getIconColor(routeName, selectedTab)}
         />
       );
     },
-    [theme]
+    [getIconColor]
   );
 
   const renderTabBar = ({ routeName, selectedTab, navigate }: any) => {
@@ -78,15 +84,19 @@ export const DashboardStack = () => {
       }}
       type="UP"
       strokeWidth={0.5}
-      strokeColor={theme.backgroundAccent.val}
+      strokeColor={theme.primary200.val}
       height={55}
       circleWidth={55}
-      bgColor={theme.backgroundAccent.val}
+      bgColor={theme.primary200.val}
       borderTopLeftRight
       renderCircle={({ selectedTab, navigate }) => (
         <Animated.View style={styles.btnCircleUp}>
           <TouchableOpacity onPress={() => navigate("Profile")}>
-            <Icon name="apps-sharp" color={theme.gray700.val} size={25} />
+            <Icon
+              name="apps-sharp"
+              color={getIconColor("Profile", selectedTab)}
+              size={25}
+            />
           </TouchableOpacity>
         </Animated.View>
       )}

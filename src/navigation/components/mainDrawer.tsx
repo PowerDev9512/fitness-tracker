@@ -8,7 +8,7 @@ import { useGetUser } from "api";
 import { Avatar } from "components";
 import React, { useCallback } from "react";
 import { useStore } from "store";
-import { Text, XStack, YStack } from "tamagui";
+import { Text, useTheme, XStack, YStack } from "tamagui";
 
 export const MainDrawer = ({
   state,
@@ -18,6 +18,7 @@ export const MainDrawer = ({
   const { setUserId } = useStore();
   const { data: user } = useGetUser();
 
+  const theme = useTheme();
   const userName = !user ? "Guest" : `${user.username}`;
   const title = user?.title?.name;
 
@@ -42,7 +43,10 @@ export const MainDrawer = ({
   }, []);
 
   return (
-    <DrawerContentScrollView>
+    <DrawerContentScrollView
+      style={{ backgroundColor: theme.backgroundStrong.val }}
+      fadingEdgeLength={10}
+    >
       <DrawerItem
         label=""
         onPress={() => null}

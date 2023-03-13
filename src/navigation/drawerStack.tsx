@@ -2,26 +2,22 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Achievements } from "features";
 import React from "react";
 
+import { DrawerHeader } from "./components/drawerHeader";
 import { MainDrawer } from "./components/mainDrawer";
-import { NavigationHeader } from "./components/navigationHeader";
 import { DashboardStack } from "./dashboardStack";
 
 const Drawer = createDrawerNavigator();
 
 const DrawerStackInternal = () => {
-  const createNavigationHeader = () => {
-    return (props: any) => <NavigationHeader loggedIn {...props} />;
-  };
-
   return (
-    <Drawer.Navigator initialRouteName="Dashboard" drawerContent={MainDrawer}>
-      <Drawer.Screen
-        options={{
-          header: createNavigationHeader(),
-        }}
-        name="Dashboard"
-        component={DashboardStack}
-      />
+    <Drawer.Navigator
+      initialRouteName="Dashboard"
+      drawerContent={MainDrawer}
+      screenOptions={{
+        header: (props) => <DrawerHeader name={props.route.name} />,
+      }}
+    >
+      <Drawer.Screen name="Dashboard" component={DashboardStack} />
       <Drawer.Screen name="Achievements" component={Achievements} />
     </Drawer.Navigator>
   );

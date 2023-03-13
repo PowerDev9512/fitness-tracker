@@ -21,7 +21,6 @@ import {
 } from "react-native";
 import { scale } from "react-native-size-scaling";
 import Svg, { Path } from "react-native-svg";
-import { useTheme } from "tamagui";
 
 import { getPath, getPathUp } from "./path";
 import { styles } from "./styles";
@@ -73,8 +72,6 @@ export type NavigatorBottomBarProps = DefaultNavigatorOptions<
 
 export const BottomTabBar = React.forwardRef<any, NavigatorBottomBarProps>(
   (props, ref) => {
-    const theme = useTheme();
-
     const SVG: any = Svg;
     const PATH: any = Path;
 
@@ -84,13 +81,13 @@ export const BottomTabBar = React.forwardRef<any, NavigatorBottomBarProps>(
       width = null,
       height = 65,
       circleWidth = 50,
-      bgColor = theme.backgroundAccent,
+      bgColor,
       initialRouteName,
       tabBar,
       renderCircle,
       borderTopLeftRight = false,
       strokeWidth = 0,
-      strokeColor = theme.backgroundAccent,
+      strokeColor,
     } = props;
 
     const [itemLeft, setItemLeft] = useState<any[]>([]);

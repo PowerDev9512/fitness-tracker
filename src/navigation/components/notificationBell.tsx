@@ -9,7 +9,7 @@ export default () => {
   const navigation = useNavigation();
 
   return (
-    <Stack ml="$19">
+    <Stack mr="$5">
       <IconButton
         onPress={() => navigation.navigate("Notifications" as never)}
         icon="notifications-outline"

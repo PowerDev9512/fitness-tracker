@@ -21,26 +21,14 @@ export const Social = () => {
 
   const searchableUsers = (users ?? []).filter((item) => item.id !== user?.id);
 
-  const skeletonMessages = Array.from({ length: 10 }, (_, i) => ({
-    text: "",
-    date: new Date(new Date().getSeconds() * i).toISOString(),
-    user: user as User,
-  }));
-
   const createMessage = useCallback(
-    (item: Message) => {
-      if (feedLoading) {
-        return <Skeleton my="$2" mx="auto" h={150} />;
-      }
-
-      return (
-        <FeedEntry
-          message={item}
-          onPress={() => setSearchedUserId(item.user.id)}
-        />
-      );
-    },
-    [feedLoading]
+    (item: Message) => (
+      <FeedEntry
+        message={item}
+        onPress={() => setSearchedUserId(item.user.id)}
+      />
+    ),
+    []
   );
 
   useEffect(() => {
@@ -89,12 +77,23 @@ export const Social = () => {
         </Button>
       </XStack>
 
-      <FlatList
-        style={{ width: "100%" }}
-        data={feed ?? skeletonMessages}
-        keyExtractor={(item) => item.text + item.user.id + item.date}
-        renderItem={({ item }) => createMessage(item)}
-      />
+      {feedLoading && (
+        <FlatList
+          style={{ width: "100%" }}
+          data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+          keyExtractor={(item) => item.toString()}
+          renderItem={() => <Skeleton my="$2" mx="auto" h={150} />}
+        />
+      )}
+
+      {!feedLoading && feed && (
+        <FlatList
+          style={{ width: "100%" }}
+          data={feed ?? []}
+          keyExtractor={(item) => item.text + item.user.id + item.date}
+          renderItem={({ item }) => createMessage(item)}
+        />
+      )}
     </Screen>
   );
 };

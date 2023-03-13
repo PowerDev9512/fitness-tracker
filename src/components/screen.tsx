@@ -1,8 +1,6 @@
 import React from "react";
 import { ScrollView, styled, YStack } from "tamagui";
 
-import { Loading } from "./loading";
-
 interface Props {
   extraSpace?: boolean;
   scrollable?: boolean;
@@ -11,7 +9,7 @@ interface Props {
 
 const ScreenInternal = styled(YStack, {
   name: "ScreenInternal",
-  backgroundColor: "$backgroundStrong",
+  backgroundColor: "$backgroundAccent",
   flex: 1,
   padding: "$4",
   space: "$true",
@@ -21,7 +19,7 @@ const ScreenInternal = styled(YStack, {
 
 const ScrollScreenInternal = styled(ScrollView, {
   name: "ScreenInternal",
-  backgroundColor: "$backgroundStrong",
+  backgroundColor: "$backgroundAccent",
   flex: 1,
   padding: "$4",
   space: "$true",

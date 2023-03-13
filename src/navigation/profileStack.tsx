@@ -7,6 +7,7 @@ const Tab = createMaterialTopTabNavigator();
 
 export const ProfileStack = () => {
   const theme = useTheme();
+  const [selectedTab, setSelectedTab] = React.useState("Stats");
 
   const screens = [
     {
@@ -25,19 +26,25 @@ export const ProfileStack = () => {
 
   return (
     <Tab.Navigator
-      style={{ backgroundColor: theme.backgroundStrong.val }}
+      style={{ backgroundColor: theme.backgroundAccent.val }}
       screenOptions={(props) => ({
         swipeEnabled: false,
         tabBarIndicator: () => null,
+        tabBarLabelStyle: {
+          fontSize: 14,
+          fontWeight: "bold",
+          color:
+            props.route.name === selectedTab
+              ? theme.white.val
+              : theme.gray200.val,
+        },
         tabBarStyle: {
-          backgroundColor: theme.backgroundAccent.val,
+          backgroundColor: theme.primary100.val,
           elevation: 0,
           shadowOpacity: 0,
-          height: 50,
-          marginTop: 15,
-          borderRadius: 75,
-          width: "95%",
-          marginLeft: "2.5%",
+          borderRadius: 10,
+          width: "80%",
+          marginLeft: "9%",
         },
       })}
       initialRouteName="Stats"
@@ -46,6 +53,11 @@ export const ProfileStack = () => {
         <Tab.Screen
           key={screen.name}
           name={screen.name}
+          listeners={{
+            tabPress: () => {
+              setSelectedTab(screen.name);
+            },
+          }}
           component={screen.component}
         />
       ))}

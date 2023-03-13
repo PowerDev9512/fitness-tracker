@@ -127,8 +127,13 @@ export const WorkoutCard = ({ workout, footer }: Props) => {
 
         {badges}
 
-        <Card p="$4" accessibilityLabel="workout-card" w={350} minHeight={400}>
-          <Heading textAlign="center" justifyContent="center" mt="$1">
+        <Card p="$4" accessibilityLabel="workout-card" w={350} minHeight={410}>
+          <Heading
+            fontSize="$9"
+            textAlign="center"
+            justifyContent="center"
+            mt="$1"
+          >
             {workout.name}
           </Heading>
           <Text justifyContent="center" textAlign="center" mb="$1">
