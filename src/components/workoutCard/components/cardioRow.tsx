@@ -39,7 +39,7 @@ export const CardioRow = ({ activity, workout }: Props) => {
           )
         }
       >
-        <XStack alignContent="center" alignItems="center">
+        <XStack alignContent="center" mb="$2" alignItems="center">
           <Text mr="$2" fontSize={16} fontWeight="bold">
             Goal
           </Text>

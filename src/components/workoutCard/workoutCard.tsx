@@ -1,16 +1,14 @@
 import { useDeleteWorkout, useGetUser } from "api";
 import dateFormat from "dateformat";
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import Icon from "react-native-vector-icons/Ionicons";
-import { ScrollView, Separator, Stack, Text, useTheme, YStack } from "tamagui";
-import { Activity, Workout } from "types";
+import { Separator, Stack, Text, useTheme, YStack } from "tamagui";
+import { Workout } from "types";
 import { titleCase } from "utils";
 
 import { Badge } from "../badge";
 import { Card } from "../card";
 import { Heading } from "../heading";
-import { CardioRow } from "./components/cardioRow";
-import { StrengthRow } from "./components/strengthRow";
 import { WorkoutCardBadges } from "./components/workoutCardBadges";
 import { WorkoutCardContent } from "./components/workoutCardContent";
 import { WorkoutCardFooter } from "./components/workoutCardFooter";
@@ -50,11 +48,13 @@ export const WorkoutCard = ({ workout, footer }: Props) => {
             justifyContent="center"
             mt="$1"
           >
-            {workout.name}
+            {titleCase(workout.name)}
           </Heading>
+
           <Text justifyContent="center" textAlign="center" mb="$1">
             {dateFormat(new Date(workout.time), "dddd, mmmm dS")}
           </Text>
+
           <Separator mt="$4" mb="$3" />
 
           <WorkoutCardContent workout={workout} />

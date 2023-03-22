@@ -21,7 +21,7 @@ export const WorkoutCardContent = ({ workout }: Props) => {
         <Text mt={2} textAlign="left" fontSize={18} fontWeight="bold">
           {activity.name}{" "}
         </Text>
-        <Text mb="$1.5" fontSize={14} color="$gray10Dark">
+        <Text mt="$1" fontSize={14} color="$gray10Dark">
           {muscles.map((muscle) => muscle).join(", ")}
         </Text>
         {children}
