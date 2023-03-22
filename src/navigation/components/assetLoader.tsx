@@ -96,7 +96,7 @@ export const AssetLoader = ({ progress, setProgress }: Props) => {
         <Heading color="$primary500" fontSize={16}>
           Checking assets...
         </Heading>
-        <Spinner accessibilityLabel="Loading page" />
+        <Spinner ml={4} my="auto" accessibilityLabel="Loading page" />
       </XStack>
     );
   }
@@ -110,7 +110,7 @@ export const AssetLoader = ({ progress, setProgress }: Props) => {
         mx="auto"
         my="auto"
       >
-        <Spinner accessibilityLabel="Loading page" />
+        <Spinner ml={4} my="auto" accessibilityLabel="Loading page" />
         <Heading color="$primary500" fontSize={16}>
           Downloading assets...
         </Heading>

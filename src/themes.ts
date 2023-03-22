@@ -1,7 +1,7 @@
 import {
   themes as defaultThemes,
   tokens as defaultTokens,
-} from "@tamagui/theme-base";
+} from "@tamagui/themes";
 import { createTheme, createTokens } from "tamagui";
 
 const tokens = createTokens({

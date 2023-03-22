@@ -1,6 +1,6 @@
 import { createInterFont } from "@tamagui/font-inter";
 import { shorthands } from "@tamagui/shorthands";
-import { tokens } from "@tamagui/theme-base";
+import { tokens } from "@tamagui/themes";
 import { createTamagui } from "tamagui";
 
 import { animations } from "./constants/animations";

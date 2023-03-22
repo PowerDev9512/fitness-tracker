@@ -13,8 +13,9 @@ module.exports = function (api) {
     },
   };
   return {
-    presets: [["babel-preset-expo", { jsxRuntime: "automatic" }]],
+    presets: ["babel-preset-expo"],
     plugins: [
+      "@babel/plugin-proposal-export-namespace-from",
       ["module-resolver", moduleResolverOptions],
       [
         "@tamagui/babel-plugin",
@@ -22,7 +23,6 @@ module.exports = function (api) {
           components: ["tamagui"],
           config: "./src/tamagui.config.ts",
           logTimings: true,
-          disableExtraction: process.env.NODE_ENV === "development",
         },
       ],
       [

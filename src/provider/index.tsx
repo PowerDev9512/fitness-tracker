@@ -1,4 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
 import React, { Suspense } from "react";
 import { TamaguiProvider } from "tamagui";
 
@@ -17,6 +18,7 @@ export const Provider = ({ children }: Props) => {
           <NavigationContainer>{children}</NavigationContainer>
         </APIProvider>
       </Suspense>
+      <StatusBar style="light" backgroundColor="#000000" />
     </TamaguiProvider>
   );
 };

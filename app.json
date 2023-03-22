@@ -1,11 +1,8 @@
 {
   "expo": {
-    "jsEngine": "hermes",
     "name": "Pocket Coach",
     "slug": "fitnesstracker",
-    "platforms": [
-      "android"
-    ],
+    "platforms": ["android"],
     "splash": {
       "image": "./src/assets/images/splash.png",
       "resizeMode": "contain",
@@ -22,21 +19,15 @@
     "android": {
       "softwareKeyboardLayoutMode": "pan",
       "package": "fitness.tracker",
-      "permissions": [
-        "android.permission.RECORD_AUDIO"
-      ],
-      "runtimeVersion": "1.0.0"
+      "permissions": ["android.permission.RECORD_AUDIO"]
     },
     "extra": {
       "eas": {
         "projectId": "87b6b9bf-d4ba-40c3-83af-a358273cf05a"
       }
     },
-    "ios": {
-      "bundleIdentifier": "fitness.tracker"
-    },
     "updates": {
-      "url": "https://u.expo.dev/87b6b9bf-d4ba-40c3-83af-a358273cf05a"
+      "fallbackToCacheTimeout": 0
     }
   }
 }
