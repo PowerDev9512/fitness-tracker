@@ -87,8 +87,8 @@ export const ActivityDetails = ({ form }: CreateWorkoutProps) => {
   };
 
   return (
-    <Stack w="110%">
-      <FormLabel>Summary</FormLabel>
+    <>
+      <FormLabel mr="auto" ml="$4">Summary</FormLabel>
       <Card my="$2" p="$2">
         {summary !== "" && (
           <>
@@ -110,14 +110,14 @@ export const ActivityDetails = ({ form }: CreateWorkoutProps) => {
         )}
       </Card>
 
-      <FormLabel>Workout date</FormLabel>
-      <Card mb="$4">
+      <FormLabel mb="$-2" mr="auto" ml="$4">Workout date</FormLabel>
+      <Card mb="$2">
         <DatePicker date={date} setDate={setDate} mode="date" />
       </Card>
 
-      <Text fontSize={16} fontWeight="semibold" textAlign="left">
+      <FormLabel mr="auto" ml="$4">
         Schedule this for {repeat} {repeat === 1 ? "week" : "weeks"}
-      </Text>
+      </FormLabel>
 
       <Card mt="$2">
         <Slider
@@ -128,10 +128,11 @@ export const ActivityDetails = ({ form }: CreateWorkoutProps) => {
           min={1}
           step={1}
           size="$4"
-          w="100%"
-          h={40}
+          mx="auto"
+          w="90%"
+          h={60}
         >
-          <Slider.Track backgroundColor="$gray400">
+          <Slider.Track backgroundColor="$gray200">
             <Slider.TrackActive />
           </Slider.Track>
           <Slider.Thumb
@@ -139,10 +140,10 @@ export const ActivityDetails = ({ form }: CreateWorkoutProps) => {
             elevate
             circular
             index={0}
-            backgroundColor="$gray700"
+            backgroundColor="$primary500"
           />
         </Slider>
       </Card>
-    </Stack>
+    </>
   );
 };

@@ -113,7 +113,7 @@ export const CreateWorkout = () => {
           ].filter((e) => e !== "");
 
           return (
-            <Stack w="100%">
+            <>
               {index === 0 && (
                 <Autocomplete
                   inputProps={{
@@ -132,6 +132,7 @@ export const CreateWorkout = () => {
                     borderWidth: 0,
                     backgroundColor: "transparent",
                     mb: "$1",
+                    mr: "auto",
                   }}
                   value={form.values.workout.name}
                   data={workoutNames?.workoutNames ?? []}
@@ -163,7 +164,7 @@ export const CreateWorkout = () => {
                   </FormLabel>
                 )}
               </YStack>
-            </Stack>
+            </>
           );
         }}
       </Formik>

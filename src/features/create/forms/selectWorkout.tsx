@@ -183,7 +183,7 @@ export const SelectWorkout = ({ form, incrementIndex }: Props) => {
   return (
     <ScrollView
       nestedScrollEnabled
-      style={{ marginTop: 10, width: "110%" }}
+      style={{ marginTop: 10, marginLeft: "auto", marginRight: -35 }}
       stickyHeaderIndices={[0]}
     >
       <Filters
