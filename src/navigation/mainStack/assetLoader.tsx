@@ -3,8 +3,8 @@ import { Heading } from "components";
 import React, { useEffect, useState } from "react";
 import { Dirs } from "react-native-file-access";
 import RNFetchBlob from "rn-fetch-blob";
-import { Spinner, Stack, XStack } from "tamagui";
 import { Exercise } from "types";
+import { LoadingMessage } from "./loadingMessage";
 
 type Progress = { current: number; total: number };
 
@@ -25,13 +25,6 @@ export const AssetLoader = ({ progress, setProgress }: Props) => {
     retrieveImages: true,
     shouldFetch: missingAssets !== null && missingAssets.length > 0,
   });
-
-  // bail out if we're done
-  useEffect(() => {
-    if (finished) {
-      setProgress((prev) => ({ current: prev.total, total: prev.total }));
-    }
-  }, [finished, setProgress]);
 
   // check for missing assets
   useEffect(() => {
@@ -54,6 +47,13 @@ export const AssetLoader = ({ progress, setProgress }: Props) => {
       setFinished(true);
     }
   }, [exercisesLoading, exercises]);
+
+  // bail out if theres nothing to do
+  useEffect(() => {
+    if (finished) {
+      setProgress((prev) => ({ current: prev.total, total: prev.total }));
+    }
+  }, [finished, setProgress]);
 
   // create missing assets
   useEffect(() => {
@@ -85,39 +85,8 @@ export const AssetLoader = ({ progress, setProgress }: Props) => {
   }, [missingAssets, exercises, setProgress, exercisesWithImages]);
 
   if (progress.current === -1) {
-    return (
-      <XStack
-        backgroundColor="$backgroundAccent"
-        alignContent="center"
-        justifyContent="center"
-        mx="auto"
-        my="auto"
-      >
-        <Heading color="$primary500" fontSize={16}>
-          Checking assets...
-        </Heading>
-        <Spinner ml={4} my="auto" accessibilityLabel="Loading page" />
-      </XStack>
-    );
+    return <LoadingMessage title="Checking assets..." />;
   }
 
-  return (
-    <Stack h="100%">
-      <XStack
-        backgroundColor="$backgroundAccent"
-        alignContent="center"
-        justifyContent="center"
-        mx="auto"
-        my="auto"
-      >
-        <Spinner ml={4} my="auto" accessibilityLabel="Loading page" />
-        <Heading color="$primary500" fontSize={16}>
-          Downloading assets...
-        </Heading>
-        <Heading color="$primary500" fontSize={16}>
-          {progress.current}/{progress.total}
-        </Heading>
-      </XStack>
-    </Stack>
-  );
+  return <LoadingMessage title="Loading assets..." description={`${progress.current}/${progress.total}`} />;
 };

@@ -1,6 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useGetUser } from "api";
-import { Heading } from "components";
 import {
   ActivityDetails,
   CreateWorkout,
@@ -10,41 +9,29 @@ import {
 } from "features";
 import React from "react";
 import { useStore } from "store";
-import { Spinner, Theme, XStack } from "tamagui";
+import { Theme } from "tamagui";
 
-import { AssetLoader } from "./components/assetLoader";
-import { MainHeader } from "./components/mainHeader";
-import { DrawerStack } from "./drawerStack";
+import { AssetLoader } from "./assetLoader";
+import { MainHeader } from "../components/mainHeader";
+import { DrawerStack } from "../drawerStack";
+import { LoadingMessage } from "./loadingMessage";
 
 const Stack = createNativeStackNavigator<MainStackParams>();
 
 export const MainStack = () => {
-  const [progress, setProgress] = React.useState({ current: -1, total: 0 });
+  const [assetProgress, setAssetProgress] = React.useState({ current: -1, total: 0 });
 
   const { userId } = useStore();
   const { data: user } = useGetUser();
 
   const userIsLoggedIn = user && (userId ?? -1) >= 0;
 
-  if (progress.current < progress.total) {
-    return <AssetLoader progress={progress} setProgress={setProgress} />;
+  if (assetProgress.current < assetProgress.total) {
+    return <AssetLoader progress={assetProgress} setProgress={setAssetProgress} />;
   }
 
   if (!userIsLoggedIn) {
-    return (
-      <XStack
-        backgroundColor="$backgroundAccent"
-        alignContent="center"
-        justifyContent="center"
-        mx="auto"
-        my="auto"
-      >
-        <Heading color="$primary500" fontSize={16}>
-          Logging in...
-        </Heading>
-        <Spinner accessibilityLabel="Loading page" />
-      </XStack>
-    );
+    return <LoadingMessage title="Logging in..." />;
   }
 
   return (

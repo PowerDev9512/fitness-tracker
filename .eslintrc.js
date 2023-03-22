@@ -6,7 +6,7 @@ module.exports = {
     "prettier",
     "plugin:react-hooks/recommended",
   ],
-  plugins: ["simple-import-sort"],
+  plugins: [],
   rules: {
     // We will use TypeScript's types for component props instead
     "react/prop-types": "off",
@@ -30,8 +30,6 @@ module.exports = {
       },
       { usePrettierrc: false },
     ],
-    "simple-import-sort/exports": "warn",
-    "simple-import-sort/imports": "warn",
     "import/namespace": "off",
     "react/function-component-definition": [
       "warn",

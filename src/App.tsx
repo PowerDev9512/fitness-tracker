@@ -5,7 +5,7 @@ import React from "react";
 import { LogBox } from "react-native";
 import Toast from "react-native-toast-message";
 
-import { MainStack } from "./navigation/mainStack";
+import { MainStack } from "./navigation/mainStack/mainStack";
 import { Provider } from "./provider";
 import { toastConfig } from "./toast.config";
 

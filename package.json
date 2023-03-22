@@ -86,7 +86,6 @@
     "eslint": "8.36.0",
     "eslint-config-universe": "11.2.0",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-simple-import-sort": "10.0.0",
     "metro-minify-terser": "^0.74.1",
     "prettier": "2.8.6",
     "typescript": "^4.7.4"
