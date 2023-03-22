@@ -11,6 +11,9 @@ import { Card } from "../card";
 import { Heading } from "../heading";
 import { CardioRow } from "./components/cardioRow";
 import { StrengthRow } from "./components/strengthRow";
+import { WorkoutCardBadges } from "./components/workoutCardBadges";
+import { WorkoutCardContent } from "./components/workoutCardContent";
+import { WorkoutCardFooter } from "./components/workoutCardFooter";
 
 interface Props {
   workout: Workout;
@@ -23,93 +26,6 @@ export const WorkoutCard = ({ workout, footer }: Props) => {
 
   const { data: user } = useGetUser();
   const { mutate: deleteWorkout } = useDeleteWorkout();
-
-  const createContent = (activity: Activity, children: React.ReactNode) => {
-    const muscles = Object.keys(activity.muscleGroupStats).map((muscleGroup) =>
-      titleCase(muscleGroup)
-    );
-
-    return (
-      <Stack mb="$2" key={activity.id}>
-        <Text mt={2} textAlign="left" fontSize={18} fontWeight="bold">
-          {activity.name}{" "}
-        </Text>
-        <Text mb="$1.5" fontSize={14} color="$gray10Dark">
-          {muscles.map((muscle) => muscle).join(", ")}
-        </Text>
-        {children}
-      </Stack>
-    );
-  };
-
-  const badges = useMemo(
-    () =>
-      (workout.past || workout.completed) && (
-        <>
-          {workout.completed && (
-            <Badge side="right" background={false}>
-              <Icon
-                name="ios-checkmark-sharp"
-                size={30}
-                color={theme.green.val}
-              />
-            </Badge>
-          )}
-
-          {!workout.completed && (
-            <Badge side="right" background={false}>
-              <Icon name="ios-close-sharp" size={30} color={theme.red.val} />
-            </Badge>
-          )}
-        </>
-      ),
-    [workout]
-  );
-
-  const footerContent = useMemo(
-    () =>
-      footer && (
-        <>
-          <Separator mt="auto" mb="$4" bg="$gray200" />
-          {footer}
-        </>
-      ),
-    [footer]
-  );
-
-  const mainContent = useMemo(
-    () => (
-      <ScrollView>
-        <Stack>
-          {workout.activities.map((activity) => {
-            switch (activity.type) {
-              case "strength":
-                return createContent(
-                  activity,
-                  <StrengthRow
-                    key={activity.id}
-                    activity={activity}
-                    workout={workout}
-                  />
-                );
-              case "cardio":
-                return createContent(
-                  activity,
-                  <CardioRow
-                    key={activity.id}
-                    activity={activity}
-                    workout={workout}
-                  />
-                );
-              default:
-                return null;
-            }
-          })}
-        </Stack>
-      </ScrollView>
-    ),
-    [workout]
-  );
 
   return (
     <Stack h="100%">
@@ -125,11 +41,11 @@ export const WorkoutCard = ({ workout, footer }: Props) => {
           <Icon name="trash-bin-sharp" size={25} color={theme.red.val} />
         </Badge>
 
-        {badges}
+        <WorkoutCardBadges workout={workout} />
 
         <Card p="$4" accessibilityLabel="workout-card" w={350} minHeight={410}>
           <Heading
-            fontSize="$9"
+            fontSize="$8"
             textAlign="center"
             justifyContent="center"
             mt="$1"
@@ -141,9 +57,9 @@ export const WorkoutCard = ({ workout, footer }: Props) => {
           </Text>
           <Separator mt="$4" mb="$3" />
 
-          {mainContent}
+          <WorkoutCardContent workout={workout} />
 
-          {footerContent}
+          <WorkoutCardFooter content={footer} />
         </Card>
       </YStack>
     </Stack>

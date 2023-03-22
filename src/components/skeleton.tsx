@@ -36,8 +36,6 @@ export const Skeleton = ({ isLoading = true, ...props }: Props) => {
   const start = interpolate(progress.value, [0, 1], [-0.5, 0.5]);
   const end = interpolate(progress.value, [0, 1], [0.5, 1.5]);
 
-  console.log(progress.value);
-
   return (
     <SkeletonInternal {...props}>
       <Animated.View>
