@@ -2,7 +2,7 @@ import { IconButton } from "components";
 import React, { useCallback } from "react";
 import { Heading, XStack } from "tamagui";
 
-import NotificationBell from "./notificationBell";
+import NotificationBell from "../sideBar/notificationBell";
 
 type BaseProps = {
   loggedIn: boolean;

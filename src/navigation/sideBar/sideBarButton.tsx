@@ -3,7 +3,7 @@ import { DrawerActions, useNavigation } from "@react-navigation/native";
 import { IconButton } from "components";
 import React from "react";
 
-export const DrawerButton = () => {
+export const SideBarButton = () => {
   const navigation = useNavigation();
   const isDrawerOpen = useDrawerStatus() === "open";
 

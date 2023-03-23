@@ -28,7 +28,7 @@ export const AddFriendModal = ({ friend, user, loading, onClose }: Props) => {
 
   return (
     <Modal isOpen={friend !== null} onClose={onClose}>
-      <Card alignItems="center">
+      <Card p="$4" alignItems="center">
         <YStack mb="$4" alignItems="center">
           {loading && <Skeleton />}
           {!loading && friend && (

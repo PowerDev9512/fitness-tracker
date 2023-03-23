@@ -60,6 +60,7 @@ export const Autocomplete = <T extends unknown>({
       {showList && filteredData.length > 0 && (
         <SafeAreaView>
           <FlatList
+            style={{ maxHeight: filteredData.length * 30 }}
             keyExtractor={keyExtractor}
             data={limitedData}
             scrollEnabled={false}
@@ -68,7 +69,7 @@ export const Autocomplete = <T extends unknown>({
               const key = keyExtractor(item);
               return (
                 <Pressable
-                  style={{ marginLeft: 2 }}
+                  style={{ marginLeft: 15 }}
                   onTouchStart={() => onChange(key)}
                 >
                   <Text fontSize={14} fontWeight="bold" color="$gray400">

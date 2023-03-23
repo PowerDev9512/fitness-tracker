@@ -5,7 +5,7 @@ import { useTheme } from "tamagui";
 
 const Tab = createMaterialTopTabNavigator();
 
-export const ProfileStack = () => {
+export const JournalStack = () => {
   const theme = useTheme();
   const [selectedTab, setSelectedTab] = React.useState("Stats");
 
@@ -44,7 +44,7 @@ export const ProfileStack = () => {
           shadowOpacity: 0,
           borderRadius: 10,
           width: "80%",
-          marginLeft: "9%",
+          marginLeft: "10%"
         },
       })}
       initialRouteName="Stats"

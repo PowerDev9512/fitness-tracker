@@ -12,6 +12,7 @@ type BaseProps = {
 type Props = BaseProps &
   Omit<React.ComponentProps<typeof Stack>, keyof BaseProps>;
 
+// this component is literally evil
 export const IconButton = ({ icon, ...props }: Props) => {
   const theme = useTheme();
 

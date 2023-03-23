@@ -1,8 +1,10 @@
 import React from "react";
 import { Button as BaseButton, Spinner, Stack } from "tamagui";
 
+type Variant = "primary" | "secondary" | "link";
+
 interface BaseProps {
-  variant?: "primary" | "link";
+  variant?: Variant;
   isLoading?: boolean;
 }
 
@@ -13,30 +15,52 @@ export const Button = ({
   isLoading = false,
   ...props
 }: Props) => {
-  let color;
-  let textColor;
+  let color: string;
+  let textColor: string;
+  let outline: string | undefined;
+  let disabled = props.disabled ?? false;
 
   switch (variant) {
     case "primary":
-      color = "$primary500";
+      color = disabled ? "$gray300" : "$primary500";
       textColor = "white";
+      outline = undefined;
       break;
     case "link":
       color = "transparent";
-      textColor = "black";
+      textColor = disabled ? "$gray300" : "$primary500";
+      outline = undefined;
       break;
+    case "secondary":
+      color = "transparent";
+      textColor = disabled ? "$gray300" : "$primary500";
+      outline = disabled ? "$gray300" : "$primary500";
     default:
       color = "$primary500";
       textColor = "white";
   }
 
-  return isLoading ? (
-    <Stack>
-      <Spinner mx="auto" pos="absolute" backgroundColor={color} />
-      <BaseButton color={textColor} backgroundColor={color} {...props} />
-    </Stack>
-  ) : (
-    <BaseButton color={textColor} backgroundColor={color} {...props}>
+  if (isLoading) {
+    return (
+      <BaseButton
+        disabled={true}
+        backgroundColor={color}
+        icon={<Spinner mx="auto" pos="absolute" backgroundColor={color} />}
+        als="center"
+        {...props}
+      />
+    );
+  }
+
+  return (
+    <BaseButton
+      pressStyle={{
+        backgroundColor: disabled ? color : "$primary200",
+      }}
+      color={textColor}
+      backgroundColor={color}
+      {...props}
+    >
       {props.children}
     </BaseButton>
   );

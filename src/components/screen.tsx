@@ -39,13 +39,17 @@ export const Screen = ({
 }: Props) => {
   if (scrollable) {
     return (
-      <ScrollScreenInternal mb={extraSpace ? "$5" : "$0"}>
+      <ScrollScreenInternal>
         {children}
+        {extraSpace && <YStack h={100} space="$true" />}
       </ScrollScreenInternal>
     );
   }
 
   return (
-    <ScreenInternal mb={extraSpace ? "$5" : "$0"}>{children}</ScreenInternal>
+    <ScreenInternal>
+      {children}
+      {extraSpace && <YStack h={100} space="$true" />}
+    </ScreenInternal>
   );
 };

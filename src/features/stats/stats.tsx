@@ -4,8 +4,8 @@ import { Heading, Screen } from "components";
 import React from "react";
 import { Text, useTheme } from "tamagui";
 
-import { BuddyStats } from "./components/buddyStats/buddyStats";
-import { WorkoutChart } from "./components/workoutChart/workoutChart";
+import { BuddyStats } from "./buddyStats";
+import { WorkoutChart } from "./workoutChart";
 
 export const Stats = () => {
   const [index, setIndex] = React.useState(0);
@@ -18,7 +18,7 @@ export const Stats = () => {
       : null;
 
   return (
-    <Screen>
+    <Screen scrollable extraSpace>
       <Heading mb="$-3" size="$9">
         Hello, {user?.username}
       </Heading>

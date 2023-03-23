@@ -5,9 +5,9 @@ import Animated from "react-native-reanimated";
 import Icon from "react-native-vector-icons/Ionicons";
 import { useTheme } from "tamagui";
 
-import { BottomTabBar } from "./components/bottomTabBar/bottomTabBar";
-import { BottomTabBarScreen } from "./components/bottomTabBar/bottomTabBarItem";
-import { ProfileStack } from "./profileStack";
+import { BottomTabBar } from "./bottomTabBar/bottomTabBar";
+import { BottomTabBarScreen } from "./bottomTabBar/bottomTabBarItem";
+import { JournalStack } from "../journal/journalStack";
 
 export const DashboardStack = () => {
   const theme = useTheme();
@@ -106,7 +106,7 @@ export const DashboardStack = () => {
       <BottomTabBarScreen name="Social" component={Social} position="LEFT" />
       <BottomTabBarScreen
         name="Profile"
-        component={ProfileStack}
+        component={JournalStack}
         position="CENTER"
       />
       <BottomTabBarScreen

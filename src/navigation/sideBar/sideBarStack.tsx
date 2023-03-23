@@ -2,9 +2,9 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Achievements } from "features";
 import React from "react";
 
-import { DrawerHeader } from "./components/drawerHeader";
-import { MainDrawer } from "./components/mainDrawer";
-import { DashboardStack } from "./dashboardStack";
+import { SideBarHeader } from "./sideBarHeader";
+import { SideBar } from "./sideBar";
+import { DashboardStack } from "../dashboard/dashboardStack";
 
 const Drawer = createDrawerNavigator();
 
@@ -12,9 +12,9 @@ const DrawerStackInternal = () => {
   return (
     <Drawer.Navigator
       initialRouteName="Dashboard"
-      drawerContent={MainDrawer}
+      drawerContent={SideBar}
       screenOptions={{
-        header: (props) => <DrawerHeader name={props.route.name} />,
+        header: (props) => <SideBarHeader name={props.route.name} />,
       }}
     >
       <Drawer.Screen name="Dashboard" component={DashboardStack} />
@@ -23,4 +23,4 @@ const DrawerStackInternal = () => {
   );
 };
 
-export const DrawerStack = React.memo(DrawerStackInternal);
+export const SideBarStack = React.memo(DrawerStackInternal);

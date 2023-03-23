@@ -10,9 +10,9 @@ import {
 } from "types";
 import { getDistanceFormatter, getWeightFormatter } from "utils";
 
-import { ActionButton } from "../components/actionButton/actionButton";
-import { IncrementBar } from "../components/incrementBar/incrementBar";
-import { CreateWorkoutProps } from "../createWorkout";
+import { ActionButton } from "./actionButton";
+import { IncrementBar } from "./incrementBar";
+import { CreateWorkoutProps } from "../../createWorkout";
 
 export const WorkoutDetails = ({ form }: CreateWorkoutProps) => {
   const { activity } = form.values;

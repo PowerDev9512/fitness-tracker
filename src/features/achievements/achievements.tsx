@@ -11,8 +11,8 @@ import {
   UserAchievement,
 } from "types";
 
-import { AchievementRow } from "./components/achievementRow/achievementRow";
-import { RewardsModal } from "./components/rewardsModal/rewardsModal";
+import { AchievementRow } from "./achievementRow";
+import { RewardsModal } from "./rewardsModal";
 
 const filterOptions: FilterOption[] = [
   {
@@ -62,10 +62,6 @@ export const Achievements = () => {
   });
 
   const renderAchievement = (achievement: UserAchievement, user: User) => {
-    if (!achievements || !user) {
-      return <Skeleton key={`${achievement.title}-skeleton`} />;
-    }
-
     return (
       <Card p="$4" key={`${achievement.title}-box`} my={4}>
         <AchievementRow user={user} achievement={achievement} />
@@ -90,31 +86,29 @@ export const Achievements = () => {
   return (
     <Screen>
       <RewardsModal rewards={rewards} onClose={() => setRewards([])} />
-      <Stack mx="auto" w="124%" mt={4}>
-        <Filters
-          filterOptions={filterOptions}
-          filters={filters}
-          setFilters={setFilters}
+      <Filters
+        filterOptions={filterOptions}
+        filters={filters}
+        setFilters={setFilters}
+      />
+
+      {achievementsLoading && (
+        <FlatList
+          style={{ width: "110%", marginLeft: "10%" }}
+          data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+          keyExtractor={(item) => item.toString()}
+          renderItem={() => <Skeleton my="$2" mx="auto" h={150} />}
         />
+      )}
 
-        {achievementsLoading && (
-          <FlatList
-            style={{ width: "90%", marginHorizontal: "auto" }}
-            data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
-            keyExtractor={(item) => item.toString()}
-            renderItem={() => <Skeleton my="$2" mx="auto" h={150} />}
-          />
-        )}
-
-        {achievements && user && (
-          <FlatList
-            style={{ width: "90%", marginHorizontal: "auto" }}
-            data={filteredAchievements ?? []}
-            keyExtractor={(item) => item.title}
-            renderItem={({ item }) => renderAchievement(item, user)}
-          />
-        )}
-      </Stack>
+      {achievements && user && (
+        <FlatList
+          style={{ width: "110%", marginLeft: "10%" }}
+          data={filteredAchievements ?? []}
+          keyExtractor={(item) => item.title}
+          renderItem={({ item }) => renderAchievement(item, user)}
+        />
+      )}
     </Screen>
   );
 };

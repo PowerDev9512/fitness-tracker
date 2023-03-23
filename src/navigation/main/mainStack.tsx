@@ -12,8 +12,8 @@ import { useStore } from "store";
 import { Theme } from "tamagui";
 
 import { AssetLoader } from "./assetLoader";
-import { MainHeader } from "../components/mainHeader";
-import { DrawerStack } from "../drawerStack";
+import { MainHeader } from "./mainHeader";
+import { SideBarStack } from "../sideBar/sideBarStack";
 import { LoadingMessage } from "./loadingMessage";
 
 const Stack = createNativeStackNavigator<MainStackParams>();
@@ -51,7 +51,7 @@ export const MainStack = () => {
           <Stack.Group>
             <Stack.Screen
               name="Drawer"
-              component={DrawerStack}
+              component={SideBarStack}
               options={{
                 headerShown: false,
               }}

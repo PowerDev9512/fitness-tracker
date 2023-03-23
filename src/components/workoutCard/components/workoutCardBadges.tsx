@@ -1,7 +1,7 @@
 import React from "react";
 
 import Icon from "react-native-vector-icons/Ionicons";
-import { Separator, useTheme } from "tamagui";
+import { useTheme } from "tamagui";
 import { Workout } from "types";
 import { Badge } from "../../badge";
 
@@ -13,8 +13,11 @@ export const WorkoutCardBadges = ({ workout }: Props) => {
   const theme = useTheme();
   const isOldWorkout = workout.past || workout.completed;
 
+  if (!isOldWorkout) {
+    return null;
+  }
+
   return (
-    isOldWorkout && (
       <>
         {workout.completed && (
           <Badge side="right" background={false}>
@@ -32,6 +35,5 @@ export const WorkoutCardBadges = ({ workout }: Props) => {
           </Badge>
         )}
       </>
-    )
-  );
+    );
 };

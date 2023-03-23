@@ -6,11 +6,11 @@ import React, { useState } from "react";
 import { Stack, Text, YStack } from "tamagui";
 import { Activity, ExerciseType, ScheduledWorkout } from "types";
 
-import { NavigationButtons } from "./components/navigationButtons/navigationButtons";
+import { NavigationButtons } from "./navigationButtons";
 import { CreateWorkoutSchema } from "./createWorkoutSchema";
-import { ActivityDetails } from "./forms/activityDetails";
-import { SelectWorkout } from "./forms/selectWorkout";
-import { WorkoutDetails } from "./forms/workoutDetails";
+import { ActivityDetails } from "./forms/activityDetails/activityDetails";
+import { SelectExercise } from "./forms/selectExercise/selectExercise";
+import { WorkoutDetails } from "./forms/workoutDetails/workoutDetails";
 
 export interface CreateWorkoutValues {
   workout: ScheduledWorkout;
@@ -57,7 +57,7 @@ export const CreateWorkout = () => {
         return <ActivityDetails form={props.form} />;
       case 1:
         return (
-          <SelectWorkout form={props.form} incrementIndex={() => setIndex(2)} />
+          <SelectExercise form={props.form} incrementIndex={() => setIndex(2)} />
         );
       case 2:
         return <WorkoutDetails form={props.form} />;
@@ -131,7 +131,7 @@ export const CreateWorkout = () => {
                   viewProps={{
                     borderWidth: 0,
                     backgroundColor: "transparent",
-                    mb: "$1",
+                    mb: "$2",
                     mr: "auto",
                   }}
                   value={form.values.workout.name}

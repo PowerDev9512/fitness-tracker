@@ -1,5 +1,5 @@
 export const ExerciseTypes = ["strength", "cardio"];
-export type ExerciseType = typeof ExerciseTypes[number];
+export type ExerciseType = (typeof ExerciseTypes)[number];
 
 export const MuscleGroups = [
   "Abs",
@@ -16,7 +16,7 @@ export const MuscleGroups = [
   "Back",
   "Triceps",
 ];
-export type MuscleGroup = typeof MuscleGroups[number];
+export type MuscleGroup = (typeof MuscleGroups)[number];
 
 export const AchievementTypes = [
   "streak",
@@ -26,7 +26,7 @@ export const AchievementTypes = [
   "weight",
   "distance",
 ];
-export type AchievementType = typeof AchievementTypes[number];
+export type AchievementType = (typeof AchievementTypes)[number];
 
 export type Mechanics = "Compound" | "Isolation" | "Unknown";
 export const Equipments = [
@@ -47,7 +47,7 @@ export const Equipments = [
   "Unknown",
 ];
 
-export type Equipment = typeof Equipments[number];
+export type Equipment = (typeof Equipments)[number];
 
 export interface Image {
   id: number;
@@ -109,6 +109,7 @@ export interface CardioData extends BaseData {
 export type Data = StrengthData | CardioData;
 
 export type Activity = Exercise & Data & { id: number };
+
 export type CardioActivity = CardioExercise & CardioData & { id: number };
 export type StrengthActivity = StrengthExercise & StrengthData & { id: number };
 
@@ -330,7 +331,7 @@ export interface User {
 }
 
 export interface Message {
-  text: string;
+  workout: Workout;
   date: string;
   user: User;
 }

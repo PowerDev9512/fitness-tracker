@@ -2,13 +2,13 @@ import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { Message } from "types";
 
 import { client } from "../client";
-import { ApiUser, ApiUserToUser } from "../types";
+import { ApiUser, ApiUserToUser, ApiWorkout, ApiWorkoutToWorkout } from "../types";
 import { useGetUser } from "../user/useGetUser";
 
 type GetFeedRawResponse = {
   messages: {
-    text: string;
-    date: string;
+    workout: ApiWorkout;
+    timestamp: string;
     user: ApiUser;
   }[];
 };
@@ -30,8 +30,8 @@ export function useGetFeed(): UseQueryResult<GetFeedResponse, unknown> {
     return data.messages.map(
       (message) =>
         ({
-          text: message.text,
-          date: message.date,
+          workout: ApiWorkoutToWorkout(message.workout, user?.maxes),
+          date: message.timestamp,
           user: ApiUserToUser(message.user),
         } as Message)
     );

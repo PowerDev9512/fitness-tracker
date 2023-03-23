@@ -1,6 +1,8 @@
 import { Check, ChevronDown, ChevronUp } from "@tamagui/lucide-icons";
 import React from "react";
-import { Adapt, Select as SelectBase, Sheet, YStack } from "tamagui";
+import { Adapt, Text, Select as SelectBase, Sheet, YStack } from "tamagui";
+import { LinearGradient } from 'tamagui/linear-gradient'
+import { titleCase } from "../utils/formatting";
 
 export type SelectData<T> = {
   label: string;
@@ -17,7 +19,7 @@ interface BaseProps<T> {
 
 type Props<T> = BaseProps<T> & React.ComponentProps<typeof SelectBase.Trigger>;
 
-export const Select = <T extends unknown>({
+const SelectInternal = <T extends unknown>({
   data,
   value,
   placeholder,
@@ -27,7 +29,7 @@ export const Select = <T extends unknown>({
 }: Props<T>) => {
   const handleOnChangeValue = (selectedValue: string) => {
     const matchingValue = data.find(
-      (item) => item.label.toLowerCase() === selectedValue.toLowerCase()
+      (item) => item.value === selectedValue
     );
 
     if (matchingValue) {
@@ -35,18 +37,30 @@ export const Select = <T extends unknown>({
     }
   };
 
+  console.log(value)
+
   return (
-    <SelectBase value={value?.label} onValueChange={handleOnChangeValue}>
+    <SelectBase id={placeholder} key={value?.label} value={value?.value} onValueChange={handleOnChangeValue}>
       <SelectBase.Trigger
-        disabled={isDisabled}
+        disabled={isDisabled || data.length === 0}
         w="100%"
         iconAfter={ChevronDown}
+        backgroundColor="$white"
         {...props}
       >
-        <SelectBase.Value placeholder />
+        {value?.label !== undefined && (
+          <Text color="black" fontSize={15} mr={1}>
+            {titleCase(value?.label)}
+          </Text>
+        )}
+        {value?.label === undefined && (
+          <Text color="$gray500" fontSize={15} mr={1}>
+            {titleCase(placeholder)}
+          </Text>
+        )}
       </SelectBase.Trigger>
 
-      <Adapt when="sm" platform="touch">
+      <Adapt>
         <Sheet modal dismissOnSnapToBottom>
           <Sheet.Frame>
             <Sheet.ScrollView>
@@ -68,9 +82,16 @@ export const Select = <T extends unknown>({
           <YStack zi={10}>
             <ChevronUp size={20} />
           </YStack>
+          <LinearGradient
+            start={[0, 0]}
+            end={[0, 1]}
+            fullscreen
+            colors={['$background', '$backgroundTransparent']}
+            br="$4"
+          />
         </SelectBase.ScrollUpButton>
 
-        <SelectBase.Viewport minWidth={200}>
+        <SelectBase.Viewport>
           <SelectBase.Group>
             <SelectBase.Label> {placeholder} </SelectBase.Label>
             {data.map((item, i) => {
@@ -78,7 +99,7 @@ export const Select = <T extends unknown>({
                 <SelectBase.Item
                   index={i}
                   key={item.label}
-                  value={item.label.toLowerCase()}
+                  value={item.value as unknown as string}
                 >
                   <SelectBase.ItemText>{item.label}</SelectBase.ItemText>
                   <SelectBase.ItemIndicator ml="auto">
@@ -100,8 +121,17 @@ export const Select = <T extends unknown>({
           <YStack zi={10}>
             <ChevronDown size={20} />
           </YStack>
+          <LinearGradient
+            start={[0, 0]}
+            end={[0, 1]}
+            fullscreen
+            colors={['$backgroundTransparent', '$background']}
+            br="$4"
+          />
         </SelectBase.ScrollDownButton>
       </SelectBase.Content>
     </SelectBase>
   );
 };
+
+export const Select = React.memo(SelectInternal) as typeof SelectInternal;

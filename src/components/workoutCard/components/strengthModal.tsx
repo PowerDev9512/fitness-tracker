@@ -94,8 +94,8 @@ export const StrengthModal = ({
             </ImagePicker>
           </XStack>
         </YStack>
-        <XStack space={2}>
-          <Button onPress={onClose}>Cancel</Button>
+        <XStack ml="auto" space={2}>
+          <Button variant="link" onPress={onClose}>Cancel</Button>
           <Button
             onPress={() => {
               editWorkout({

@@ -90,7 +90,7 @@ export const Social = () => {
         <FlatList
           style={{ width: "100%" }}
           data={feed ?? []}
-          keyExtractor={(item) => item.text + item.user.id + item.date}
+          keyExtractor={(item) => item.workout.id + item.user.username + item.date}
           renderItem={({ item }) => createMessage(item)}
         />
       )}

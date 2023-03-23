@@ -10,7 +10,7 @@ import React, { useCallback } from "react";
 import { useStore } from "store";
 import { Text, useTheme, XStack, YStack } from "tamagui";
 
-export const MainDrawer = ({
+export const SideBar = ({
   state,
   navigation,
   descriptors,
@@ -44,7 +44,7 @@ export const MainDrawer = ({
 
   return (
     <DrawerContentScrollView
-      style={{ backgroundColor: theme.backgroundStrong.val }}
+      style={{ backgroundColor: theme.background.val }}
       fadingEdgeLength={10}
     >
       <DrawerItem

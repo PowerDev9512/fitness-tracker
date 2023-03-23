@@ -16,8 +16,9 @@ type Props = Omit<React.ComponentProps<typeof YStack>, "children"> & {
 const SkeletonInternal = styled(Stack, {
   name: "SkeletonInternal",
   backgroundColor: "$white",
-  w: "100%",
+  w: "90%",
   h: "100%",
+  mr: "auto",
   borderRadius: 10,
 });
 

@@ -67,6 +67,7 @@ export const Input = ({
         caretHidden={false}
         placeholder={placeholder}
         placeholderTextColor="gray"
+        backgroundColor="$white"
         color="black"
         {...props}
         w="100%"

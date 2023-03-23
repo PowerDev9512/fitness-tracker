@@ -7,6 +7,7 @@ import { Stack, Text } from "tamagui";
 export default () => {
   const { data: user } = useGetUser();
   const navigation = useNavigation();
+  const friendRequests = user?.friendRequests?.length ?? 0;
 
   return (
     <Stack mr="$5">
@@ -16,7 +17,7 @@ export default () => {
         size={28}
         color="$gray700"
       />
-      {(user?.friendRequests ?? 0) > 0 && (
+      {friendRequests > 0 && (
         <Stack
           position="absolute"
           top={7}

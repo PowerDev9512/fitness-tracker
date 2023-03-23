@@ -3,7 +3,7 @@ import { Progress, Text, XStack } from "tamagui";
 import { Reward, User, UserAchievement } from "types";
 import { getWeightFormatter, titleCase } from "utils";
 
-import { RewardText } from "../rewardText/rewardText";
+import { RewardText } from "./rewardText";
 
 interface Props {
   achievement: UserAchievement;

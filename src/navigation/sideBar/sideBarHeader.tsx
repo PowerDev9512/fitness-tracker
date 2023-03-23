@@ -1,7 +1,7 @@
 import React from "react";
 import { Heading, XStack } from "tamagui";
 
-import { DrawerButton } from "./drawerButton";
+import { SideBarButton } from "./sideBarButton";
 import NotificationBell from "./notificationBell";
 
 interface Props {
@@ -17,7 +17,7 @@ const DrawerHeaderInternal = ({ name }: Props) => {
       alignItems="center"
     >
       <XStack alignItems="center">
-        <DrawerButton />
+        <SideBarButton />
         <Heading>{name}</Heading>
       </XStack>
       <NotificationBell />
@@ -25,4 +25,4 @@ const DrawerHeaderInternal = ({ name }: Props) => {
   );
 };
 
-export const DrawerHeader = React.memo(DrawerHeaderInternal);
+export const SideBarHeader = React.memo(DrawerHeaderInternal);
