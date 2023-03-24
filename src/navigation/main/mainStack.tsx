@@ -24,13 +24,14 @@ export const MainStack = () => {
   const { userId } = useStore();
   const { data: user } = useGetUser();
 
-  const userIsLoggedIn = user && (userId ?? -1) >= 0;
+  const id = userId ?? -1;
+  const userIsLoggedIn = user !== undefined && id >= 0;
 
   if (assetProgress.current < assetProgress.total) {
     return <AssetLoader progress={assetProgress} setProgress={setAssetProgress} />;
   }
 
-  if (!userIsLoggedIn) {
+  if (id >= 0 && !user) {
     return <LoadingMessage title="Logging in..." />;
   }
 

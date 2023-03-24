@@ -39,7 +39,7 @@ jobs:
           aws-region: ap-southeast-2
 
       - name: Download secret json from S3
-        run: aws s3 cp s3://fitness-tracker-blobs/pc-api-9217576884676944131-660-611aafa20edf.json ./pc-api-9217576884676944131-660-611aafa20edf.json
+        run: aws s3 cp s3://fitness-tracker-blobs/pc-api-9217576884676944131-660-c3f177bf72d7.json ./pc-api-9217576884676944131-660-c3f177bf72d7.json
 
       - name: Publish update
         run: eas build --auto-submit --platform android --profile production

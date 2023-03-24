@@ -23,10 +23,11 @@ type RegisterRequest = {
 
 type RegisterRawResponse = {
   user: ApiUser;
+  token: string;
 };
 
 export function useRegister() {
-  const { setUserId, userId } = useStore();
+  const { setUserId, setToken, userId } = useStore();
   const navigation = useNavigation();
 
   return useMutation(
@@ -44,6 +45,7 @@ export function useRegister() {
         updatedRequest
       );
       setUserId(data.user.id);
+      setToken(data.token);
       return ApiUserToUser(data.user);
     },
     {

@@ -61,7 +61,7 @@ export const Login = () => {
               value={values.password}
               name="Password"
             />
-            <Button onClick={() => handleSubmit()}>Sign In</Button>
+            <Button onPress={() => handleSubmit()}>Sign In</Button>
           </SC.Container>
         )}
       </Formik>

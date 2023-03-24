@@ -12,11 +12,12 @@ type LoginRequest = {
 type RawLoginResponse = {
   value: {
     userId: number;
+    token: string;
   };
 };
 
 export function useLogin() {
-  const { setUserId, userId } = useStore();
+  const { setUserId, setToken, userId } = useStore();
 
   return useMutation(
     async (request: LoginRequest) => {
@@ -25,6 +26,7 @@ export function useLogin() {
         request
       );
       setUserId(data.value.userId);
+      setToken(data.value.token);
     },
     {
       onSuccess() {
