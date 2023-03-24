@@ -1,5 +1,5 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useGetUser } from "api";
+import { useGetUser, useMe } from "api";
 import {
   ActivityDetails,
   CreateWorkout,
@@ -7,7 +7,7 @@ import {
   Notifications,
   Register,
 } from "features";
-import React from "react";
+import React, { useEffect } from "react";
 import { useStore } from "store";
 import { Theme } from "tamagui";
 
@@ -17,15 +17,27 @@ import { SideBarStack } from "../sideBar/sideBarStack";
 import { LoadingMessage } from "./loadingMessage";
 
 const Stack = createNativeStackNavigator<MainStackParams>();
+const refreshInterval = 3600000; // 1 hour in milliseconds
 
 export const MainStack = () => {
   const [assetProgress, setAssetProgress] = React.useState({ current: -1, total: 0 });
 
   const { userId } = useStore();
   const { data: user } = useGetUser();
+  const { refetch: refreshToken } = useMe();
 
   const id = userId ?? -1;
   const userIsLoggedIn = user !== undefined && id >= 0;
+
+  useEffect(() => {
+    if (!userIsLoggedIn) return;
+
+    const interval = setInterval(() => {
+      refreshToken();
+    }, refreshInterval);
+
+    return () => clearInterval(interval);
+  }, [refreshToken]);
 
   if (assetProgress.current < assetProgress.total) {
     return <AssetLoader progress={assetProgress} setProgress={setAssetProgress} />;

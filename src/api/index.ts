@@ -3,6 +3,7 @@ export * from "./achievements/useRecordAchievement";
 export * from "./achievements/useUserAchievements";
 export * from "./apiProvider";
 export * from "./auth/useLogin";
+export * from "./auth/useMe";
 export * from "./auth/useRegister";
 export * from "./exercise/useExercises";
 export * from "./social/useConfirmFriendRequest";

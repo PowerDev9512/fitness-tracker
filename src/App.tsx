@@ -11,12 +11,8 @@ import { toastConfig } from "./toast.config";
 
 LogBox.ignoreLogs(["Require cycle: node_modules/victory"]);
 LogBox.ignoreLogs(["warning: matchMedia implementation is not provided."]);
-LogBox.ignoreLogs([
-  "Please report: Excessive number of pending callbacks: 501.",
-]);
-LogBox.ignoreLogs([
-  "VirtualizedLists should never be nested inside plain ScrollViews with the same orientation because it can break windowing and other functionality - use another VirtualizedList-backed container instead.",
-]);
+LogBox.ignoreLogs(["Please report: Excessive number of pending callbacks: 501."]);
+LogBox.ignoreLogs(["VirtualizedLists should never be nested inside plain ScrollViews with the same orientation because it can break windowing and other functionality - use another VirtualizedList-backed container instead."]);
 
 const App = () => {
   const [loaded] = useFonts({
