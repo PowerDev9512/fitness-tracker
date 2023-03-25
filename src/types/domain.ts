@@ -330,6 +330,14 @@ export interface User {
   friendRequests: number[];
 }
 
+export interface OtherUser {
+  username: string;
+  level: number;
+  avatar: Image | null;
+  title: Title | null;
+  badge: Badge | null;
+}
+
 export interface Message {
   workout: Workout;
   date: string;

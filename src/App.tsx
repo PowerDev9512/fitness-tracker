@@ -23,6 +23,7 @@ type MeResponse = {
 };
 
 const refreshInterval = 3600000; // 1 hour in milliseconds
+
 const refreshToken = async (setToken: (token: string) => void) => {
   try {
     const response = await client.get<MeResponse>("/users/me");
@@ -30,6 +31,13 @@ const refreshToken = async (setToken: (token: string) => void) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+const startTokenRefresh = (token: string, setToken: (token: string) => void) => {
+  setTimeout(async () => {
+    await refreshToken(setToken);
+    startTokenRefresh(token, setToken);
+  }, refreshInterval);
 };
 
 const App = () => {
@@ -41,16 +49,9 @@ const App = () => {
   });
 
   useEffect(() => {
-    if (!userId || !token) {
-      return;
-    }
-
-    const interval = setInterval(() => {
-      refreshToken(setToken);
-    }, refreshInterval);
-
-    return () => clearInterval(interval);
-  }, [refreshToken]);
+    if (!token) return;
+    startTokenRefresh(token, setToken);
+  }, []);
 
   if (!loaded) {
     return null;

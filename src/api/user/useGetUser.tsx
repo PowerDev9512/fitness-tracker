@@ -11,34 +11,16 @@ type GetUserRawResponse = {
 
 type GetUserResponse = User | null;
 
-export function useGetUser(
-  otherUserId: number | null = null
-): UseQueryResult<GetUserResponse, unknown> {
+export function useGetUser(): UseQueryResult<GetUserResponse, unknown> {
   const { userId, setUserId } = useStore();
 
-  const cacheKey = otherUserId ? ["user", otherUserId] : ["user", userId];
-
-  return useQuery(cacheKey, async () => {
-    if (!otherUserId) {
-      if (!userId || userId < 0) {
-        return undefined;
-      }
-
-      const { data } = await client.get<GetUserRawResponse>(`/users/${userId}`);
-      setUserId(data.user.id);
-      return ApiUserToUser(data.user);
+  return useQuery(["user", userId], async () => {
+    if (!userId || userId < 0) {
+      return undefined;
     }
 
-    if (otherUserId) {
-      if (otherUserId < 0) {
-        return undefined;
-      }
-
-      const { data } = await client.get<GetUserRawResponse>(
-        `/users/${otherUserId}`
-      );
-
-      return ApiUserToUser(data.user);
-    }
+    const { data } = await client.get<GetUserRawResponse>(`/users/${userId}`);
+    setUserId(data.user.id);
+    return ApiUserToUser(data.user);
   });
 }

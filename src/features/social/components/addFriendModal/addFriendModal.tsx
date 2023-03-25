@@ -2,11 +2,11 @@ import { useSendFriendRequest } from "api";
 import { Avatar, Button, Card, Heading, Modal, Skeleton } from "components";
 import React, { useEffect } from "react";
 import { Text, XStack, YStack } from "tamagui";
-import { User } from "types";
+import { OtherUser, User } from "types";
 
 interface Props {
   user: User | null;
-  friend: User | null;
+  friend: OtherUser | null;
   loading: boolean;
   onClose: () => void;
 }
@@ -34,7 +34,7 @@ export const AddFriendModal = ({ friend, user, loading, onClose }: Props) => {
           {!loading && friend && (
             <>
               <Heading> {friend.username} </Heading>
-              <Text>Level {friend.workoutBuddy.data.levelStats.overall} </Text>
+              <Text>Level {friend.level} </Text>
               <Text> {friend.title?.name ?? ""} </Text>
             </>
           )}

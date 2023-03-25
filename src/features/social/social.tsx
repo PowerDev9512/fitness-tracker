@@ -1,22 +1,22 @@
-import { useGetFeed, useGetUser, useGetUsers } from "api";
+import { useGetFeed, useGetOtherUser, useGetUser, useGetUsers } from "api";
 import { Button, Input, Screen, Skeleton } from "components";
 import React, { useCallback, useEffect } from "react";
 import { FlatList } from "react-native";
 import Toast from "react-native-toast-message";
 import { XStack } from "tamagui";
-import { Message, User } from "types";
+import { Message, OtherUser, User } from "types";
 
 import { AddFriendModal } from "./components/addFriendModal/addFriendModal";
 import { FeedEntry } from "./components/feedEntry/feedEntry";
 
 export const Social = () => {
   const [searchedUserId, setSearchedUserId] = React.useState<number>(-1);
-  const [searchedUser, setSearchedUser] = React.useState<User | null>(null);
+  const [searchedUser, setSearchedUser] = React.useState<OtherUser | null>(null);
   const [search, setSearch] = React.useState("");
 
   const { data: users } = useGetUsers();
   const { data: user } = useGetUser();
-  const { data: friend, isLoading: friendLoading } = useGetUser(searchedUserId);
+  const { data: friend, isLoading: friendLoading } = useGetOtherUser(searchedUserId);
   const { data: feed, isLoading: feedLoading } = useGetFeed();
 
   const searchableUsers = (users ?? []).filter((item) => item.id !== user?.id);

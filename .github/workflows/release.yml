@@ -6,11 +6,33 @@ on:
 
 jobs:
   build:
-    name: Deploy to Play Store
+    name: EAS build
     runs-on: ubuntu-latest
     steps:
+      - name: Check for EXPO_TOKEN
+        run: |
+          if [ -z "${{ secrets.EXPO_TOKEN }}" ]; then
+            echo "You must provide an EXPO_TOKEN secret linked to this project's Expo account in this repo's secrets. Learn more: https://docs.expo.dev/eas-update/github-actions"
+            exit 1
+          fi
+
       - name: Checkout repository
         uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+
+      - name: Setup Expo
+        uses: expo/expo-github-action@v7
+        with:
+          expo-version: latest
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        run: npm ci
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -22,18 +44,5 @@ jobs:
       - name: Download secret json from S3
         run: aws s3 cp s3://fitness-tracker-blobs/pc-api-9217576884676944131-660-c3f177bf72d7.json ./pc-api-9217576884676944131-660-c3f177bf72d7.json
 
-      - name: Grant gradlew execution permission
-        working-directory: ./android
-        run: chmod +x ./gradlew
-
-      - name: Build release
-        working-directory: ./android
-        run: ./gradlew bundleRelease
-
-      - name: Upload to Play Store
-        uses: r0adkll/upload-google-play@v1
-        with:
-          serviceAccountJson: pc-api-9217576884676944131-660-c3f177bf72d7.json
-          packageName: fitness.tracker
-          releaseFile: android/app/build/outputs/bundle/release/app-release.aab
-          track: internal
+      - name: Publish update
+        run: eas build --auto-submit --platform android --profile production

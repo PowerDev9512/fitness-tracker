@@ -2,14 +2,14 @@ import React, { useMemo, useState } from "react";
 import { Pressable } from "react-native";
 import FastImage from "react-native-fast-image";
 import { Stack } from "tamagui";
-import { Badge, Image as ImageType, User } from "types";
+import { Badge, Image as ImageType, OtherUser, User } from "types";
 
 import { ImagePicker } from "./imagePicker";
 
 interface BaseProps {
   size: "sm" | "md" | "lg" | "xl" | "2xl";
   callback: (image: ImageType) => void;
-  user: User | null;
+  user: User | OtherUser | null;
   badge?: Badge;
   editable?: boolean;
 }
