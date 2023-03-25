@@ -21,7 +21,7 @@ export function useGetUser(
   return useQuery(cacheKey, async () => {
     if (!otherUserId) {
       if (!userId || userId < 0) {
-        return null;
+        return undefined;
       }
 
       const { data } = await client.get<GetUserRawResponse>(`/users/${userId}`);
@@ -31,7 +31,7 @@ export function useGetUser(
 
     if (otherUserId) {
       if (otherUserId < 0) {
-        return null;
+        return undefined;
       }
 
       const { data } = await client.get<GetUserRawResponse>(

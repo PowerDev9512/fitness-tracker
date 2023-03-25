@@ -113,9 +113,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace 'dev.tamagui.expo.client'
+    namespace 'fitness.tracker'
     defaultConfig {
-        applicationId 'dev.tamagui.expo.client'
+        applicationId 'fitness.tracker'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

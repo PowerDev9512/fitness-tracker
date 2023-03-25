@@ -260,10 +260,12 @@ export const ErrorCodes: { [key: number]: string } = {
 };
 
 export type ApiError = {
-  message: string;
-  code: keyof typeof ErrorCodes;
+  errors: {
+    message: string;
+    code: keyof typeof ErrorCodes;
+  }[];
 };
 
-export function isApiError(error: any[]): error is ApiError[] {
-  return error.length > 0 && error[0].code !== undefined;
+export function isApiError(response: any): response is ApiError {
+  return response.errors !== undefined;
 }

@@ -19,7 +19,7 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   android: {
     ...config.android,
     runtimeVersion: "1.0.0",
-    package: IS_DEV ? "dev.tamagui.expo.devclient" : "dev.tamagui.expo.client",
+    package: "fitness.tracker",
   },
   ios: {
     ...config.ios,

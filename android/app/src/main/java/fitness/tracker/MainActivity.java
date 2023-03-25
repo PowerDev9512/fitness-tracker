@@ -1,4 +1,4 @@
-package dev.tamagui.expo.client;
+package fitness.tracker;
 
 import android.os.Build;
 import android.os.Bundle;
