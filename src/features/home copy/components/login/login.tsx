@@ -61,7 +61,9 @@ export const Login = () => {
               value={values.password}
               name="Password"
             />
-            <Button onPress={() => handleSubmit()}>Sign In</Button>
+            <Button
+              disabled={!(values.email && values.password)}
+              onPress={() => handleSubmit()}>Sign In</Button>
           </SC.Container>
         )}
       </Formik>

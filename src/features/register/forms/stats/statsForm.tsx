@@ -5,7 +5,6 @@ import { createMeasurementFormatter, createWeightFormatter } from "utils";
 
 import { Exercise } from "../../../../types/domain";
 import { RegisterProps } from "../../register";
-import * as SC from "../../register.styles";
 
 type Props = RegisterProps & {
   exercises: Exercise[];
@@ -90,7 +89,7 @@ export const StatsForm = ({ form, exercises }: Props) => {
   ));
 
   return (
-    <SC.Container>
+    <Stack w="90%">
       <FormInput
         onChangeText={form.handleChange("height")}
         onBlur={form.handleBlur("height")}
@@ -127,8 +126,12 @@ export const StatsForm = ({ form, exercises }: Props) => {
       />
       <FormLabel mr="auto">Exercise maxes</FormLabel>
       <Autocomplete
-        w="100%"
-        placeholder="Select an exercise to add a max for"
+        viewProps={{
+          w: "100%",
+        }}
+        inputProps={{
+          placeholder: "Select an exercise to add a max for"
+        }}
         data={filteredExercises ?? []}
         value={exerciseText}
         keyExtractor={(item: Exercise) => item.name}
@@ -141,7 +144,8 @@ export const StatsForm = ({ form, exercises }: Props) => {
       />
       {maxes}
       <Button
-        mt="$20"
+        mb="$4"
+        mt="$4"
         w="100%"
         disabled={selectedExercise === null}
         onPress={() => {
@@ -152,6 +156,6 @@ export const StatsForm = ({ form, exercises }: Props) => {
       >
         Add New Exercise Max
       </Button>
-    </SC.Container>
+    </Stack>
   );
 };

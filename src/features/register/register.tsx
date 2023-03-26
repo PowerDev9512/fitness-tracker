@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { Text } from "tamagui";
 import { Image } from "types";
 
-import { NavigationButton } from "./components/navigationButton/navigationButton";
+import { NavigationButton } from "./navigationButton";
 import { BuddyForm } from "./forms/buddy/buddyForm";
 import { RegisterForm } from "./forms/details/registerForm";
 import { StatsForm } from "./forms/stats/statsForm";

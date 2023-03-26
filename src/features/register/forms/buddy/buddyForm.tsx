@@ -3,11 +3,10 @@ import React from "react";
 import { Stack, XStack } from "tamagui";
 
 import { RegisterProps } from "../../register";
-import * as SC from "../../register.styles";
 
 export const BuddyForm = ({ form }: RegisterProps) => {
   return (
-    <SC.Container>
+    <Stack w="90%">
       <FormInput
         onChangeText={form.handleChange("buddyName")}
         onBlur={form.handleBlur("buddyName")}
@@ -21,7 +20,7 @@ export const BuddyForm = ({ form }: RegisterProps) => {
         name="Buddy Name"
       />
 
-      <Stack mb={2} mr="auto">
+      <Stack mb="$4" mr="auto">
         <FormLabel>Measurement Unit</FormLabel>
         {["Metric", "Imperial"].map((unit) => (
           <XStack key={unit} alignItems="center">
@@ -38,7 +37,7 @@ export const BuddyForm = ({ form }: RegisterProps) => {
         ))}
       </Stack>
 
-      <Stack mr="auto">
+      <Stack mb="$4" mr="auto">
         <FormLabel>Height</FormLabel>
         {["Kilograms", "Pounds"].map((unit) => (
           <XStack key={unit} alignItems="center">
@@ -52,6 +51,6 @@ export const BuddyForm = ({ form }: RegisterProps) => {
           </XStack>
         ))}
       </Stack>
-    </SC.Container>
+    </Stack>
   );
 };

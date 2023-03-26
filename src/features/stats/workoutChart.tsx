@@ -93,8 +93,6 @@ export const WorkoutChart = () => {
       ...workoutData.graphData.map((data) => data.exerciseMetaData)
     );
 
-    console.log(workoutData.graphData);
-
     return (
       <VictoryChart style={{ parent: { maxWidth: "100%" } }} containerComponent={<VictoryVoronoiContainer />}>
         <VictoryArea

@@ -41,8 +41,15 @@ export const Autocomplete = <T extends unknown>({
     [filteredData]
   );
 
+  const handlePress = (e: any) => {
+    if (e.target !== e.currentTarget) {
+      return;
+    }
+    setShowList(false);
+  };
+
   return (
-    <Stack {...viewProps}>
+    <Stack {...viewProps} onTouchStart={handlePress}>
       <Stack>
         <Input
           placeholder={inputProps?.placeholder ?? "Search"}

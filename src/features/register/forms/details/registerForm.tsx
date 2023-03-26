@@ -3,7 +3,7 @@ import React from "react";
 import { Image } from "types";
 
 import { RegisterProps } from "../../register";
-import * as SC from "../../register.styles";
+import { Stack } from "tamagui";
 
 export const RegisterForm = ({ form }: RegisterProps) => {
   const handleImageChange = (image: Image) => {
@@ -11,9 +11,8 @@ export const RegisterForm = ({ form }: RegisterProps) => {
   };
 
   return (
-    <SC.Container>
-      <Avatar user={null} size="xl" callback={handleImageChange} editable />
-
+    <Stack w="90%" mb="$4">
+      <Avatar mx="auto" user={null} size="xl" callback={handleImageChange} editable />
       <FormInput
         required
         onChangeText={form.handleChange("username")}
@@ -64,6 +63,6 @@ export const RegisterForm = ({ form }: RegisterProps) => {
             : undefined
         }
       />
-    </SC.Container>
+    </Stack>
   );
 };

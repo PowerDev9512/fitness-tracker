@@ -37,8 +37,6 @@ const SelectInternal = <T extends unknown>({
     }
   };
 
-  console.log(value)
-
   return (
     <SelectBase id={placeholder} key={value?.label} value={value?.value} onValueChange={handleOnChangeValue}>
       <SelectBase.Trigger

@@ -29,7 +29,7 @@ const refreshToken = async (setToken: (token: string) => void) => {
     const response = await client.get<MeResponse>("/users/me");
     setToken(response.data.value.token);
   } catch (error) {
-    console.log(error);
+    return;
   }
 };
 

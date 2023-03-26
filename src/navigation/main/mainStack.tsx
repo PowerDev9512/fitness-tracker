@@ -14,20 +14,21 @@ import { AssetLoader } from "./assetLoader";
 import { MainHeader } from "./mainHeader";
 import { SideBarStack } from "../sideBar/sideBarStack";
 import { LoadingMessage } from "./loadingMessage";
+import { useStore } from "store";
 
 const Stack = createNativeStackNavigator<MainStackParams>();
-const refreshInterval = 3600000; // 1 hour in milliseconds
 
 export const MainStack = () => {
   const [assetProgress, setAssetProgress] = React.useState({ current: -1, total: 0 });
   const { data: user, isLoading: loggingIn } = useGetUser();
+  const { userId } = useStore();
   const userIsLoggedIn = user !== undefined;
 
   if (assetProgress.current < assetProgress.total) {
     return <AssetLoader progress={assetProgress} setProgress={setAssetProgress} />;
   }
 
-  if (loggingIn) {
+  if (loggingIn && userId !== undefined && userId >= 0) {
     return <LoadingMessage title="Logging in..." />;
   }
 
