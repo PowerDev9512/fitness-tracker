@@ -15,8 +15,8 @@ export const UserSetting = ({ item, onChange, value }: Props) => {
     `${item.key}-${opt.value}-${value}`;
 
   return (
-    <Card w="100%" mx="auto" my="$2" p="$2">
-      <Text ml={2} mb={2}>
+    <Card w="100%" mx="auto" my="$2" p="$4">
+      <Text ml="$1" mb="$2">
         {item.title}
       </Text>
       {item.options.map((option) => (
@@ -25,7 +25,7 @@ export const UserSetting = ({ item, onChange, value }: Props) => {
           mb={1}
           key={`${key(option)}-stack`}
           alignItems="center"
-          space={2}
+          space="$2"
         >
           <RadioButton
             value={option.value}
