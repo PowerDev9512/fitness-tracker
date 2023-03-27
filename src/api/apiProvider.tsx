@@ -20,6 +20,7 @@ const onErrorHandler = (err: unknown) => {
     if (err.response?.status === 401) {
       setUserId(undefined);
       setToken(undefined);
+      queryClient.clear();
       return;
     }
 

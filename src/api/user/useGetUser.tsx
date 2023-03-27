@@ -11,7 +11,7 @@ type GetUserRawResponse = {
 
 type GetUserResponse = User | null;
 
-export function useGetUser(): UseQueryResult<GetUserResponse, unknown> {
+export function useGetUser(forceFetch?: boolean): UseQueryResult<GetUserResponse, unknown> {
   const { userId, setUserId } = useStore();
 
   return useQuery(["user", userId], async () => {
@@ -22,5 +22,7 @@ export function useGetUser(): UseQueryResult<GetUserResponse, unknown> {
     const { data } = await client.get<GetUserRawResponse>(`/users/${userId}`);
     setUserId(data.user.id);
     return ApiUserToUser(data.user);
+  }, {
+    enabled: !!forceFetch,
   });
 }

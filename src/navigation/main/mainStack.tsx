@@ -7,7 +7,7 @@ import {
   Notifications,
   Register,
 } from "features";
-import React from "react";
+import React, { useEffect } from "react";
 import { Theme } from "tamagui";
 
 import { AssetLoader } from "./assetLoader";
@@ -20,16 +20,21 @@ const Stack = createNativeStackNavigator<MainStackParams>();
 
 export const MainStack = () => {
   const [assetProgress, setAssetProgress] = React.useState({ current: -1, total: 0 });
-  const { data: user, isLoading: loggingIn } = useGetUser();
+  const { data: user, fetchStatus: getUserStatus, refetch: getUser } = useGetUser(true);
   const { userId } = useStore();
-  const userIsLoggedIn = user !== undefined;
+
+  useEffect(() => {
+    if (getUserStatus === "idle" && userId !== undefined && userId >= 0) {
+      getUser();
+    }
+  }, [userId]);
 
   if (assetProgress.current < assetProgress.total) {
     return <AssetLoader progress={assetProgress} setProgress={setAssetProgress} />;
   }
 
-  if (loggingIn && userId !== undefined && userId >= 0) {
-    return <LoadingMessage title="Logging in..." />;
+  if (getUserStatus !== "idle" && userId !== undefined && userId >= 0) {
+    return <LoadingMessage title="Loading..." />;
   }
 
   return (
@@ -39,13 +44,13 @@ export const MainStack = () => {
           header: (props) => (
             <MainHeader
               name={props.route.name}
-              loggedIn={userIsLoggedIn}
+              loggedIn={user !== undefined}
               onBackPress={() => props.navigation.goBack()}
             />
           ),
         }}
       >
-        {userIsLoggedIn && (
+        {user && (
           <Stack.Group>
             <Stack.Screen
               name="Drawer"
@@ -64,7 +69,7 @@ export const MainStack = () => {
           </Stack.Group>
         )}
 
-        {!userIsLoggedIn && (
+        {!user && (
           <Stack.Group>
             <Stack.Screen
               name="Home"
