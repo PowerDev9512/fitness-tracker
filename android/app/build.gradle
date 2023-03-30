@@ -118,8 +118,8 @@ android {
         applicationId 'fitness.tracker'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 34
-        versionName "0.9.3"
+        versionCode 35
+        versionName "0.9.4"
     }
 
     splits {
