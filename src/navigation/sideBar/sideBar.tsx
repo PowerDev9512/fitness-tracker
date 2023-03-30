@@ -4,7 +4,7 @@ import {
   DrawerItem,
   DrawerItemList,
 } from "@react-navigation/drawer";
-import { useGetUser } from "api";
+import { queryClient, useGetUser } from "api";
 import { Avatar } from "components";
 import React, { useCallback } from "react";
 import { useStore } from "store";
@@ -60,7 +60,13 @@ export const SideBar = ({
         descriptors={descriptors}
       />
 
-      <DrawerItem label="Logout" onPress={() => setUserId(-1)} />
+      <DrawerItem
+        label="Logout"
+        onPress={() => {
+          queryClient.clear();
+          setUserId(undefined);
+        }}
+      />
     </DrawerContentScrollView>
   );
 };

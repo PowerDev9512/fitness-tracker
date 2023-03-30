@@ -1,5 +1,6 @@
 {
-  "extends": "expo/tsconfig.base.ts",
+  // extend from expo tsconfig
+  "extends": "expo/tsconfig.base.json",
   "exclude": [
     "node_modules",
     "babel.config.js",
@@ -9,6 +10,9 @@
   ],
   "compilerOptions": {
     "strict": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "jsx": "react-native",
     "strictNullChecks": true,
     "typeRoots": ["node_modules/@types"],
     "paths": {

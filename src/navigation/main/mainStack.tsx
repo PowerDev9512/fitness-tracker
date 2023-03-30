@@ -13,28 +13,24 @@ import { Theme } from "tamagui";
 import { AssetLoader } from "./assetLoader";
 import { MainHeader } from "./mainHeader";
 import { SideBarStack } from "../sideBar/sideBarStack";
-import { LoadingMessage } from "./loadingMessage";
 import { useStore } from "store";
 
 const Stack = createNativeStackNavigator<MainStackParams>();
 
 export const MainStack = () => {
   const [assetProgress, setAssetProgress] = React.useState({ current: -1, total: 0 });
-  const { data: user, fetchStatus: getUserStatus, refetch: getUser } = useGetUser(true);
-  const { userId } = useStore();
+  const { data: user } = useGetUser();
+  const { setUserId, token, setToken } = useStore();
 
   useEffect(() => {
-    if (getUserStatus === "idle" && userId !== undefined && userId >= 0) {
-      getUser();
+    if (token?.expiresAt && token.expiresAt < new Date()) {
+      setToken(undefined);
+      setUserId(undefined);
     }
-  }, [userId]);
+  }, [setToken, token]);
 
   if (assetProgress.current < assetProgress.total) {
     return <AssetLoader progress={assetProgress} setProgress={setAssetProgress} />;
-  }
-
-  if (getUserStatus !== "idle" && userId !== undefined && userId >= 0) {
-    return <LoadingMessage title="Loading..." />;
   }
 
   return (
@@ -44,7 +40,7 @@ export const MainStack = () => {
           header: (props) => (
             <MainHeader
               name={props.route.name}
-              loggedIn={user !== undefined}
+              loggedIn={user === undefined}
               onBackPress={() => props.navigation.goBack()}
             />
           ),
@@ -69,7 +65,7 @@ export const MainStack = () => {
           </Stack.Group>
         )}
 
-        {!user && (
+        {user === undefined && (
           <Stack.Group>
             <Stack.Screen
               name="Home"

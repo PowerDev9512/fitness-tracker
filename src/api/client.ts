@@ -21,7 +21,7 @@ export const client = axios.create({
   baseURL: local,
   headers: {
     "Content-Type": "application/json",
-    Authorization: "Bearer " + useStore.getState().token ?? "",
+    Authorization: "Bearer " + useStore.getState().token?.token ?? "",
   },
 });
 
