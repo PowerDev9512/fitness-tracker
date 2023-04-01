@@ -221,7 +221,7 @@ const SettingsInternal = () => {
 
       <Button
         w="100%"
-        disabled={isUpdating}
+        isLoading={isUpdating}
         onPress={() =>
           update({
             ...userDetails,

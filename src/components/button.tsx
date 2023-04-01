@@ -18,7 +18,7 @@ export const Button = ({
   let color: string;
   let textColor: string;
   let outline: string | undefined;
-  let disabled = props.disabled ?? false;
+  const disabled = isLoading === true || props.disabled === true;
 
   switch (variant) {
     case "primary":
@@ -35,6 +35,7 @@ export const Button = ({
       color = "transparent";
       textColor = disabled ? "$gray300" : "$primary500";
       outline = disabled ? "$gray300" : "$primary500";
+      break;
     default:
       color = "$primary500";
       textColor = "white";
@@ -43,12 +44,21 @@ export const Button = ({
   if (isLoading) {
     return (
       <BaseButton
-        disabled={true}
+        disabled
+        color={textColor}
         backgroundColor={color}
-        icon={<Spinner mx="auto" pos="absolute" backgroundColor={color} />}
-        als="center"
+        icon={
+          <Spinner
+            mx="auto"
+            pos="absolute"
+            size="large"
+            backgroundColor={color}
+          />
+        }
         {...props}
-      />
+      >
+        {" "}
+      </BaseButton>
     );
   }
 

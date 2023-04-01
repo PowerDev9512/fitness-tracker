@@ -51,6 +51,10 @@ export const Input = ({
         position="absolute"
         right={0}
         backgroundColor="transparent"
+        color="$gray500"
+        pressStyle={{
+          backgroundColor: "transparent",
+        }}
         onPress={() => setHidden(!hidden)}
         icon={hidden ? <EyeOff /> : <Eye />}
       />
@@ -69,6 +73,7 @@ export const Input = ({
         placeholderTextColor="gray"
         backgroundColor="$white"
         color="black"
+        secureTextEntry={hidden}
         {...props}
         w="100%"
       />

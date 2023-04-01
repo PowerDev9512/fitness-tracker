@@ -49,7 +49,7 @@ export const AddFriendModal = ({ friend, user, loading, onClose }: Props) => {
 
           {!isFriend && (
             <Button
-              disabled={adding || loading}
+              isLoading={adding || loading}
               onPress={() => {
                 addFriend({ friendId: user?.id ?? -1 });
               }}
@@ -59,7 +59,7 @@ export const AddFriendModal = ({ friend, user, loading, onClose }: Props) => {
           )}
 
           {isFriend && (
-            <Button disabled={adding} onPress={() => null}>
+            <Button isLoading={adding} onPress={() => null}>
               Remove Friend
             </Button>
           )}

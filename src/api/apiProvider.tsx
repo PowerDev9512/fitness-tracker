@@ -7,16 +7,16 @@ import {
 import { AxiosError } from "axios";
 import * as React from "react";
 import Toast from "react-native-toast-message";
-
-import { log } from "../utils/helpers";
-import { ErrorCodes, isApiError } from "./types";
 import { useStore } from "store";
+
+import { ErrorCodes, isApiError } from "./types";
+import { log } from "../utils/helpers";
 
 const onErrorHandler = (err: unknown) => {
   log(err, "error");
 
   if (err instanceof AxiosError) {
-    const { setUserId, setToken } = useStore();
+    const { setUserId, setToken } = useStore.getState();
     if (err.response?.status === 401) {
       setUserId(undefined);
       setToken(undefined);
@@ -26,11 +26,16 @@ const onErrorHandler = (err: unknown) => {
 
     const data = err.response?.data;
     if (isApiError(data) && data.errors.length > 0) {
-      Toast.show({
-        text1: ErrorCodes[data.errors[0].code],
-        type: "error",
-      });
-      return;
+      const error = data.errors?.[0];
+      const message = ErrorCodes?.[error.code];
+      if (message) {
+        Toast.show({
+          text1: message.title,
+          text2: message.description ?? "",
+          type: "error",
+        });
+        return;
+      }
     }
   }
 

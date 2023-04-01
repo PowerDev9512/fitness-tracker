@@ -26,7 +26,7 @@ export const CardioModal = ({ workout, activity, onClose, isOpen }: Props) => {
   const [notes, setNotes] = useState(activity.notes);
   const [image, setImage] = useState(activity.image);
 
-  const { mutate: editWorkout } = useEditWorkout();
+  const { mutate: editWorkout, isLoading: editing } = useEditWorkout();
 
   const handleChange =
     (callback: (value: number) => void) => (value: string) => {
@@ -84,6 +84,7 @@ export const CardioModal = ({ workout, activity, onClose, isOpen }: Props) => {
         <XStack ml="auto" space={2}>
           <Button variant="link" onPress={onClose}>Cancel</Button>
           <Button
+            isLoading={editing}
             onPress={() => {
               editWorkout({
                 userId: user!.id,

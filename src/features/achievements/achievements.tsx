@@ -1,8 +1,7 @@
 import { useGetUser, useRecordAchievement, useUserAchievements } from "api";
-import { Card, FilterOption, Filters, Screen, Skeleton } from "components";
+import { Button, Card, FilterOption, Filters, Screen, Skeleton } from "components";
 import React, { useEffect, useState } from "react";
 import { FlatList } from "react-native";
-import { Button, Stack } from "tamagui";
 import {
   AchievementTypes,
   MuscleGroups,
@@ -31,7 +30,7 @@ export const Achievements = () => {
   const { data: user } = useGetUser();
   const { data: achievements, isLoading: achievementsLoading } =
     useUserAchievements({ userId: user?.id ?? 0 });
-  const { data: recordResponse, mutate: recordAchievement } =
+  const { data: recordResponse, mutate: recordAchievement, isLoading: recording } =
     useRecordAchievement();
 
   const [rewards, setRewards] = useState<Reward[]>([]);
@@ -68,6 +67,7 @@ export const Achievements = () => {
         {achievement.isCompleted && (
           <Button
             mt="$10"
+            isLoading={recording}
             onPress={() =>
               recordAchievement({
                 userId: user.id,

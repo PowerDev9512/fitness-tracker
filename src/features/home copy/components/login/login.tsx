@@ -13,10 +13,10 @@ export interface LoginValues {
 }
 
 export const Login = () => {
-  const { mutate } = useLogin();
+  const { mutate, isLoading: loggingIn } = useLogin();
 
   const onSubmit = ({ email, password }: LoginValues) => {
-    mutate({ email, password });
+    mutate({ email: email.trim().toLowerCase(), password });
   };
 
   return (
@@ -63,7 +63,11 @@ export const Login = () => {
             />
             <Button
               disabled={!(values.email && values.password)}
-              onPress={() => handleSubmit()}>Sign In</Button>
+              isLoading={loggingIn}
+              onPress={() => handleSubmit()}
+            >
+              Sign In
+            </Button>
           </SC.Container>
         )}
       </Formik>
