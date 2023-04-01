@@ -1,16 +1,20 @@
+import Constants from "expo-constants";
 import React from "react";
 import { Heading, XStack } from "tamagui";
 
-import { SideBarButton } from "./sideBarButton";
 import NotificationBell from "./notificationBell";
+import { SideBarButton } from "./sideBarButton";
 
 interface Props {
   name: string;
 }
 
 const DrawerHeaderInternal = ({ name }: Props) => {
+  const STATUSBAR_HEIGHT = Constants.statusBarHeight;
+
   return (
     <XStack
+      mt={STATUSBAR_HEIGHT}
       backgroundColor="$backgroundAccent"
       py="$3"
       justifyContent="space-between"

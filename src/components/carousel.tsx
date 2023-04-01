@@ -20,20 +20,20 @@ export const Carousel = ({
   const { width, height } = Dimensions.get("window");
 
   return (
-    <GestureHandlerRootView style={{ marginTop: -20 }}>
+    <GestureHandlerRootView>
       <BaseCarousel
         loop={false}
         vertical
         pagingEnabled
         width={width}
-        height={height * 0.95}
+        height={height * 0.9}
         scrollAnimationDuration={1000}
         data={items}
         defaultIndex={defaultIndex}
         mode="parallax"
         modeConfig={{
-          parallaxScrollingScale: 0.92,
-          parallaxScrollingOffset: 380,
+          parallaxScrollingScale: 0.90,
+          parallaxScrollingOffset: 350,
         }}
         renderItem={({ item, index }) => renderItem(item, index)}
       />

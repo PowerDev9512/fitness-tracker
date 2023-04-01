@@ -7,7 +7,6 @@ export * from "./auth/useRegister";
 export * from "./exercise/useExercises";
 export * from "./social/useConfirmFriendRequest";
 export * from "./social/useGetFeed";
-export * from "./social/useGetUsers";
 export * from "./social/useRejectFriendRequest";
 export * from "./social/useSendFriendRequest";
 export * from "./user/useAddWorkout";

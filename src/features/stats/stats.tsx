@@ -1,8 +1,8 @@
 import SegmentedControl from "@react-native-segmented-control/segmented-control";
 import { useGetUser } from "api";
-import { Heading, Screen } from "components";
+import { Avatar, Heading, Screen } from "components";
 import React from "react";
-import { Text, useTheme } from "tamagui";
+import { Separator, Text, XStack, YStack, useTheme } from "tamagui";
 
 import { BuddyStats } from "./buddyStats";
 import { WorkoutChart } from "./workoutChart";
@@ -12,28 +12,42 @@ export const Stats = () => {
   const { data: user } = useGetUser();
   const theme = useTheme();
 
-  const streakText =
-    (user?.workoutBuddy?.data?.streak ?? 0) > 0
-      ? `\nYou're on a roll, keep up the ${user?.workoutBuddy.data.streak} day streak!`
-      : null;
+  if (!user) {
+    return (
+      <Screen scrollable extraSpace>
+        <Heading style={{ marginTop: 10, marginBottom: 10 }}>
+          Loading...
+        </Heading>
+      </Screen>
+    );
+  }
 
   return (
     <Screen scrollable extraSpace>
-      <Heading mb="$-3" size="$9">
-        Hello, {user?.username}
-      </Heading>
-
-      <Text fontSize={16} fontWeight="semibold" textAlign="center">
-        Its time to get your workout on!
-        {streakText}
-      </Text>
+      <XStack>
+        <Avatar user={user} size="lg" callback={() => {}} />
+        <YStack my="auto" ml="$5">
+          <Heading>{user.username}</Heading>
+          <Text>{user?.title?.name ?? "Titleless"}</Text>
+          <Separator my="$2" w="100%" borderColor="$gray500" />
+          <Text>Level {user.workoutBuddy.data.levelStats.overall}</Text>
+          <Text>Streak {user.workoutBuddy.data.streak} days</Text>
+        </YStack>
+      </XStack>
 
       <SegmentedControl
         style={{
           width: "90%",
-          backgroundColor: theme.background.val,
-          marginBottom: -10,
+          marginBottom: -25,
           height: 30,
+        }}
+        tintColor={theme.backgroundStrong.val}
+        fontStyle={{
+          color: theme.black.val,
+        }}
+        tabStyle={{
+          backgroundColor: theme.white.val,
+          borderRadius: 0,
         }}
         values={["Stats", "Graphs"]}
         selectedIndex={index}
@@ -41,13 +55,6 @@ export const Stats = () => {
           setIndex(event.nativeEvent.selectedSegmentIndex);
         }}
         backgroundColor={theme.white.val}
-        tabStyle={{
-          margin: 2,
-          borderColor: "transparent",
-          backgroundColor: "transparent",
-          borderRadius: 0,
-          height: 30,
-        }}
       />
 
       {index === 0 && <BuddyStats />}

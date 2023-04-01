@@ -11,12 +11,18 @@ type GetOtherUserRawResponse = {
 type GetOtherUserResponse = OtherUser | null;
 
 export function useGetOtherUser(
-  otherUserId: number
+  otherUserName: string | null
 ): UseQueryResult<GetOtherUserResponse, unknown> {
   const { userId } = useStore();
 
-  return useQuery(["otherUser", otherUserId], async () => {
-    const { data } = await client.get<GetOtherUserRawResponse>(`/users/${userId}/otherUsers/${otherUserId}`);
+  return useQuery(["otherUser", otherUserName], async () => {
+    if (!userId || !otherUserName) {
+      return null;
+    }
+
+    const { data } = await client.get<GetOtherUserRawResponse>(
+      `/users/${userId}/otherUsers/${otherUserName}`
+    );
     return data.user;
   });
 }

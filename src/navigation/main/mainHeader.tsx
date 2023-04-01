@@ -3,6 +3,7 @@ import React, { useCallback } from "react";
 import { Heading, XStack } from "tamagui";
 
 import NotificationBell from "../sideBar/notificationBell";
+import Constants from "expo-constants";
 
 type BaseProps = {
   loggedIn: boolean;
@@ -13,6 +14,8 @@ type BaseProps = {
 type Props = BaseProps;
 
 const MainHeaderInternal = ({ loggedIn, name, onBackPress }: Props) => {
+  const STATUSBAR_HEIGHT = Constants.statusBarHeight;
+
   const createNotificationBell = useCallback(() => {
     if (loggedIn && name !== "Notifications") {
       return <NotificationBell />;
@@ -21,6 +24,7 @@ const MainHeaderInternal = ({ loggedIn, name, onBackPress }: Props) => {
 
   return (
     <XStack
+      mt={STATUSBAR_HEIGHT}
       backgroundColor="$backgroundAccent"
       py="$3"
       justifyContent="space-between"

@@ -25,6 +25,7 @@ export function useLogin() {
         "/users/login",
         request
       );
+
       setUserId(data.value.userId);
       setToken(data.value.token);
     },

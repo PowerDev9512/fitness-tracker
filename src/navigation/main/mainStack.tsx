@@ -8,19 +8,25 @@ import {
   Register,
 } from "features";
 import React, { useEffect } from "react";
-import { Theme } from "tamagui";
+import { useStore } from "store";
+import { Theme, useTheme } from "tamagui";
 
 import { AssetLoader } from "./assetLoader";
+import { LoadingMessage } from "./loadingMessage";
 import { MainHeader } from "./mainHeader";
 import { SideBarStack } from "../sideBar/sideBarStack";
-import { useStore } from "store";
+import { StatusBar } from "expo-status-bar";
 
 const Stack = createNativeStackNavigator<MainStackParams>();
 
 export const MainStack = () => {
-  const [assetProgress, setAssetProgress] = React.useState({ current: -1, total: 0 });
-  const { data: user } = useGetUser();
-  const { setUserId, token, setToken } = useStore();
+  const theme = useTheme();
+  const [assetProgress, setAssetProgress] = React.useState({
+    current: -1,
+    total: 0,
+  });
+  const { data: user, isLoading: gettingUser } = useGetUser();
+  const { setUserId, token, setToken, userId } = useStore();
 
   useEffect(() => {
     if (token?.expiresAt && token.expiresAt < new Date()) {
@@ -30,11 +36,18 @@ export const MainStack = () => {
   }, [setToken, token]);
 
   if (assetProgress.current < assetProgress.total) {
-    return <AssetLoader progress={assetProgress} setProgress={setAssetProgress} />;
+    return (
+      <AssetLoader progress={assetProgress} setProgress={setAssetProgress} />
+    );
+  }
+
+  if (gettingUser && userId !== undefined) {
+    return <LoadingMessage title="Loading ..." />;
   }
 
   return (
     <Theme name={user?.userSettings?.darkMode ? "dark" : "light"}>
+      <StatusBar backgroundColor={theme.backgroundAccent.val} />
       <Stack.Navigator
         screenOptions={{
           header: (props) => (

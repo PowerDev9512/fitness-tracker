@@ -1,74 +1,58 @@
-import { useGetFeed, useGetOtherUser, useGetUser, useGetUsers } from "api";
+import { useGetFeed, useGetOtherUser, useGetUser } from "api";
 import { Button, Input, Screen, Skeleton } from "components";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback } from "react";
 import { FlatList } from "react-native";
 import Toast from "react-native-toast-message";
 import { XStack } from "tamagui";
-import { Message, OtherUser, User } from "types";
+import { Message, User } from "types";
 
 import { AddFriendModal } from "./components/addFriendModal/addFriendModal";
 import { FeedEntry } from "./components/feedEntry/feedEntry";
 
 export const Social = () => {
-  const [searchedUserId, setSearchedUserId] = React.useState<number>(-1);
-  const [searchedUser, setSearchedUser] = React.useState<OtherUser | null>(null);
-  const [search, setSearch] = React.useState("");
+  const [searchText, setSearchText] = React.useState("");
+  const [searchedUserName, setSearchedUserName] = React.useState<string | null>("");
 
-  const { data: users } = useGetUsers();
   const { data: user } = useGetUser();
-  const { data: friend, isLoading: friendLoading } = useGetOtherUser(searchedUserId);
+  const { data: searchedUser, isLoading: friendLoading } = useGetOtherUser(searchedUserName);
   const { data: feed, isLoading: feedLoading } = useGetFeed();
-
-  const searchableUsers = (users ?? []).filter((item) => item.id !== user?.id);
 
   const createMessage = useCallback(
     (item: Message) => (
       <FeedEntry
         message={item}
-        onPress={() => setSearchedUserId(item.user.id)}
+        onPress={() => setSearchedUserName(item.user.username)}
       />
     ),
     []
   );
 
-  useEffect(() => {
-    if (friend) {
-      setSearchedUser(friend);
-      setSearchedUserId(-1);
-    }
-  }, [friend]);
-
   return (
     <Screen extraSpace>
       <AddFriendModal
         user={user as User}
-        friend={searchedUser}
+        friend={searchedUser ?? null}
         loading={friendLoading}
-        onClose={() => setSearchedUser(null)}
+        onClose={() => setSearchedUserName(null)}
       />
 
       <XStack space="$3" w="100%">
         <Input
           w="65%"
           placeholder="Search for friends"
-          value={search}
-          onChangeText={setSearch}
+          value={searchText}
+          onChangeText={setSearchText}
           type="text"
         />
         <Button
           w="30%"
           onPress={() => {
-            const foundUser = searchableUsers.find(
-              (item) => item.username.toLowerCase() === search.toLowerCase()
-            );
-
-            if (foundUser) {
-              setSearchedUserId(foundUser.id);
+            if (searchText.length > 0) {
+              setSearchedUserName(searchText);
             } else {
               Toast.show({
-                text1: "User not found",
-                text2: "Please try a different username",
                 type: "error",
+                text1: "Please enter a username",
               });
             }
           }}
@@ -90,7 +74,9 @@ export const Social = () => {
         <FlatList
           style={{ width: "100%" }}
           data={feed ?? []}
-          keyExtractor={(item) => item.workout.id + item.user.username + item.date}
+          keyExtractor={(item) =>
+            item.workout.id + item.user.username + item.date
+          }
           renderItem={({ item }) => createMessage(item)}
         />
       )}

@@ -26,11 +26,10 @@ export const BuddyStats = () => {
   const anatomy = user.workoutBuddy.data.anatomy.sort((a, b) =>
     a.level < b.level ? 1 : -1
   );
-  const level = user.workoutBuddy.data.levelStats.overall;
 
   return (
     <Card p="$4">
-      <Accordion title="Stats" secondTitle={`Level ${level}`}>
+      <Accordion title="Stats">
         <FlatList
           data={anatomy}
           renderItem={({ item, index }) =>
