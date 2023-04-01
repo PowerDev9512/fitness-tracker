@@ -10,10 +10,8 @@ type LoginRequest = {
 };
 
 type RawLoginResponse = {
-  value: {
-    userId: number;
-    token: string;
-  };
+  userId: number;
+  token: string;
 };
 
 export function useLogin() {
@@ -26,8 +24,8 @@ export function useLogin() {
         request
       );
 
-      setUserId(data.value.userId);
-      setToken(data.value.token);
+      setUserId(data.userId);
+      setToken(data.token);
     },
     {
       onSuccess() {
