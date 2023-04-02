@@ -1,7 +1,8 @@
 import { Check, ChevronDown, ChevronUp } from "@tamagui/lucide-icons";
 import React from "react";
 import { Adapt, Text, Select as SelectBase, Sheet, YStack } from "tamagui";
-import { LinearGradient } from 'tamagui/linear-gradient'
+import { LinearGradient } from "tamagui/linear-gradient";
+
 import { titleCase } from "../utils/formatting";
 
 export type SelectData<T> = {
@@ -28,9 +29,7 @@ const SelectInternal = <T extends unknown>({
   ...props
 }: Props<T>) => {
   const handleOnChangeValue = (selectedValue: string) => {
-    const matchingValue = data.find(
-      (item) => item.value === selectedValue
-    );
+    const matchingValue = data.find((item) => item.value === selectedValue);
 
     if (matchingValue) {
       onChangeValue(matchingValue?.value);
@@ -38,7 +37,12 @@ const SelectInternal = <T extends unknown>({
   };
 
   return (
-    <SelectBase id={placeholder} key={value?.label} value={value?.value} onValueChange={handleOnChangeValue}>
+    <SelectBase
+      id={placeholder}
+      key={value?.label}
+      value={value?.value}
+      onValueChange={handleOnChangeValue}
+    >
       <SelectBase.Trigger
         disabled={isDisabled || data.length === 0}
         w="100%"
@@ -51,11 +55,12 @@ const SelectInternal = <T extends unknown>({
             {titleCase(value?.label)}
           </Text>
         )}
-        {value?.label === undefined && (
-          <Text color="$gray500" fontSize={15} mr={1}>
-            {titleCase(placeholder)}
-          </Text>
-        )}
+        {value?.label === undefined ||
+          (value?.label === "" && (
+            <Text mr="auto" color="$gray500" textAlign="left" fontSize={13}>
+              {titleCase(placeholder)}
+            </Text>
+          ))}
       </SelectBase.Trigger>
 
       <Adapt>
@@ -84,7 +89,7 @@ const SelectInternal = <T extends unknown>({
             start={[0, 0]}
             end={[0, 1]}
             fullscreen
-            colors={['$background', '$backgroundTransparent']}
+            colors={["$background", "$backgroundTransparent"]}
             br="$4"
           />
         </SelectBase.ScrollUpButton>
@@ -123,7 +128,7 @@ const SelectInternal = <T extends unknown>({
             start={[0, 0]}
             end={[0, 1]}
             fullscreen
-            colors={['$backgroundTransparent', '$background']}
+            colors={["$backgroundTransparent", "$background"]}
             br="$4"
           />
         </SelectBase.ScrollDownButton>

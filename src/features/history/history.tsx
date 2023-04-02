@@ -16,19 +16,24 @@ export const History = () => {
     </Stack>
   );
 
-  const content =
-    pastWorkouts.length > 0 ? (
+  if (pastWorkouts.length === 0) {
+    return (
+      <Screen>
+        <Text fontSize={16} mt={10}>
+          {" "}
+          No past workouts exist{" "}
+        </Text>
+      </Screen>
+    );
+  }
+
+  return (
+    <Screen>
       <Carousel
         renderItem={renderItem}
         items={pastWorkouts}
         defaultIndex={pastWorkouts.length - 1}
       />
-    ) : (
-      <Text fontSize={16} mt={10}>
-        {" "}
-        No past workouts exist{" "}
-      </Text>
-    );
-
-  return <Screen>{content}</Screen>;
+    </Screen>
+  );
 };

@@ -2,7 +2,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { Screen } from "components";
 import React from "react";
 import { Pressable } from "react-native";
-import { Heading, Image, Text } from "tamagui";
+import { Image, Text } from "tamagui";
 
 import { Login } from "./components/login/login";
 import { Header, SubHeader } from "./components/login/login.styles";

@@ -8,6 +8,7 @@ export const Container = styled(YStack, {
 });
 
 export const Header = styled(Heading, {
+  mt: "$6",
   size: "$10",
   fontWeight: "bold",
   textAlign: "center",

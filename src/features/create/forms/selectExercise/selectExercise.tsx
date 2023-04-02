@@ -1,22 +1,11 @@
-import { Star } from "@tamagui/lucide-icons";
 import { useExercises } from "api";
-import {
-  Accordion,
-  CachedImage,
-  Card,
-  FilterOption,
-  Filters,
-  Skeleton,
-} from "components";
-import React, { useCallback, useMemo, useState } from "react";
-import { FlatList, Pressable, ScrollView } from "react-native";
-import { Text, XStack } from "tamagui";
+import { FilterOption, Filters, Skeleton } from "components";
+import React, { useMemo, useState } from "react";
+import { ScrollView } from "react-native";
 import { Equipments, Exercise, ExerciseTypes, MuscleGroups } from "types";
-import { titleCase } from "utils";
 
-import { CreateWorkoutProps } from "../../createWorkout";
-import { ExerciseAccordionEntry } from "./exerciseAccordionEntry";
 import { ExerciseAccordion } from "./exerciseAccordion";
+import { CreateWorkoutProps } from "../../createWorkout";
 
 interface BaseProps {
   incrementIndex: () => void;
@@ -105,12 +94,12 @@ export const SelectExercise = ({ form, incrementIndex }: Props) => {
       muscleGroup.exercises.length > 0;
 
     const createAccordionForExercises = (muscleGroup: MuscleGroupData) => (
-        <ExerciseAccordion 
-          key={muscleGroup.name}
-          muscleGroup={muscleGroup}
-          updateActivity={form.setFieldValue}
-          incrementIndex={incrementIndex}
-        />
+      <ExerciseAccordion
+        key={muscleGroup.name}
+        muscleGroup={muscleGroup}
+        updateActivity={form.setFieldValue}
+        incrementIndex={incrementIndex}
+      />
     );
 
     return MuscleGroups.map(getMatchingExercises)

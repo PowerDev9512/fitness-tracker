@@ -21,7 +21,12 @@ interface Props {
   width?: string;
 }
 
-export const Filters = ({ filters, setFilters, filterOptions, width = undefined }: Props) => {
+export const Filters = ({
+  filters,
+  setFilters,
+  filterOptions,
+  width = undefined,
+}: Props) => {
   const filterOptionsWithClear = filterOptions.map((option) => ({
     ...option,
     values: [undefined, ...option.values],

@@ -58,7 +58,7 @@ export const Achievements = () => {
     }
 
     return true;
-  });
+  }).sort((a, b) => b.progress - a.progress);
 
   const renderAchievement = (achievement: UserAchievement, user: User) => {
     return (
@@ -94,7 +94,7 @@ export const Achievements = () => {
 
       {achievementsLoading && (
         <FlatList
-          style={{ width: "110%", marginLeft: "10%" }}
+          style={{ width: "100%" }}
           data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
           keyExtractor={(item) => item.toString()}
           renderItem={() => <Skeleton my="$2" mx="auto" h={150} />}
@@ -103,7 +103,7 @@ export const Achievements = () => {
 
       {achievements && user && (
         <FlatList
-          style={{ width: "110%", marginLeft: "10%" }}
+          style={{ width: "100%" }}
           data={filteredAchievements ?? []}
           keyExtractor={(item) => item.title}
           renderItem={({ item }) => renderAchievement(item, user)}

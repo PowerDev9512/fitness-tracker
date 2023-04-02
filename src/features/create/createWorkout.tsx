@@ -86,7 +86,7 @@ export const CreateWorkout = () => {
   };
 
   return (
-    <Screen>
+    <Screen scrollable extraSpace>
       <Formik
         validationSchema={CreateWorkoutSchema}
         initialValues={initialValues}
@@ -132,6 +132,7 @@ export const CreateWorkout = () => {
                     borderWidth: 0,
                     backgroundColor: "transparent",
                     mb: "$2",
+                    ml: "$-3.5",
                     mr: "auto",
                   }}
                   value={form.values.workout.name}

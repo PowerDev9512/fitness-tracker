@@ -2,8 +2,8 @@ import { Card, DatePicker, FormLabel } from "components";
 import React from "react";
 import { Slider } from "tamagui";
 
-import { CreateWorkoutProps } from "../../createWorkout";
 import { ActivitySummary } from "./activitySummary";
+import { CreateWorkoutProps } from "../../createWorkout";
 
 export const ActivityDetails = ({ form }: CreateWorkoutProps) => {
   const { date, repeat } = form.values;
@@ -15,15 +15,22 @@ export const ActivityDetails = ({ form }: CreateWorkoutProps) => {
 
   return (
     <>
-      <FormLabel mr="auto" ml="$4">Summary</FormLabel>
-      <ActivitySummary workout={workout} onDeleteActivity={form.setFieldValue} />
+      <FormLabel mr="auto" ml="$1">
+        Summary
+      </FormLabel>
+      <ActivitySummary
+        workout={workout}
+        onDeleteActivity={form.setFieldValue}
+      />
 
-      <FormLabel mb="$-2" mr="auto" ml="$4">Workout date</FormLabel>
+      <FormLabel mb="$-2" mr="auto" ml="$1">
+        Workout date
+      </FormLabel>
       <Card mb="$2">
         <DatePicker date={date} setDate={setDate} mode="date" />
       </Card>
 
-      <FormLabel mr="auto" ml="$4">
+      <FormLabel mr="auto" ml="$1">
         Schedule this for {repeat} {repeat === 1 ? "week" : "weeks"}
       </FormLabel>
 
@@ -43,11 +50,7 @@ export const ActivityDetails = ({ form }: CreateWorkoutProps) => {
           <Slider.Track backgroundColor="$gray200">
             <Slider.TrackActive />
           </Slider.Track>
-          <Slider.Thumb
-            circular
-            index={0}
-            backgroundColor="$primary500"
-          />
+          <Slider.Thumb circular index={0} backgroundColor="$primary500" />
         </Slider>
       </Card>
     </>

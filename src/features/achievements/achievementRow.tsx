@@ -77,6 +77,8 @@ export const AchievementRow = ({ achievement, user }: Props) => {
 
       const { text, max, key } = entry;
 
+      const percentOfMax = Math.floor((achievement.progress / max) * 100);
+
       return (
         <>
           <XStack key={`${achievement.title}-${key}-stack`} mt={2}>
@@ -100,10 +102,12 @@ export const AchievementRow = ({ achievement, user }: Props) => {
             size="$4"
             backgroundColor="$gray200"
             key={`${achievement.title}-${key}-progress`}
-            value={achievement.progress}
-            max={max}
+            value={percentOfMax}
           >
-            <Progress.Indicator animation="bouncy" />
+            <Progress.Indicator
+              animation="bouncy"
+              backgroundColor="$primary300"
+            />
           </Progress>
         </>
       );

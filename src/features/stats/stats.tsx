@@ -26,18 +26,18 @@ export const Stats = () => {
     <Screen scrollable extraSpace>
       <XStack>
         <Avatar user={user} size="lg" callback={() => {}} />
-        <YStack my="auto" ml="$5">
+        <YStack my="auto" ml="$10">
           <Heading>{user.username}</Heading>
           <Text>{user?.title?.name ?? "Titleless"}</Text>
           <Separator my="$2" w="100%" borderColor="$gray500" />
           <Text>Level {user.workoutBuddy.data.levelStats.overall}</Text>
-          <Text>Streak {user.workoutBuddy.data.streak} days</Text>
+          <Text>{user.workoutBuddy.data.streak} day streak</Text>
         </YStack>
       </XStack>
 
       <SegmentedControl
         style={{
-          width: "90%",
+          width: "100%",
           marginBottom: -25,
           height: 30,
         }}

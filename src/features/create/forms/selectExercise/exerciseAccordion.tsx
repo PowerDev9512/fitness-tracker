@@ -1,8 +1,9 @@
 import { Accordion, Card } from "components";
 import { FlatList } from "react-native";
+import { Text } from "tamagui";
 import { CardioExercise, Exercise, StrengthExercise } from "types";
 import { titleCase } from "utils";
-import { Text } from "tamagui";
+
 import { ExerciseAccordionEntry } from "./exerciseAccordionEntry";
 
 interface Props {
@@ -48,7 +49,7 @@ export const ExerciseAccordion = ({
   };
 
   return (
-    <Card my="$2" p="$2.5" key={`card-${muscleGroup.name}`}>
+    <Card w="90%" my="$2" p="$2.5" key={`card-${muscleGroup.name}`}>
       <Accordion
         title={titleCase(muscleGroup.name)}
         secondTitle={`${muscleGroup.exercises.length} exercises`}

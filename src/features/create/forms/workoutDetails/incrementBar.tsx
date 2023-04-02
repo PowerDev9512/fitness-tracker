@@ -29,7 +29,7 @@ const IncrementBarInternal = ({
 
       return (
         <Button
-          w="20%"
+          w="19%"
           key={`${increment}-${index}`}
           borderRadius={0}
           borderTopLeftRadius={leftBorderRadius}
@@ -80,7 +80,7 @@ const IncrementBarInternal = ({
           {name}
         </FormLabel>
         {titleAccessory && (
-          <Text fontSize={8} ml="auto">
+          <Text fontSize={8} ml="auto" mr="$3" mt="auto" mb="$1">
             {titleAccessory}
           </Text>
         )}
@@ -95,7 +95,7 @@ const IncrementBarInternal = ({
           type="text"
           borderRadius={0}
           backgroundColor="white"
-          w="15%"
+          w="17%"
           textAlign="center"
         />
         {negativeIncrements}
