@@ -1,15 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
-import { Exercise, Max, Workout } from "types";
+import { Activity, Exercise, Max, Workout } from "types";
 
+import { useGetUser } from "./useGetUser";
 import { queryClient } from "../apiProvider";
 import { client } from "../client";
-import {
-  ApiData,
-  ApiWorkout,
-  ApiWorkoutToWorkout,
-  WorkoutToApiWorkout,
-} from "../types";
-import { useGetUser } from "./useGetUser";
 
 type EditWorkoutRequest = {
   userId: number;
@@ -17,12 +11,12 @@ type EditWorkoutRequest = {
 };
 
 type EditWorkoutPayload = {
-  newData: Record<number, ApiData>;
+  activities: Record<number, Activity>;
   completed: boolean;
 };
 
 type EditWorkoutResponse = {
-  workout: ApiWorkout;
+  workout: Workout;
   maxes: Max[];
 };
 
@@ -31,12 +25,12 @@ export function useEditWorkout() {
 
   return useMutation(
     async (rawRequest: EditWorkoutRequest) => {
-      const workout = WorkoutToApiWorkout(rawRequest.workout, true);
+      const workout = rawRequest.workout;
       const payload: EditWorkoutPayload = {
-        newData: workout.activities.reduce((acc, activity) => {
-          acc[+activity.data.id] = activity.data;
+        activities: workout.activities.reduce((acc, activity) => {
+          acc[+activity.id] = activity;
           return acc;
-        }, {} as Record<number, ApiData>),
+        }, {} as Record<number, Activity>),
         completed: workout.completed,
       };
 
@@ -44,8 +38,9 @@ export function useEditWorkout() {
         `/users/${rawRequest.userId}/workouts/${rawRequest.workout.id}`,
         payload
       );
+
       return {
-        workout: ApiWorkoutToWorkout(data.workout, user?.maxes ?? []),
+        workout: data.workout,
         maxes: data.maxes,
       };
     },

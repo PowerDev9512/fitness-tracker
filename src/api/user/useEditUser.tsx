@@ -2,9 +2,9 @@ import { useMutation } from "@tanstack/react-query";
 import { useStore } from "store";
 import { Badge, Image, Title, User } from "types";
 
+import { useGetUser } from "./useGetUser";
 import { queryClient } from "../apiProvider";
 import { client } from "../client";
-import { useGetUser } from "./useGetUser";
 
 export type RawEditUserRequest = {
   userId: number;

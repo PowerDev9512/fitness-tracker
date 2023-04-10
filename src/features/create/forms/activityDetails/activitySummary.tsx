@@ -1,8 +1,9 @@
 import { Card } from "components";
 import { useMemo } from "react";
 import { Separator, Text } from "tamagui";
-import { StrengthData, StrengthExercise, Workout } from "types";
+import { StrengthActivity, Workout } from "types";
 import { titleCase } from "utils";
+
 import { ActivityEntry } from "./activityEntry";
 
 interface Props {
@@ -16,9 +17,7 @@ type ExerciseSummary = {
 };
 
 export const ActivitySummary = ({ workout, onDeleteActivity }: Props) => {
-  const calculateStrengthVolume = (
-    exercise: StrengthExercise & StrengthData
-  ): number => {
+  const calculateStrengthVolume = (exercise: StrengthActivity): number => {
     const { targetSets, targetReps, targetWeight } = exercise;
     return targetSets * targetReps * targetWeight;
   };
@@ -37,11 +36,9 @@ export const ActivitySummary = ({ workout, onDeleteActivity }: Props) => {
           mainMuscleGroup,
           otherMuscleGroups,
           detailedMuscleGroup,
-        } = curr;
+        } = curr.exercise;
         if (type === "strength") {
-          const volume = calculateStrengthVolume(
-            curr as StrengthExercise & StrengthData
-          );
+          const volume = calculateStrengthVolume(curr as StrengthActivity);
 
           const muscleGroups = otherMuscleGroups
             .concat(mainMuscleGroup)

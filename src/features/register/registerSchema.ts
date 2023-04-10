@@ -12,7 +12,7 @@ export const RegisterSchema = Yup.object<
   confirmPassword: Yup.string()
     .required("Confirm Password is required")
     .min(6, "Password must be at least 6 characters")
-    .oneOf([Yup.ref("password"), null], "Passwords must match"),
+    .oneOf([Yup.ref("password"), ""], "Passwords must match"),
   email: Yup.string().email("Invalid email").required("Email is required"),
   height: Yup.number()
     .required("Height is required")

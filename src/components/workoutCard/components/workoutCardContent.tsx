@@ -12,14 +12,14 @@ interface Props {
 
 export const WorkoutCardContent = ({ workout }: Props) => {
   const createContent = (activity: Activity, children: React.ReactNode) => {
-    const muscles = Object.keys(activity.muscleGroupStats).map((muscleGroup) =>
+    const muscles = Object.keys(activity.exercise.muscleGroupStats).map((muscleGroup) =>
       titleCase(muscleGroup)
     );
 
     return (
       <Stack mb="$2" key={activity.id}>
         <Text mt={2} textAlign="left" fontSize={18} fontWeight="bold">
-          {activity.name}{" "}
+          {activity.exercise.name}{" "}
         </Text>
         <Text mt="$1" fontSize={14} color="$gray10Dark">
           {muscles.map((muscle) => muscle).join(", ")}

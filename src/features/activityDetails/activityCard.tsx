@@ -119,7 +119,7 @@ export const ActivityCard = ({ workout, isMain }: Props) => {
       {isMain && (
         <Text mt="$4" fontWeight="bold" mx="auto" key={`${activity.id} Other`}>
           {" "}
-          Other {workout.activity.name} Workouts{" "}
+          Other {workout.activity.exercise.name} Workouts{" "}
         </Text>
       )}
     </Stack>

@@ -1,4 +1,3 @@
-import { Delete } from "@tamagui/lucide-icons";
 import { useGetUser } from "api";
 import { IconButton } from "components";
 import React from "react";
@@ -21,9 +20,12 @@ export const ActivityEntry = ({ activity, deleteActivity }: Props) => {
     switch (currActivity.type) {
       case "strength":
         return (
-          <Text key={`${currActivity.name}-text`} my={2}>
-            <Text fontWeight="bold" key={`${currActivity.name}-text-title`}>
-              {currActivity.name.trim()}
+          <Text key={`${currActivity.exercise.name}-text`} my={2}>
+            <Text
+              fontWeight="bold"
+              key={`${currActivity.exercise.name}-text-title`}
+            >
+              {currActivity.exercise.name.trim()}
             </Text>
             {"\n"}
             {currActivity.targetSets}x{currActivity.targetReps},{" "}
@@ -32,9 +34,12 @@ export const ActivityEntry = ({ activity, deleteActivity }: Props) => {
         );
       case "cardio":
         return (
-          <Text key={`${currActivity.name}-text`} my={2}>
-            <Text fontWeight="bold" key={`${currActivity.name}-text-title`}>
-              {currActivity.name}
+          <Text key={`${currActivity.exercise.name}-text`} my={2}>
+            <Text
+              fontWeight="bold"
+              key={`${currActivity.exercise.name}-text-title`}
+            >
+              {currActivity.exercise.name}
             </Text>
             {"\n"}
             {distanceFormatter(
@@ -50,11 +55,11 @@ export const ActivityEntry = ({ activity, deleteActivity }: Props) => {
   };
 
   return (
-    <XStack p="$1" key={`${activity.name}-hstack`} alignItems="center">
+    <XStack p="$1" key={`${activity.exercise.name}-hstack`} alignItems="center">
       {createChild(activity)}
       <IconButton
         onPress={deleteActivity}
-        key={`${activity.name}-delete-button`}
+        key={`${activity.exercise.name}-delete-button`}
         ml="auto"
         mt="auto"
         size={24}

@@ -1,4 +1,4 @@
-import { useConfirmFriendRequest, useGetUser, useGetUsers } from "api";
+import { useConfirmFriendRequest, useGetUser, useGetOtherUsers } from "api";
 import { Avatar, Button, Card, Screen } from "components";
 import React, { useCallback, useEffect } from "react";
 import { FlatList } from "react-native";
@@ -9,10 +9,17 @@ import { useRejectFriendRequest } from "../../api/social/useRejectFriendRequest"
 export const Notifications = () => {
   const [actionedId, setActionedId] = React.useState<number | null>(null);
   const { data: user, isLoading: userLoading } = useGetUser();
-  const { data: batchedUsers } = useGetUsers(user?.friendRequests ?? []);
-  const { mutate: acceptFriend, status: addStatus, isLoading: accepting } = useConfirmFriendRequest();
-  const { mutate: declineFriend, status: declineStatus, isLoading: declining } =
-    useRejectFriendRequest();
+  const { data: batchedUsers } = useGetOtherUsers(user?.friendRequests ?? []);
+  const {
+    mutate: acceptFriend,
+    status: addStatus,
+    isLoading: accepting,
+  } = useConfirmFriendRequest();
+  const {
+    mutate: declineFriend,
+    status: declineStatus,
+    isLoading: declining,
+  } = useRejectFriendRequest();
 
   useEffect(() => {
     if (addStatus === "success" || declineStatus === "success") {
@@ -56,10 +63,16 @@ export const Notifications = () => {
                 </Text>
               </XStack>
               <XStack ml="auto">
-                <Button isLoading={accepting} onPress={() => handleOnDecline(currentUser.id)}>
+                <Button
+                  isLoading={accepting}
+                  onPress={() => handleOnDecline(currentUser.id)}
+                >
                   Decline
                 </Button>
-                <Button isLoading={declining} onPress={() => handleOnAccept(currentUser.id)}>
+                <Button
+                  isLoading={declining}
+                  onPress={() => handleOnAccept(currentUser.id)}
+                >
                   Accept
                 </Button>
               </XStack>

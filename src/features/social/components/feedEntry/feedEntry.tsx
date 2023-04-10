@@ -33,9 +33,9 @@ export const FeedEntry = ({ message: item, onPress }: Props) => {
   const activityToText = (activity: Activity) => {
     switch (activity.type) {
       case "strength":
-        return `- ${activity.name} | ${activity.sets} x ${activity.reps}, ${weightFormatter((activity.weight ?? 0).toString(), false)}`;
+        return `- ${activity.exercise.name} | ${activity.sets} x ${activity.reps}, ${weightFormatter((activity.weight ?? 0).toString(), false)}`;
       case "cardio":
-        return `- ${activity.name} | ${distanceFormatter((activity.distance ?? 0).toString(), false)} in ${activity.duration} minutes`;
+        return `- ${activity.exercise.name} | ${distanceFormatter((activity.distance ?? 0).toString(), false)} in ${activity.duration} minutes`;
     }
   };
 

@@ -4,8 +4,8 @@ import React, { useEffect } from "react";
 import { FlatList } from "react-native";
 import { Text } from "tamagui";
 
-import { Screen } from "../../components/screen";
 import { ActivityCard } from "./activityCard";
+import { Screen } from "../../components/screen";
 
 interface Props {
   route: {
@@ -33,7 +33,7 @@ export const ActivityDetails = ({ route }: Props) => {
   useEffect(() => {
     if (mainActivity !== undefined) {
       navigation.setOptions({
-        title: mainActivity.activity.name,
+        title: mainActivity.name,
       });
     }
   }, [mainActivity, navigation]);
@@ -45,7 +45,7 @@ export const ActivityDetails = ({ route }: Props) => {
   const filteredActivities = activities
     .filter(
       (a) =>
-        a.activity.exerciseId === mainActivity?.activity.exerciseId &&
+        a.activity.exercise.id === mainActivity?.activity.exercise.id &&
         a.id !== mainActivity.id
     )
     .sort((a, b) => b.time.localeCompare(a.time));
@@ -55,8 +55,10 @@ export const ActivityDetails = ({ route }: Props) => {
       <FlatList
         style={{ width: "100%" }}
         data={filteredActivities}
-        ListHeaderComponent={<ActivityCard workout={mainActivity} isMain={true} />}
-        renderItem={({ item }) => <ActivityCard workout={item} isMain={false} />}
+        ListHeaderComponent={<ActivityCard workout={mainActivity} isMain />}
+        renderItem={({ item }) => (
+          <ActivityCard workout={item} isMain={false} />
+        )}
       />
     </Screen>
   );

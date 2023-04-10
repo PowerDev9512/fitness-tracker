@@ -1,9 +1,9 @@
 import { Star } from "@tamagui/lucide-icons";
-import { Accordion, CachedImage, Card } from "components";
+import { useGetUser } from "api";
+import { CachedImage } from "components";
 import { Pressable } from "react-native";
 import { XStack, Text } from "tamagui";
 import { Exercise } from "types";
-import { titleCase } from "utils";
 
 interface Props {
   exercise: Exercise;
@@ -11,13 +11,17 @@ interface Props {
 }
 
 export const ExerciseAccordionEntry = ({ exercise, onPress }: Props) => {
+  const { data: user } = useGetUser();
+
+  const max = user?.maxes.find((max) => max.exercise === exercise.name);
+
   return (
     <Pressable onPress={() => onPress(exercise)}>
       <XStack alignItems="center" space={2} my={2} p={2}>
         <Text w="100%" color="black" my="auto">
           {exercise.name}
         </Text>
-        {exercise.userHasMax && (
+        {max && (
           <Star color="$primary500" size={25} style={{ marginLeft: "auto" }} />
         )}
         <CachedImage

@@ -2,11 +2,9 @@ import { useQuery, UseQueryResult } from "@tanstack/react-query";
 import { Exercise } from "types";
 
 import { client } from "../client";
-import { ApiExercise, ApiExerciseToExercise } from "../types";
-import { useGetUser } from "../user/useGetUser";
 
 type RawGetExercisesResponse = {
-  exercises: ApiExercise[];
+  exercises: Exercise[];
 };
 
 type GetExercisesResponse = Exercise[];
@@ -20,7 +18,6 @@ export function useExercises({
   retrieveImages,
   shouldFetch = true,
 }: GetExercisesParams): UseQueryResult<GetExercisesResponse, unknown> {
-  const { data: user } = useGetUser();
   return useQuery({
     enabled: shouldFetch,
     queryKey: ["exercises", retrieveImages],
@@ -31,9 +28,7 @@ export function useExercises({
         },
       });
 
-      return data.exercises.map((exercise) =>
-        ApiExerciseToExercise(exercise, user?.maxes ?? [])
-      );
+      return data.exercises;
     },
   });
 }

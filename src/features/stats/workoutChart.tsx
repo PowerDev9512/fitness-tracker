@@ -2,7 +2,7 @@ import { useGetUser, useGetWorkoutData } from "api";
 import { Card, Heading, Select } from "components";
 import React, { useMemo, useState } from "react";
 import { Spinner, Stack, Text, YStack, useTheme } from "tamagui";
-import { ExerciseType, GraphType, StrengthData, StrengthExercise } from "types";
+import { ExerciseType, GraphType, StrengthActivity, StrengthData, StrengthExercise } from "types";
 import { createDistanceFormatter, createWeightFormatter, getPastWorkouts } from "utils";
 import {
   VictoryArea,
@@ -43,7 +43,7 @@ export const WorkoutChart = () => {
       pastWorkouts
         .flatMap((workout) => workout.activities)
         .filter((activity) => activity.type === workoutType)
-        .map((exercise) => exercise.name)
+        .map((activity) => activity.exercise.name)
         .filter((name, index, self) => self.indexOf(name) === index),
     [pastWorkouts, workoutType]
   );
@@ -59,10 +59,10 @@ export const WorkoutChart = () => {
         pastWorkouts
           .flatMap((workout) => workout.activities)
           .filter(
-            (exercise) =>
-              exercise.name === selectedExercise && exercise.type === "strength"
+            (activity) =>
+              activity.exercise.name === selectedExercise && activity.type === "strength"
           )
-          .map((exercise) => exercise as StrengthExercise & StrengthData)
+          .map((exercise) => exercise as StrengthActivity)
           .map((exercise) => exercise.reps)
           .filter((currReps) => currReps) as number[]
       ),

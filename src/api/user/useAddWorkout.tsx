@@ -1,15 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
-import { ScheduledWorkout } from "types";
+import { Activity, ScheduledWorkout, Workout } from "types";
 
+import { useGetUser } from "./useGetUser";
 import { queryClient } from "../apiProvider";
 import { client } from "../client";
-import {
-  ApiData,
-  ApiWorkout,
-  ApiWorkoutToWorkout,
-  WorkoutToApiWorkout,
-} from "../types";
-import { useGetUser } from "./useGetUser";
+import { log } from "utils";
 
 type AddWorkoutRequest = {
   userId: number;
@@ -17,15 +12,14 @@ type AddWorkoutRequest = {
 };
 
 type AddWorkoutResponse = {
-  workout: ApiWorkout;
+  workout: Workout;
 };
+
+type ActivityDto = Activity & { exerciseId: number };
 
 type AddWorkoutPayload = {
   name: string;
-  activities: {
-    exerciseId: number;
-    data: ApiData;
-  }[];
+  activities: ActivityDto[];
   completed: boolean;
   past: boolean;
   time: string;
@@ -36,12 +30,15 @@ export function useAddWorkout() {
 
   return useMutation(
     async (rawRequest: AddWorkoutRequest) => {
-      const workout = WorkoutToApiWorkout(rawRequest.workout, true);
+      const workout = rawRequest.workout;
+
+      log(workout);
+
       const payload: AddWorkoutPayload = {
         name: workout.name,
         activities: workout.activities.map((activity) => ({
+          ...activity,
           exerciseId: activity.exercise.id,
-          data: activity.data,
         })),
         completed: workout.completed,
         past: workout.past,
@@ -52,7 +49,8 @@ export function useAddWorkout() {
         `/users/${rawRequest.userId}/workouts`,
         payload
       );
-      return { workouts: ApiWorkoutToWorkout(data.workout, user?.maxes ?? []) };
+
+      return { workouts: data.workout };
     },
     {
       onSuccess(response) {

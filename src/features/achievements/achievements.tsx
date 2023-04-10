@@ -1,5 +1,12 @@
 import { useGetUser, useRecordAchievement, useUserAchievements } from "api";
-import { Button, Card, FilterOption, Filters, Screen, Skeleton } from "components";
+import {
+  Button,
+  Card,
+  FilterOption,
+  Filters,
+  Screen,
+  Skeleton,
+} from "components";
 import React, { useEffect, useState } from "react";
 import { FlatList } from "react-native";
 import {
@@ -30,8 +37,11 @@ export const Achievements = () => {
   const { data: user } = useGetUser();
   const { data: achievements, isLoading: achievementsLoading } =
     useUserAchievements({ userId: user?.id ?? 0 });
-  const { data: recordResponse, mutate: recordAchievement, isLoading: recording } =
-    useRecordAchievement();
+  const {
+    data: recordResponse,
+    mutate: recordAchievement,
+    isLoading: recording,
+  } = useRecordAchievement();
 
   const [rewards, setRewards] = useState<Reward[]>([]);
   const [filters, setFilters] = useState<Record<string, string | undefined>>({
@@ -45,20 +55,22 @@ export const Achievements = () => {
     }
   }, [recordResponse]);
 
-  const filteredAchievements = achievements?.filter((achievement) => {
-    if (filters.muscleGroup && achievement.achievementType === "weight") {
-      return (
-        achievement.targetMuscleGroup.toLowerCase() ===
-        filters.muscleGroup.toLowerCase()
-      );
-    }
+  const filteredAchievements = (achievements ?? [])
+    .filter((achievement) => {
+      if (filters.muscleGroup && achievement.achievementType === "weight") {
+        return (
+          achievement.targetMuscleGroup.toLowerCase() ===
+          filters.muscleGroup.toLowerCase()
+        );
+      }
 
-    if (filters.achievementType) {
-      return achievement.achievementType === filters.achievementType;
-    }
+      if (filters.achievementType) {
+        return achievement.achievementType === filters.achievementType;
+      }
 
-    return true;
-  }).sort((a, b) => b.progress - a.progress);
+      return true;
+    })
+    .sort((a, b) => b.progress - a.progress);
 
   const renderAchievement = (achievement: UserAchievement, user: User) => {
     return (

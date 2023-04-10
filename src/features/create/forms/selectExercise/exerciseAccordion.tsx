@@ -1,14 +1,15 @@
+import { useGetUser } from "api";
 import { Accordion, Card } from "components";
 import { FlatList } from "react-native";
 import { Text } from "tamagui";
-import { CardioExercise, Exercise, StrengthExercise } from "types";
+import { Activity, CardioActivity, Exercise, StrengthActivity } from "types";
 import { titleCase } from "utils";
 
 import { ExerciseAccordionEntry } from "./exerciseAccordionEntry";
 
 interface Props {
   muscleGroup: MuscleGroupData;
-  updateActivity: (formEntry: string, activity: Exercise) => void;
+  updateActivity: (formEntry: string, activity: Activity) => void;
   incrementIndex: () => void;
 }
 
@@ -22,27 +23,48 @@ export const ExerciseAccordion = ({
   updateActivity,
   incrementIndex,
 }: Props) => {
+  const { data: user } = useGetUser();
+
+  const sortedExercises = muscleGroup.exercises.sort((a, b) => {
+    const aMax = user?.maxes.find((max) => max.exercise === a.name);
+    const bMax = user?.maxes.find((max) => max.exercise === b.name);
+    if (aMax && bMax) {
+      return aMax.weight > bMax.weight ? -1 : 1;
+    }
+    if (aMax) {
+      return -1;
+    }
+    if (bMax) {
+      return 1;
+    }
+    return 0;
+  });
+
   const handleExerciseChange = (exercise: Exercise) => {
     if (exercise) {
       if (exercise.type === "strength") {
         updateActivity("activity", {
-          ...exercise,
+          id: 0,
+          exercise,
+          type: "strength",
           reps: null,
           sets: null,
           weight: null,
           targetReps: 0,
           targetSets: 0,
           targetWeight: 0,
-        } as StrengthExercise);
+        } as StrengthActivity);
       }
       if (exercise.type === "cardio") {
         updateActivity("activity", {
-          ...exercise,
+          id: 0,
+          exercise,
+          type: "cardio",
           distance: null,
           duration: null,
           targetDistance: 0,
           targetDuration: 0,
-        } as CardioExercise);
+        } as CardioActivity);
       }
       incrementIndex();
     }
@@ -57,8 +79,8 @@ export const ExerciseAccordion = ({
       >
         <FlatList
           nestedScrollEnabled
-          data={muscleGroup.exercises}
-          keyExtractor={(item) => item.exerciseId.toString()}
+          data={sortedExercises}
+          keyExtractor={(item) => item.id.toString()}
           ListEmptyComponent={<Text>No exercises found</Text>}
           renderItem={({ item: exercise }) => (
             <ExerciseAccordionEntry

@@ -2,12 +2,7 @@ import { useGetUser } from "api";
 import { Button, Card, FormLabel, Heading } from "components";
 import React, { useMemo } from "react";
 import { Stack, Text, XStack, YStack } from "tamagui";
-import {
-  CardioData,
-  CardioExercise,
-  StrengthData,
-  StrengthExercise,
-} from "types";
+import { CardioActivity, StrengthActivity } from "types";
 import { getDistanceFormatter, getWeightFormatter } from "utils";
 
 import { ActionButton } from "./actionButton";
@@ -22,8 +17,11 @@ export const WorkoutDetails = ({ form }: CreateWorkoutProps) => {
   const weightFormatter = getWeightFormatter(user);
 
   const max = useMemo(
-    () => user?.maxes?.find((curr) => curr.exercise === activity?.name),
-    [activity?.name, user?.maxes]
+    () =>
+      user?.maxes?.find(
+        (curr) => curr.exercise === activity?.exercise?.name ?? ""
+      ),
+    [activity?.exercise.name, user?.maxes]
   );
 
   const activitySpecificFields = useMemo(() => {
@@ -37,9 +35,7 @@ export const WorkoutDetails = ({ form }: CreateWorkoutProps) => {
       }
     };
 
-    const createCardioFields = (
-      cardioActivity: CardioData & CardioExercise
-    ) => (
+    const createCardioFields = (cardioActivity: CardioActivity) => (
       <Stack mb={4}>
         <IncrementBar
           name={distanceFormatter("Distance")}
@@ -57,9 +53,7 @@ export const WorkoutDetails = ({ form }: CreateWorkoutProps) => {
       </Stack>
     );
 
-    const createWeightFields = (
-      strengthActivity: StrengthData & StrengthExercise
-    ) => (
+    const createWeightFields = (strengthActivity: StrengthActivity) => (
       <Stack>
         <IncrementBar
           name="Sets"
@@ -191,7 +185,7 @@ export const WorkoutDetails = ({ form }: CreateWorkoutProps) => {
   return (
     <Card w="100%" mt={4}>
       <FormLabel pl="$3" pt="$2" mr="auto" fontWeight="bold" fontSize={32}>
-        {activity.name}
+        {activity.exercise.name}
       </FormLabel>
       {activitySpecificFields}
       {maxFields}

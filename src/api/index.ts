@@ -16,5 +16,5 @@ export * from "./user/useEditWorkout";
 export * from "./user/useGetUser";
 export * from "./user/useGetWorkoutData";
 export * from "./user/useGetWorkoutNames";
-export * from "./user/useGetOtherUser";
+export * from "./user/useGetOtherUsers";
 export { client } from "./client";

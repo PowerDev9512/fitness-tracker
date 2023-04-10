@@ -1,4 +1,4 @@
-import { useGetFeed, useGetOtherUser, useGetUser } from "api";
+import { useGetFeed, useGetOtherUsers, useGetUser } from "api";
 import { Button, Input, Screen, Skeleton } from "components";
 import React, { useCallback } from "react";
 import { FlatList } from "react-native";
@@ -14,7 +14,9 @@ export const Social = () => {
   const [searchedUserName, setSearchedUserName] = React.useState<string | null>("");
 
   const { data: user } = useGetUser();
-  const { data: searchedUser, isLoading: friendLoading } = useGetOtherUser(searchedUserName);
+  const { data: searchedUsers, isLoading: friendLoading } = useGetOtherUsers(
+    searchedUserName ? [searchedUserName] : []
+  );
   const { data: feed, isLoading: feedLoading } = useGetFeed();
 
   const createMessage = useCallback(
@@ -31,7 +33,7 @@ export const Social = () => {
     <Screen extraSpace>
       <AddFriendModal
         user={user as User}
-        friend={searchedUser ?? null}
+        friend={searchedUsers?.[0] ?? null}
         loading={friendLoading}
         onClose={() => setSearchedUserName(null)}
       />

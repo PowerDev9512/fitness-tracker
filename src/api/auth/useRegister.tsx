@@ -5,7 +5,6 @@ import { User } from "types";
 
 import { queryClient } from "../apiProvider";
 import { client } from "../client";
-import { ApiUser, ApiUserToUser } from "../types";
 
 type RegisterRequest = {
   email: string;
@@ -22,7 +21,7 @@ type RegisterRequest = {
 };
 
 type RegisterRawResponse = {
-  user: ApiUser;
+  user: User;
   token: string;
 };
 
@@ -46,7 +45,7 @@ export function useRegister() {
       );
       setUserId(data.user.id);
       setToken(data.token);
-      return ApiUserToUser(data.user);
+      return data.user;
     },
     {
       onSuccess(response: User) {

@@ -57,7 +57,7 @@ export interface Image {
 }
 
 interface BaseExercise {
-  exerciseId: number;
+  id: number;
   name: string;
   type: ExerciseType;
   mainMuscleGroup: MuscleGroup;
@@ -108,10 +108,13 @@ export interface CardioData extends BaseData {
 
 export type Data = StrengthData | CardioData;
 
-export type Activity = Exercise & Data & { id: number };
+export type Activity = Data & {
+  id: number;
+  exercise: Exercise;
+};
 
-export type CardioActivity = CardioExercise & CardioData & { id: number };
-export type StrengthActivity = StrengthExercise & StrengthData & { id: number };
+export type CardioActivity = Activity & { type: "cardio" };
+export type StrengthActivity = Activity & { type: "strength" };
 
 interface BaseWorkout {
   id: number;
@@ -331,6 +334,7 @@ export interface User {
 }
 
 export interface OtherUser {
+  id: number;
   username: string;
   level: number;
   avatar: Image | null;

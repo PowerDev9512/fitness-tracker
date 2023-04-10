@@ -6,12 +6,10 @@ import { ActivitySummary } from "./activitySummary";
 import { CreateWorkoutProps } from "../../createWorkout";
 
 export const ActivityDetails = ({ form }: CreateWorkoutProps) => {
-  const { date, repeat } = form.values;
+  const { date, repeat, workout } = form.values;
   const setDate = (newDate: Date) => form.setFieldValue("date", newDate);
   const setRepeat = (newRepeat: number[]) =>
     form.setFieldValue("repeat", newRepeat);
-
-  const { workout } = form.values;
 
   return (
     <>

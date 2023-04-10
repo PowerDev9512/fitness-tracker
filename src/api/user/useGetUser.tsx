@@ -3,10 +3,9 @@ import { useStore } from "store";
 import { User } from "types";
 
 import { client } from "../client";
-import { ApiUser, ApiUserToUser } from "../types";
 
 type GetUserRawResponse = {
-  user: ApiUser;
+  user: User;
 };
 
 type GetUserResponse = User | null;
@@ -21,6 +20,6 @@ export function useGetUser(): UseQueryResult<GetUserResponse, unknown> {
 
     const response = await client.get<GetUserRawResponse>(`/users/${userId}`);
     setUserId(response.data.user.id);
-    return ApiUserToUser(response.data.user);
+    return response.data.user;
   });
 }
