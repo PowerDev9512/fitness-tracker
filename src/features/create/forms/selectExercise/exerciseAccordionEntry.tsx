@@ -1,16 +1,20 @@
 import { Star } from "@tamagui/lucide-icons";
 import { useGetUser } from "api";
 import { CachedImage } from "components";
+import React from "react";
 import { Pressable } from "react-native";
-import { XStack, Text } from "tamagui";
+import { XStack, Text, YStack, useTheme, Stack } from "tamagui";
 import { Exercise } from "types";
+
+import { titleCase } from "../../../../utils/formatting";
 
 interface Props {
   exercise: Exercise;
   onPress: (exercise: Exercise) => void;
 }
 
-export const ExerciseAccordionEntry = ({ exercise, onPress }: Props) => {
+const ExerciseAccordionEntryInternal = ({ exercise, onPress }: Props) => {
+  const theme = useTheme();
   const { data: user } = useGetUser();
 
   const max = user?.maxes.find((max) => max.exercise === exercise.name);
@@ -18,14 +22,28 @@ export const ExerciseAccordionEntry = ({ exercise, onPress }: Props) => {
   return (
     <Pressable onPress={() => onPress(exercise)}>
       <XStack alignItems="center" space={2} my={2} p={2}>
-        <Text w="100%" color="black" my="auto">
-          {exercise.name}
-        </Text>
-        {max && (
-          <Star color="$primary500" size={25} style={{ marginLeft: "auto" }} />
-        )}
+        <YStack>
+          <Text w="100%" color="black" my="auto">
+            {exercise.name}
+          </Text>
+          <Text w="100%" fontSize={12} color="black" my="auto">
+            {Object.entries(exercise.muscleGroupStats)
+              .map(([muscleGroup, value]) => {
+                return `${value} ${titleCase(muscleGroup)} XP`;
+              })
+              .join("\n")}
+          </Text>
+        </YStack>
+
         <CachedImage
-          style={{ width: 60, height: 50, marginLeft: "auto" }}
+          style={{
+            width: 60,
+            height: 50,
+            marginLeft: "auto",
+            backgroundColor: "white",
+            borderWidth: 2,
+            borderColor: max ? theme.primary300.val : theme.gray200.val,
+          }}
           alt={`${exercise.name} image`}
           fileName={`${exercise.muscleGroupImageId}.png`}
         />
@@ -33,3 +51,7 @@ export const ExerciseAccordionEntry = ({ exercise, onPress }: Props) => {
     </Pressable>
   );
 };
+
+export const ExerciseAccordionEntry = React.memo(
+  ExerciseAccordionEntryInternal
+);

@@ -1,6 +1,7 @@
 import { useGetUser } from "api";
 import { Accordion, Card } from "components";
-import { FlatList } from "react-native";
+import { useMemo } from "react";
+import { FlatList, ListRenderItemInfo } from "react-native";
 import { Text } from "tamagui";
 import { Activity, CardioActivity, Exercise, StrengthActivity } from "types";
 import { titleCase } from "utils";
@@ -40,35 +41,48 @@ export const ExerciseAccordion = ({
     return 0;
   });
 
-  const handleExerciseChange = (exercise: Exercise) => {
-    if (exercise) {
-      if (exercise.type === "strength") {
-        updateActivity("activity", {
-          id: 0,
-          exercise,
-          type: "strength",
-          reps: null,
-          sets: null,
-          weight: null,
-          targetReps: 0,
-          targetSets: 0,
-          targetWeight: 0,
-        } as StrengthActivity);
-      }
-      if (exercise.type === "cardio") {
-        updateActivity("activity", {
-          id: 0,
-          exercise,
-          type: "cardio",
-          distance: null,
-          duration: null,
-          targetDistance: 0,
-          targetDuration: 0,
-        } as CardioActivity);
-      }
-      incrementIndex();
-    }
-  };
+  const renderExercise = useMemo(
+    () =>
+      ({ item: exercise }: ListRenderItemInfo<Exercise>) => {
+        const handleExerciseChange = (exercise: Exercise) => {
+          if (exercise) {
+            if (exercise.type === "strength") {
+              updateActivity("activity", {
+                id: 0,
+                exercise,
+                type: "strength",
+                reps: null,
+                sets: null,
+                weight: null,
+                targetReps: 0,
+                targetSets: 0,
+                targetWeight: 0,
+              } as StrengthActivity);
+            }
+            if (exercise.type === "cardio") {
+              updateActivity("activity", {
+                id: 0,
+                exercise,
+                type: "cardio",
+                distance: null,
+                duration: null,
+                targetDistance: 0,
+                targetDuration: 0,
+              } as CardioActivity);
+            }
+            incrementIndex();
+          }
+        };
+
+        return (
+          <ExerciseAccordionEntry
+            exercise={exercise}
+            onPress={handleExerciseChange}
+          />
+        );
+      },
+    [incrementIndex, updateActivity]
+  );
 
   return (
     <Card w="90%" my="$2" p="$2.5" key={`card-${muscleGroup.name}`}>
@@ -82,12 +96,7 @@ export const ExerciseAccordion = ({
           data={sortedExercises}
           keyExtractor={(item) => item.id.toString()}
           ListEmptyComponent={<Text>No exercises found</Text>}
-          renderItem={({ item: exercise }) => (
-            <ExerciseAccordionEntry
-              exercise={exercise}
-              onPress={handleExerciseChange}
-            />
-          )}
+          renderItem={renderExercise}
         />
       </Accordion>
     </Card>

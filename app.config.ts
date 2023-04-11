@@ -18,13 +18,9 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
     : "./src/assets/icons/icon.png",
   android: {
     ...config.android,
-    runtimeVersion: "1.0.0",
-    package: "fitness.tracker",
-  },
-  ios: {
-    ...config.ios,
     runtimeVersion: {
-      policy: "sdkVersion",
+      policy: "nativeVersion",
     },
+    package: "fitness.tracker",
   },
 });

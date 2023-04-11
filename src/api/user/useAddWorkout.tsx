@@ -32,8 +32,6 @@ export function useAddWorkout() {
     async (rawRequest: AddWorkoutRequest) => {
       const workout = rawRequest.workout;
 
-      log(workout);
-
       const payload: AddWorkoutPayload = {
         name: workout.name,
         activities: workout.activities.map((activity) => ({

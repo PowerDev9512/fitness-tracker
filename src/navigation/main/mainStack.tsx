@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useGetUser } from "api";
+import { StatusBar } from "expo-status-bar";
 import {
   ActivityDetails,
   CreateWorkout,
@@ -15,7 +16,6 @@ import { AssetLoader } from "./assetLoader";
 import { LoadingMessage } from "./loadingMessage";
 import { MainHeader } from "./mainHeader";
 import { SideBarStack } from "../sideBar/sideBarStack";
-import { StatusBar } from "expo-status-bar";
 
 const Stack = createNativeStackNavigator<MainStackParams>();
 
@@ -33,7 +33,7 @@ export const MainStack = () => {
       setToken(undefined);
       setUserId(undefined);
     }
-  }, [setToken, token]);
+  }, [setToken, setUserId, token]);
 
   if (assetProgress.current < assetProgress.total) {
     return (

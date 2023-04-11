@@ -1,9 +1,9 @@
 import { useExercises } from "api";
-import { Heading } from "components";
 import React, { useEffect, useState } from "react";
 import { Dirs } from "react-native-file-access";
 import RNFetchBlob from "rn-fetch-blob";
 import { Exercise } from "types";
+
 import { LoadingMessage } from "./loadingMessage";
 
 type Progress = { current: number; total: number };
@@ -14,16 +14,16 @@ interface Props {
 }
 
 export const AssetLoader = ({ progress, setProgress }: Props) => {
-  const [missingAssets, setMissingAssets] = useState<Exercise[] | null>(null);
+  const [missingAssets, setMissingAssets] = useState<Exercise[]>([]);
   const [finished, setFinished] = useState(false);
 
-  const { data: exercises, isLoading: exercisesLoading } = useExercises({
+  const { data: exercises } = useExercises({
     retrieveImages: false,
   });
 
   const { data: exercisesWithImages } = useExercises({
     retrieveImages: true,
-    shouldFetch: missingAssets !== null && missingAssets.length > 0,
+    shouldFetch: missingAssets.length > 0,
   });
 
   // check for missing assets
@@ -32,21 +32,30 @@ export const AssetLoader = ({ progress, setProgress }: Props) => {
       return;
     }
 
-    const missingExercises = exercises
-      .map((exercise) => {
-        const fileName = `${Dirs.DocumentDir}/${exercise.muscleGroupImageId}.png`;
-        const exists = RNFetchBlob.fs.exists(fileName);
-        return { exists, exercise };
-      })
-      .filter((r) => !r.exists)
-      .map((r) => r.exercise);
+    const doesExerciseHaveImage = async (exercise: Exercise) => {
+      const fileName = `${Dirs.DocumentDir}/${exercise.muscleGroupImageId}.png`;
+      return await RNFetchBlob.fs.exists(fileName);
+    };
 
-    setMissingAssets(missingExercises);
+    const promises = exercises.map(async (exercise, i) => {
+      const exists = await doesExerciseHaveImage(exercise);
+      return { exists, exercise };
+    });
 
-    if (missingExercises.length === 0) {
-      setFinished(true);
-    }
-  }, [exercisesLoading, exercises]);
+    Promise.all(promises).then((results) => {
+      const missing = results.filter((r) => !r.exists).map((r) => r.exercise);
+      setMissingAssets(missing);
+
+      if (missing.length === 0) {
+        setFinished(true);
+      } else {
+        setProgress(() => ({
+          current: 0,
+          total: missing.length,
+        }));
+      }
+    });
+  }, [exercises, setProgress]);
 
   // bail out if theres nothing to do
   useEffect(() => {
@@ -57,8 +66,11 @@ export const AssetLoader = ({ progress, setProgress }: Props) => {
 
   // create missing assets
   useEffect(() => {
-    if (missingAssets && missingAssets.length > 0) {
-      setProgress(() => ({ current: 0, total: missingAssets.length }));
+    if (missingAssets.length > 0 && exercisesWithImages) {
+      setProgress(() => ({
+        current: 0,
+        total: missingAssets.length,
+      }));
 
       missingAssets.forEach((exercise) => {
         const matchingExercise = exercisesWithImages?.find(
@@ -82,11 +94,16 @@ export const AssetLoader = ({ progress, setProgress }: Props) => {
       setProgress((prev) => ({ current: prev.total, total: prev.total }));
       setFinished(true);
     }
-  }, [missingAssets, exercises, setProgress, exercisesWithImages]);
+  }, [exercisesWithImages, missingAssets, setProgress]);
 
   if (progress.current === -1) {
     return <LoadingMessage title="Checking assets..." />;
   }
 
-  return <LoadingMessage title="Loading assets..." description={`${progress.current}/${progress.total}`} />;
+  return (
+    <LoadingMessage
+      title="Loading assets..."
+      description={`${progress.current}/${progress.total}`}
+    />
+  );
 };

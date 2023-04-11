@@ -1,4 +1,4 @@
-import create, { StateCreator, StoreApi, UseBoundStore } from "zustand";
+import { create, StateCreator, StoreApi, UseBoundStore } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
 import { createUserSlice, UserSlice } from "./user/slice";
@@ -19,7 +19,7 @@ function createStore<TState extends Record<string | number | symbol, any>>(
       storage: createJSONStorage(() => zustandStorage),
     })
   );
-  store.destroy();
+
   return [
     store,
     {

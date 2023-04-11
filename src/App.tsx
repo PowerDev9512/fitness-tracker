@@ -15,12 +15,12 @@ LogBox.ignoreLogs(["Please report: Excessive number of pending callbacks: 501."]
 LogBox.ignoreLogs(["VirtualizedLists should never be nested inside plain ScrollViews with the same orientation because it can break windowing and other functionality - use another VirtualizedList-backed container instead."]);
 
 const App = () => {
-  const [loaded] = useFonts({
+  const [appIsReady] = useFonts({
     Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
     InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
   });
 
-  if (!loaded) {
+  if (!appIsReady) {
     return null;
   }
 

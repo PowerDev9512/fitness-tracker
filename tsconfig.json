@@ -14,7 +14,6 @@
     "esModuleInterop": true,
     "jsx": "react-native",
     "strictNullChecks": true,
-    "typeRoots": ["node_modules/@types"],
     "paths": {
       "components": ["./src/components"],
       "store": ["./src/store"],

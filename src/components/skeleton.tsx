@@ -28,24 +28,28 @@ export const Skeleton = ({ isLoading = true, ...props }: Props) => {
 
   useEffect(() => {
     progress.value = withRepeat(
-      withTiming(1, { duration: 100, easing: Easing.linear }),
+      withTiming(1, { duration: 5000, easing: Easing.linear }),
       -1,
-      false
+      true
     );
-  }, []);
+  }, [progress]);
 
-  const start = interpolate(progress.value, [0, 1], [-0.5, 0.5]);
-  const end = interpolate(progress.value, [0, 1], [0.5, 1.5]);
+  const animatedStyle = {
+    transform: [{ translateX: progress.value }],
+  };
+
+  const start = { x: 0, y: 0 };
+  const end = { x: interpolate(progress.value, [0, 1], [0, 1]), y: 0 };
 
   return (
     <SkeletonInternal {...props}>
-      <Animated.View>
+      <Animated.View style={animatedStyle}>
         <LinearGradient
           w="100%"
           h="100%"
           borderRadius={10}
-          start={{ x: start, y: 0 }}
-          end={{ x: end, y: 0 }}
+          start={start}
+          end={end}
           colors={[theme.gray200.val, theme.gray400.val, theme.gray200.val]}
         />
       </Animated.View>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -25,6 +25,8 @@ const InternalAccordion = ({
   const [isOpen, setIsOpen] = useState(false);
 
   const maxHeight = short ? 125 : 200;
+
+  const memoizedChildren = useMemo(() => children, [children]);
 
   const fadeAnimation = useSharedValue(0);
   const fadeStyle = useAnimatedStyle(() => ({
@@ -58,7 +60,7 @@ const InternalAccordion = ({
       </XStack>
 
       <Animated.View style={fadeStyle}>
-        <ScrollView>{isOpen && children}</ScrollView>
+        <ScrollView>{isOpen && memoizedChildren}</ScrollView>
       </Animated.View>
 
       <Animated.View style={rotateStyle}>
