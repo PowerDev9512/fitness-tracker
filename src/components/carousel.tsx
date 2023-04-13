@@ -1,7 +1,7 @@
-import React, { JSXElementConstructor, ReactElement, useState } from "react";
-import { Dimensions } from "react-native";
+import React, { JSXElementConstructor, ReactElement, useCallback, useEffect } from "react";
+import { Animated, Dimensions } from "react-native";
+import { ExpandingDot } from "react-native-animated-pagination-dots";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import PaginationDot from "react-native-insta-pagination-dots";
 import BaseCarousel from "react-native-reanimated-carousel";
 import { Stack, useTheme } from "tamagui";
 
@@ -22,8 +22,29 @@ export const Carousel = ({
   defaultIndex = undefined,
 }: Props) => {
   const { width } = Dimensions.get("window");
-  const theme = useTheme();
-  const [currentPage, setCurrentPage] = React.useState(defaultIndex);
+
+  const scrollOffsetAnimatedValue = React.useRef(new Animated.Value(0)).current;
+  const positionAnimatedValue = React.useRef(new Animated.Value(0)).current;
+
+  const inputRange = [0, items.length];
+  const scrollX = Animated.add(
+    scrollOffsetAnimatedValue,
+    positionAnimatedValue
+  ).interpolate({
+    inputRange,
+    outputRange: [0, items.length * width],
+  });
+
+  useEffect(() => {
+    positionAnimatedValue.setValue(defaultIndex ?? 0);
+  }, []);
+
+  const onPageScroll = useCallback(
+    (_offsetProgress: number, absoluteProgress: number) => {
+      positionAnimatedValue.setValue(absoluteProgress);
+    },
+    [positionAnimatedValue]
+  );
 
   return (
     <GestureHandlerRootView style={{ flex: 1, marginBottom: 50 }}>
@@ -35,8 +56,8 @@ export const Carousel = ({
         width={width}
         scrollAnimationDuration={500}
         data={items}
+        onProgressChange={onPageScroll}
         defaultIndex={defaultIndex}
-        onScrollEnd={(index) => setCurrentPage(index)}
         mode="parallax"
         modeConfig={{
           parallaxScrollingScale: 0.84,
@@ -45,10 +66,22 @@ export const Carousel = ({
         renderItem={({ item, index }) => renderItem(item, index)}
       />
       <Stack mx="auto" mt="$-10">
-        <PaginationDot
-          activeDotColor={theme.primary300.val}
-          curPage={currentPage}
-          maxPage={items.length}
+        <ExpandingDot
+          data={items}
+          expandingDotWidth={30}
+          //@ts-ignore
+          scrollX={scrollX}
+          inActiveDotOpacity={0.6}
+          dotStyle={{
+            width: 10,
+            height: 10,
+            backgroundColor: "#347af0",
+            borderRadius: 5,
+            marginHorizontal: 5,
+          }}
+          containerStyle={{
+            top: -3,
+          }}
         />
       </Stack>
     </GestureHandlerRootView>

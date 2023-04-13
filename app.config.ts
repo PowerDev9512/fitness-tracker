@@ -11,15 +11,18 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   },
   name: IS_DEV ? `[DEV] ${config.name}` : config.name ?? "FitnessTracker",
   slug: config.slug ?? "FitnessTracker",
-  icon: IS_DEV
-    ? "./src/assets/icons/icon-dev.png"
-    : IS_BETA
-    ? "./src/assets/icons/icon-beta.png"
-    : "./src/assets/icons/icon.png",
+  icon: "./src/assets/icons/icon.png",
   android: {
     ...config.android,
     runtimeVersion: {
       policy: "nativeVersion",
+    },
+    splash: {
+      backgroundColor: "#5da5da",
+    },
+    adaptiveIcon: {
+      foregroundImage: "./src/assets/icons/icon.png",
+      backgroundColor: "#5da5da",
     },
     package: "fitness.tracker",
   },

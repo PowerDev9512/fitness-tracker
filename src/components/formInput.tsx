@@ -12,6 +12,7 @@ interface Props {
   placeholder?: string | undefined;
   value: string | number | undefined;
   onBlur: (e: any) => void;
+  onFocus?: (e: any) => void;
   onChangeText: (value: string) => void;
   hideLabel?: boolean;
   type?: "text" | "password";
@@ -22,6 +23,7 @@ export const FormInput = ({
   value,
   onChangeText,
   onBlur,
+  onFocus,
   hideLabel = false,
   placeholder = undefined,
   error = undefined,
@@ -43,6 +45,7 @@ export const FormInput = ({
         type={type}
         value={value}
         onBlur={onBlur}
+        onFocus={onFocus ?? (() => {})}
         placeholder={placeholder}
         onChangeText={onChangeText}
       />

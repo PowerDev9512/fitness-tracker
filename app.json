@@ -3,12 +3,6 @@
     "name": "Pocket Coach",
     "slug": "fitnesstracker",
     "platforms": ["android"],
-    "icon": "./src/assets/icons/icon.png",
-    "splash": {
-      "image": "./src/assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#5da5da"
-    },
     "plugins": [
       [
         "expo-image-picker",

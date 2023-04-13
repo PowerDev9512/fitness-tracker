@@ -33,16 +33,9 @@ const onErrorHandler = (err: unknown) => {
           text2: message.description ?? "",
           type: "error",
         });
-        return;
       }
     }
   }
-
-  Toast.show({
-    type: "error",
-    text1: "An error has occured",
-    text2: "Please try again shortly!",
-  });
 };
 
 export const queryClient = new QueryClient({
