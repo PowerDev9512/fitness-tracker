@@ -18,13 +18,12 @@ export const AssetLoader = ({ progress, setProgress }: Props) => {
   const [finished, setFinished] = useState(false);
 
   const { data: exercises } = useExercises({
-    retrieveImages: false,
+    retrieveImages: missingAssets.length > 0,
   });
 
-  const { data: exercisesWithImages } = useExercises({
-    retrieveImages: true,
-    shouldFetch: missingAssets.length > 0,
-  });
+  const exercisesWithImages = exercises?.filter(
+    (e) => e.muscleGroupImageId !== null
+  );
 
   // check for missing assets
   useEffect(() => {

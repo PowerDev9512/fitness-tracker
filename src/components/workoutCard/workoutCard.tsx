@@ -6,12 +6,12 @@ import { Separator, Stack, Text, useTheme, YStack } from "tamagui";
 import { Workout } from "types";
 import { titleCase } from "utils";
 
-import { Badge } from "../badge";
-import { Card } from "../card";
-import { Heading } from "../heading";
 import { WorkoutCardBadges } from "./components/workoutCardBadges";
 import { WorkoutCardContent } from "./components/workoutCardContent";
 import { WorkoutCardFooter } from "./components/workoutCardFooter";
+import { Badge } from "../badge";
+import { Card } from "../card";
+import { Heading } from "../heading";
 
 interface Props {
   workout: Workout;
@@ -19,11 +19,10 @@ interface Props {
 }
 
 export const WorkoutCard = ({ workout, footer }: Props) => {
-  const [deleting, setDeleting] = useState(false);
   const theme = useTheme();
 
   const { data: user } = useGetUser();
-  const { mutate: deleteWorkout } = useDeleteWorkout();
+  const { mutate: deleteWorkout, isLoading: deleting } = useDeleteWorkout();
 
   return (
     <Stack h="100%">
@@ -32,7 +31,6 @@ export const WorkoutCard = ({ workout, footer }: Props) => {
           side="left"
           loading={deleting}
           onClick={() => {
-            setDeleting(true);
             deleteWorkout({ userId: user?.id ?? -1, workoutId: workout.id });
           }}
         >
@@ -42,11 +40,7 @@ export const WorkoutCard = ({ workout, footer }: Props) => {
         <WorkoutCardBadges workout={workout} />
 
         <Card p="$4" accessibilityLabel="workout-card" w={350} minHeight={410}>
-          <Heading
-            textAlign="center"
-            justifyContent="center"
-            mt="$1"
-          >
+          <Heading textAlign="center" justifyContent="center" mt="$1">
             {titleCase(workout.name)}
           </Heading>
 

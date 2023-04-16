@@ -59,6 +59,7 @@ export interface Image {
 interface BaseExercise {
   id: number;
   name: string;
+  gifUrl: string | null;
   type: ExerciseType;
   mainMuscleGroup: MuscleGroup;
   detailedMuscleGroup: MuscleGroup | null;
@@ -136,7 +137,14 @@ export interface CompletedWorkout extends BaseWorkout {
 export type Workout = ScheduledWorkout | CompletedWorkout;
 
 interface BuddyAnatomyBase {
+  id: number;
   muscleGroup: MuscleGroup;
+  levelData: {
+    currentLevel: number;
+    minLevel: number;
+    maxLevel: number;
+    currentLevelProgress: number;
+  };
 }
 export interface BuddyAbs extends BuddyAnatomyBase {
   muscleGroup: "Abs";
@@ -184,12 +192,6 @@ export interface BuddyBack extends BuddyAnatomyBase {
 
 export interface BuddyTriceps extends BuddyAnatomyBase {
   muscleGroup: "Triceps";
-}
-
-export interface BuddyAnatomy {
-  id: number;
-  level: number;
-  muscleGroup: MuscleGroup;
 }
 
 export type StrengthLevelTypes =
@@ -283,7 +285,7 @@ export type UserAchievement = Achievement & {
 };
 
 export interface BuddyData {
-  anatomy: BuddyAnatomy[];
+  anatomy: BuddyAnatomyBase[];
   streak: number;
   muscleGroupStats: Record<MuscleGroup, number>;
   levelStats: Record<StrengthLevelTypes, number>;

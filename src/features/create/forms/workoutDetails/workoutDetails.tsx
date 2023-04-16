@@ -1,17 +1,19 @@
 import { useGetUser } from "api";
 import { Button, Card, FormLabel, Heading } from "components";
 import React, { useMemo } from "react";
-import { Stack, Text, XStack, YStack } from "tamagui";
+import { Image, ScrollView, Stack, Text, XStack, YStack } from "tamagui";
 import { CardioActivity, StrengthActivity } from "types";
 import { getDistanceFormatter, getWeightFormatter } from "utils";
 
 import { ActionButton } from "./actionButton";
 import { IncrementBar } from "./incrementBar";
+import { WorkoutDemonstrationModal } from "./workoutDemonstrationModal";
 import { CreateWorkoutProps } from "../../createWorkout";
 
 export const WorkoutDetails = ({ form }: CreateWorkoutProps) => {
   const { activity } = form.values;
   const { data: user } = useGetUser();
+  const [isOpen, setIsOpen] = React.useState(false);
 
   const distanceFormatter = getDistanceFormatter(user);
   const weightFormatter = getWeightFormatter(user);
@@ -183,12 +185,30 @@ export const WorkoutDetails = ({ form }: CreateWorkoutProps) => {
   }
 
   return (
-    <Card w="100%" mt={4}>
-      <FormLabel pl="$3" pt="$2" mr="auto" fontWeight="bold" fontSize={32}>
-        {activity.exercise.name}
-      </FormLabel>
-      {activitySpecificFields}
-      {maxFields}
-    </Card>
+    <>
+      <WorkoutDemonstrationModal
+        url={activity.exercise.gifUrl ?? ""}
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+      />
+      <Card w="100%" mt={4}>
+        <FormLabel pl="$3" pt="$2" mr="auto" fontWeight="bold" fontSize={32}>
+          {activity.exercise.name}
+        </FormLabel>
+        {activitySpecificFields}
+        {maxFields}
+        <Stack>
+          <Button
+            variant="link"
+            mx="auto"
+            mb="$3"
+            w="75%"
+            onPress={() => setIsOpen(true)}
+          >
+            View Demonstration
+          </Button>
+        </Stack>
+      </Card>
+    </>
   );
 };

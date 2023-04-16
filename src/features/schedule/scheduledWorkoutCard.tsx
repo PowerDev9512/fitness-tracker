@@ -11,7 +11,7 @@ export const ScheduledWorkoutCard = ({
   scheduledWorkout,
   onComplete,
 }: Props) => {
-  const footer = <Button onPress={() => onComplete()}>Complete Workout</Button>;
+  const footer = <Button onPress={onComplete}>Complete Workout</Button>;
 
   return <WorkoutCard workout={scheduledWorkout} footer={footer} />;
 };

@@ -8,7 +8,6 @@ import { getScheduledWorkouts } from "utils";
 
 import { ScheduledWorkoutCard } from "./scheduledWorkoutCard";
 
-
 export const Schedule = () => {
   const { mutate: editWorkout } = useEditWorkout();
   const { data: user } = useGetUser();
@@ -26,7 +25,7 @@ export const Schedule = () => {
     );
   }
 
-  const onComplete = () => (workout: ScheduledWorkout) => {
+  const onComplete = (workout: ScheduledWorkout) => {
     editWorkout({
       userId: user.id,
       workout: { ...workout, completed: true, past: true },
@@ -42,7 +41,7 @@ export const Schedule = () => {
     <Stack margin="auto">
       <ScheduledWorkoutCard
         scheduledWorkout={item}
-        onComplete={onComplete}
+        onComplete={() => onComplete(item)}
         key={index}
       />
     </Stack>

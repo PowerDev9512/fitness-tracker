@@ -12,19 +12,28 @@ export const BuddyStats = () => {
     return null;
   }
 
-  const createStats = (name: string, state: number, index: number) => (
+  const createStats = (
+    name: string,
+    currentLevel: number,
+    state: number,
+    maxLevel: number,
+    index: number
+  ) => (
     <Stack key={`${name}-${index}-container`} marginTop="$2">
       <Text key={`${name}-${index}-text`}>
-        {titleCase(name)}: {state} / 10
+        {titleCase(name)}: {currentLevel} / {maxLevel}
       </Text>
-      <Progress key={`${name}-${index}-progress`} value={state * 10}>
+      <Progress
+        key={`${name}-${index}-progress`}
+        value={(currentLevel / maxLevel) * 100}
+      >
         <Progress.Indicator backgroundColor="$primary500" animation="bouncy" />
       </Progress>
     </Stack>
   );
 
   const anatomy = user.workoutBuddy.data.anatomy.sort((a, b) =>
-    a.level < b.level ? 1 : -1
+    a.levelData.currentLevel < b.levelData.currentLevel ? 1 : -1
   );
 
   return (
@@ -33,7 +42,13 @@ export const BuddyStats = () => {
         <FlatList
           data={anatomy}
           renderItem={({ item, index }) =>
-            createStats(item.muscleGroup, item.level, index)
+            createStats(
+              item.muscleGroup,
+              item.levelData.currentLevel,
+              item.levelData.currentLevelProgress,
+              item.levelData.maxLevel,
+              index
+            )
           }
           keyExtractor={(item, index) => `${item.muscleGroup}-${index}`}
         />
