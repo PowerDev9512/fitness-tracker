@@ -54,7 +54,7 @@ export const Notifications = () => {
           }
 
           return (
-            <Card pt={-5} w="$18" mx="auto" mt={2}>
+            <Card p="$4" w="100%" mx="auto" mt="$-1">
               <XStack>
                 <Avatar user={currentUser} size="md" callback={() => null} />
                 <Text mt={7} ml={2}>
@@ -64,6 +64,7 @@ export const Notifications = () => {
               </XStack>
               <XStack ml="auto">
                 <Button
+                  variant="link"
                   isLoading={accepting}
                   onPress={() => handleOnDecline(currentUser.id)}
                 >

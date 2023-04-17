@@ -24,7 +24,7 @@ export function useGetOtherUsers(
     const searchType = typeof otherUsers[0] === "string" ? "username" : "id";
 
     const { data } = await client.get<GetOtherUserRawResponse>(
-      `/users/${userId}/otherUsers/}`,
+      `/users/${userId}/otherUsers`,
       {
         params: {
           otherUsers: otherUsersString,
@@ -32,6 +32,7 @@ export function useGetOtherUsers(
         },
       }
     );
+
     return data.users;
   });
 }

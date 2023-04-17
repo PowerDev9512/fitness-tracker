@@ -24,7 +24,7 @@ export const AddFriendModal = ({ friend, user, loading, onClose }: Props) => {
     }
   }, [addingStatus, onClose]);
 
-  const isFriend = user?.friends?.includes(user.id) ?? false;
+  const isFriend = user?.friends?.includes(friend?.id ?? -1) ?? false;
 
   return (
     <Modal isOpen={friend !== null} onClose={onClose}>
@@ -51,7 +51,7 @@ export const AddFriendModal = ({ friend, user, loading, onClose }: Props) => {
             <Button
               isLoading={adding || loading}
               onPress={() => {
-                addFriend({ friendId: user?.id ?? -1 });
+                addFriend({ friendId: friend?.id ?? -1 });
               }}
             >
               Add Friend

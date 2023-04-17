@@ -18,18 +18,16 @@ export default () => {
         color="$gray700"
       />
       {friendRequests > 0 && (
-        <Stack
+        <Text
+          textAlign="center"
+          color="$primary300"
+          fontSize={18}
           position="absolute"
-          top={7}
-          right={1}
-          bottom={0}
-          width={4}
-          height={4}
+          top={2}
+          right={-10}
         >
-          <Text pb={1} textAlign="center" color="white" fontSize={8}>
-            {user?.friendRequests.length}
-          </Text>
-        </Stack>
+          {user?.friendRequests.length}
+        </Text>
       )}
     </Stack>
   );
