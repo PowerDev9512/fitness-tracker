@@ -351,6 +351,7 @@ export interface Message {
 }
 
 export interface StoreEntry {
+  productId: string;
   reward: Reward;
   price: number;
   title: string;

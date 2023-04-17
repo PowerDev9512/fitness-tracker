@@ -1,4 +1,4 @@
-import { Autocomplete, Button, FormInput, FormLabel } from "components";
+import { Autocomplete, Button, FormInput, FormLabel, IconButton } from "components";
 import React from "react";
 import { Stack, XStack } from "tamagui";
 import { createMeasurementFormatter, createWeightFormatter } from "utils";
@@ -39,7 +39,7 @@ export const StatsForm = ({ form, exercises }: Props) => {
   const maxes = Object.entries(form.values.maxes).map(([exerciseName, max]) => (
     <Stack>
       <FormLabel mt={4}>{exerciseName}</FormLabel>
-      <XStack space={5} w="30%" alignItems="center" key={exerciseName}>
+      <XStack space="$4" w="40%" alignItems="center" key={exerciseName}>
         <FormInput
           key={`weight-${exerciseName}`}
           onChangeText={form.handleChange(`maxes.${exerciseName}.weight`)}
@@ -68,9 +68,12 @@ export const StatsForm = ({ form, exercises }: Props) => {
           }
           name="Reps"
         />
-        <Button
+        <IconButton
           key={`remove-${exerciseName}`}
-          mt={5}
+          icon="close"
+          mt="$6"
+          color="$red500"
+          size={24}
           onPress={() => {
             form.setFieldValue(
               "maxes",
@@ -83,7 +86,7 @@ export const StatsForm = ({ form, exercises }: Props) => {
           }}
         >
           Remove
-        </Button>
+        </IconButton>
       </XStack>
     </Stack>
   ));

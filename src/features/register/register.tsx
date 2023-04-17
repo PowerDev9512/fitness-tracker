@@ -5,10 +5,10 @@ import React, { useState } from "react";
 import { Text } from "tamagui";
 import { Image } from "types";
 
-import { NavigationButton } from "./navigationButton";
 import { BuddyForm } from "./forms/buddy/buddyForm";
 import { RegisterForm } from "./forms/details/registerForm";
 import { StatsForm } from "./forms/stats/statsForm";
+import { NavigationButton } from "./navigationButton";
 import { RegisterSchema } from "./registerSchema";
 
 export interface RegisterValues {
@@ -16,7 +16,6 @@ export interface RegisterValues {
   password: string;
   confirmPassword: string;
   username: string;
-  buddyName: string;
   height: number;
   weight: number;
   weightUnit: "kilograms" | "pounds";
@@ -36,7 +35,10 @@ const RegisterScreen = () => {
   const [index, setIndex] = useState(0);
 
   const onSubmit = (registrationDetails: RegisterValues) => {
-    register({ ...registrationDetails });
+    register({
+      ...registrationDetails,
+      buddyName: registrationDetails.username,
+    });
   };
 
   const getStep = (props: RegisterProps) => {
@@ -64,7 +66,6 @@ const RegisterScreen = () => {
             password: "",
             confirmPassword: "",
             username: "",
-            buddyName: "",
             weightUnit: "kilograms",
             measurementUnit: "metric",
             height: 0,

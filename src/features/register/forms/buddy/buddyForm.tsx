@@ -7,19 +7,6 @@ import { RegisterProps } from "../../register";
 export const BuddyForm = ({ form }: RegisterProps) => {
   return (
     <Stack w="90%">
-      <FormInput
-        onChangeText={form.handleChange("buddyName")}
-        onBlur={form.handleBlur("buddyName")}
-        value={form.values.buddyName}
-        required
-        error={
-          form.errors.buddyName && form.touched.buddyName
-            ? form.errors.buddyName
-            : undefined
-        }
-        name="Buddy Name"
-      />
-
       <Stack mb="$4" mr="auto">
         <FormLabel>Measurement Unit</FormLabel>
         {["Metric", "Imperial"].map((unit) => (

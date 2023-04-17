@@ -53,7 +53,7 @@ export const MainStack = () => {
           header: (props) => (
             <MainHeader
               name={props.route.name}
-              loggedIn={user === undefined}
+              loggedIn={user !== undefined}
               onBackPress={() => props.navigation.goBack()}
             />
           ),

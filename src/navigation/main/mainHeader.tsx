@@ -1,9 +1,9 @@
 import { IconButton } from "components";
+import Constants from "expo-constants";
 import React, { useCallback } from "react";
 import { Heading, XStack } from "tamagui";
 
 import NotificationBell from "../sideBar/notificationBell";
-import Constants from "expo-constants";
 
 type BaseProps = {
   loggedIn: boolean;

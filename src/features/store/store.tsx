@@ -1,9 +1,11 @@
-import { useGetUser, useStoreEntries } from "api";
+import { useClaimEntry, useGetUser, useStoreEntries } from "api";
 import { Button, Card, Heading, Screen } from "components";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FlatList } from "react-native";
+import { useIAP, requestPurchase, withIAPContext } from "react-native-iap";
+import Toast from "react-native-toast-message";
 import { Text, XStack } from "tamagui";
-import { Reward, StoreEntry, Title } from "types";
+import { Reward, StoreEntry } from "types";
 
 const compareRewards = (a: Reward, b: Reward) => {
   if (a.rewardType === "title" && b.rewardType === "title") {
@@ -12,13 +14,68 @@ const compareRewards = (a: Reward, b: Reward) => {
   return false;
 };
 
-export const Store = () => {
+const Store = () => {
   const { data: user } = useGetUser();
   const { data: storeEntries } = useStoreEntries();
+  const { mutate: claimReward } = useClaimEntry();
+
+  const [loadingId, setLoadingId] = useState<string | null>(null);
+  const { products, currentPurchase, currentPurchaseError, getProducts } =
+    useIAP();
 
   const buyItem = (item: StoreEntry) => {
-    console.log("buying item", item);
+    const matchingProduct = products.find(
+      (product) => product.productId === item.productId
+    );
+
+    if (matchingProduct) {
+      requestPurchase({ sku: matchingProduct.productId });
+    }
   };
+
+  useEffect(() => {
+    getProducts({ skus: storeEntries?.map((entry) => entry.productId) ?? [] });
+  }, [getProducts, storeEntries]);
+
+  useEffect(() => {
+    if (loadingId) {
+      const timeout = setTimeout(() => {
+        setLoadingId(null);
+      }, 3000);
+      return () => clearTimeout(timeout);
+    }
+  }, [loadingId]);
+
+  useEffect(() => {
+    if (currentPurchaseError) {
+      setLoadingId(null);
+      Toast.show({
+        text1: "Error",
+        text2: currentPurchaseError.message,
+        type: "error",
+      });
+    }
+  }, [currentPurchaseError]);
+
+  useEffect(() => {
+    if (currentPurchase) {
+      setLoadingId(null);
+
+      const reward = storeEntries?.find(
+        (entry) => entry.productId === currentPurchase.productId
+      )?.reward;
+
+      if (reward) {
+        Toast.show({
+          text1: "Success",
+          text2: "You're purchase was successful",
+          type: "success",
+        });
+
+        claimReward({ reward });
+      }
+    }
+  }, [claimReward, currentPurchase, storeEntries]);
 
   const rewards = useMemo(() => user?.inventory ?? [], [user]);
 
@@ -36,7 +93,14 @@ export const Store = () => {
           </Text>
         </XStack>
         <Text mb="$4">{storeEntry.description}</Text>
-        <Button disabled={alreadyBought} onPress={() => buyItem(storeEntry)}>
+        <Button
+          disabled={alreadyBought}
+          onPress={() => {
+            setLoadingId(storeEntry.productId);
+            return buyItem(storeEntry);
+          }}
+          isLoading={loadingId === storeEntry.productId}
+        >
           {alreadyBought ? "Already bought" : "Buy"}
         </Button>
       </Card>
@@ -56,3 +120,5 @@ export const Store = () => {
     </Screen>
   );
 };
+
+export default withIAPContext(Store);

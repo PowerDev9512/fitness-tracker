@@ -23,5 +23,4 @@ export const RegisterSchema = Yup.object<
   age: Yup.number()
     .required("Age is required")
     .min(18, "Age must be at least 18"),
-  buddyName: Yup.string().required("Buddy Name is required"),
 });

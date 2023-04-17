@@ -18,4 +18,5 @@ export * from "./user/useGetWorkoutData";
 export * from "./user/useGetWorkoutNames";
 export * from "./user/useGetOtherUsers";
 export * from "./store/useStoreEntries";
+export * from "./store/useClaimEntry";
 export { client } from "./client";
