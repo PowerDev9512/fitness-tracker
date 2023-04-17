@@ -1,9 +1,9 @@
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { Achievements } from "features";
+import { Achievements, Store } from "features";
 import React from "react";
 
-import { SideBarHeader } from "./sideBarHeader";
 import { SideBar } from "./sideBar";
+import { SideBarHeader } from "./sideBarHeader";
 import { DashboardStack } from "../dashboard/dashboardStack";
 
 const Drawer = createDrawerNavigator();
@@ -19,6 +19,7 @@ const DrawerStackInternal = () => {
     >
       <Drawer.Screen name="Dashboard" component={DashboardStack} />
       <Drawer.Screen name="Achievements" component={Achievements} />
+      <Drawer.Screen name="Store" component={Store} />
     </Drawer.Navigator>
   );
 };

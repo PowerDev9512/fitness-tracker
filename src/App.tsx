@@ -6,7 +6,7 @@ import { LogBox } from "react-native";
 import Toast from "react-native-toast-message";
 
 import { MainStack } from "./navigation/main/mainStack";
-import { Provider } from "./provider";
+import Provider from "./provider";
 import { toastConfig } from "./toast.config";
 
 LogBox.ignoreLogs(["Require cycle: node_modules/victory"]);

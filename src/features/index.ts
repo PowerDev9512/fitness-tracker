@@ -9,3 +9,4 @@ export { Schedule } from "./schedule/schedule";
 export { Settings } from "./settings/settings";
 export { Social } from "./social/social";
 export { Stats } from "./stats/stats";
+export { Store } from "./store/store";

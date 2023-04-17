@@ -349,3 +349,10 @@ export interface Message {
   date: string;
   user: User;
 }
+
+export interface StoreEntry {
+  reward: Reward;
+  price: number;
+  title: string;
+  description: string;
+}

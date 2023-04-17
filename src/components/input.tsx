@@ -10,7 +10,7 @@ interface InputProps {
   onBlur?: (value: any) => void;
   rightElement?: React.ReactNode;
   placeholder: string | undefined;
-  type: "text" | "password";
+  type: "text" | "password" | "number" | "email";
 }
 
 type Props = Omit<React.ComponentProps<typeof InputBase>, "value"> & InputProps;
@@ -41,6 +41,23 @@ export const Input = ({
     valueAsString = "";
   }
 
+  let keyboardType: "default" | "numeric" | "email-address" = "default";
+
+  switch (type) {
+    case "text":
+      keyboardType = "default";
+      break;
+    case "password":
+      keyboardType = "default";
+      break;
+    case "number":
+      keyboardType = "numeric";
+      break;
+    case "email":
+      keyboardType = "email-address";
+      break;
+  }
+
   const createRightElement = () => {
     if (rightElement) {
       return rightElement;
@@ -69,6 +86,7 @@ export const Input = ({
         onChangeText={onChangeText}
         borderRadius={10}
         caretHidden={false}
+        keyboardType={keyboardType}
         placeholder={placeholder}
         placeholderTextColor="gray"
         backgroundColor="$white"

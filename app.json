@@ -9,6 +9,12 @@
         {
           "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
+      ],
+      [
+        "react-native-iap",
+        {
+          "inAppBillingV3Enabled": true
+        }
       ]
     ],
     "android": {
