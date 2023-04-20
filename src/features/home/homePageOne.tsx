@@ -23,7 +23,7 @@ export const HomePageOne = ({ onNext }: Props) => {
     >
       <Heading mx="auto">Welcome to Pocket Coach</Heading>
       <Text fontSize={16} textAlign="center" mx="auto">
-        Your personal fitness tracker and coach
+        Your very own fitness tracker and coach
       </Text>
       <SvgUri
         uri={

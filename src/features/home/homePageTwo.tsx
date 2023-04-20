@@ -23,7 +23,7 @@ export const HomePageTwo = ({ onNext }: Props) => {
     >
       <Heading mx="auto">Simplyfing your fitness journey</Heading>
       <Text textAlign="center" fontSize={16} mx="auto">
-        We gameify your goals and make them achievable
+        We make achieving all of your fitness goals fun and easy
       </Text>
       <SvgUri
         uri={

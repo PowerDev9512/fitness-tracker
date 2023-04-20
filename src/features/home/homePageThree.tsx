@@ -50,7 +50,7 @@ export const HomePageThree = () => {
         flex: 1,
         padding: 20,
         paddingTop: 50,
-        marginBottom: 30,
+        marginBottom: 65,
         width: "100%",
       }}
     >
@@ -58,7 +58,7 @@ export const HomePageThree = () => {
         Login to your account
       </Heading>
       <Text textAlign="center" fontSize={16} mx="auto">
-        Or register below to start your fitness journey
+        Or register below to start your fitness journey right now!
       </Text>
       <SvgUri
         uri={
