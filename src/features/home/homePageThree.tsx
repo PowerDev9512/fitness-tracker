@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useLogin } from "api";
 import { Heading, FormInput, Button } from "components";
 import { useMemo, useState } from "react";
-import { View, Image, Pressable } from "react-native";
+import { View, Image, Pressable, Linking } from "react-native";
 import { SvgUri } from "react-native-svg";
 import { Text, YStack } from "tamagui";
 
@@ -50,7 +50,7 @@ export const HomePageThree = () => {
         flex: 1,
         padding: 20,
         paddingTop: 50,
-        marginBottom: 0,
+        marginBottom: 30,
         width: "100%",
       }}
     >
@@ -107,6 +107,21 @@ export const HomePageThree = () => {
           <Text fontWeight="bold" color="$primary300">
             {" "}
             Register here!
+          </Text>
+        </Text>
+      </Pressable>
+      <Pressable
+        onPress={() =>
+          Linking.openURL(
+            "https://thed24.github.io/fitness-tracker-site/privacy"
+          )
+        }
+      >
+        <Text textAlign="center" mb="$2" color="$primary300">
+          Or, view our
+          <Text fontWeight="bold" color="$primary300">
+            {" "}
+            Privacy Policy
           </Text>
         </Text>
       </Pressable>
