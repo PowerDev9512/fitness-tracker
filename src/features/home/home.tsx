@@ -1,11 +1,12 @@
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import React from "react";
+import React, { useEffect } from "react";
 import { Animated, Dimensions } from "react-native";
 import { ExpandingDot } from "react-native-animated-pagination-dots";
 import PagerView, {
   PagerViewOnPageScrollEventData,
 } from "react-native-pager-view";
 import { Stack } from "tamagui";
+import { Mixpanel } from "utils";
 
 import { HomePageOne } from "./homePageOne";
 import { HomePageThree } from "./homePageThree";
@@ -29,6 +30,11 @@ export const Home = ({
     inputRange,
     outputRange: [0, pages.length * width],
   });
+
+  useEffect(() => {
+    const event = "Onboarding 1 Viewed";
+    Mixpanel.track(event);
+  }, []);
 
   const onPageScroll = React.useMemo(
     () =>
@@ -56,11 +62,16 @@ export const Home = ({
         ref={ref}
         style={{ flex: 1 }}
         onPageScroll={onPageScroll}
+        onPageSelected={(e) => {
+          const event = `Onboarding ${e.nativeEvent.position + 1} Viewed`;
+          Mixpanel.track(event, { page: e.nativeEvent.position + 1 });
+        }}
       >
         <HomePageOne key={1} onNext={() => ref.current?.setPage(1)} />
         <HomePageTwo key={2} onNext={() => ref.current?.setPage(2)} />
         <HomePageThree key={3} />
       </AnimatedPagerView>
+
       <Stack w="100%" h="10%">
         <Stack justifyContent="center">
           <ExpandingDot

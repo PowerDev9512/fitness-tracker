@@ -12,7 +12,8 @@ import React, { useEffect } from "react";
 import { useStore } from "store";
 import { Theme, useTheme } from "tamagui";
 
-import { AssetLoader } from "./assetLoader";
+// import { AssetLoader } from "./assetLoader";
+
 import { LoadingMessage } from "./loadingMessage";
 import { MainHeader } from "./mainHeader";
 import { SideBarStack } from "../sideBar/sideBarStack";
@@ -21,10 +22,12 @@ const Stack = createNativeStackNavigator<MainStackParams>();
 
 export const MainStack = () => {
   const theme = useTheme();
-  const [assetProgress, setAssetProgress] = React.useState({
+
+  /*   const [assetProgress, setAssetProgress] = React.useState({
     current: -1,
     total: 0,
-  });
+  }); */
+
   const { data: user, isLoading: gettingUser } = useGetUser();
   const { setUserId, token, setToken, userId } = useStore();
 
@@ -35,11 +38,11 @@ export const MainStack = () => {
     }
   }, [setToken, setUserId, token]);
 
-  if (assetProgress.current < assetProgress.total) {
+  /*   if (assetProgress.current < assetProgress.total) {
     return (
       <AssetLoader progress={assetProgress} setProgress={setAssetProgress} />
     );
-  }
+  } */
 
   if (gettingUser && userId !== undefined) {
     return <LoadingMessage title="Loading ..." />;

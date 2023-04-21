@@ -1,7 +1,7 @@
 import { Button } from "components";
-import { View, Image } from "react-native";
-import { SvgUri } from "react-native-svg";
-import { Text } from "tamagui";
+import { View } from "react-native";
+import FastImage from "react-native-fast-image";
+import { Stack, Text } from "tamagui";
 
 import { Heading } from "../../components/heading";
 
@@ -21,18 +21,26 @@ export const HomePageOne = ({ onNext }: Props) => {
         width: "100%",
       }}
     >
-      <Heading mx="auto">Welcome to Pocket Coach</Heading>
+      <Heading textAlign="center" mx="auto">
+        Welcome to Pocket Coach
+      </Heading>
       <Text fontSize={16} textAlign="center" mx="auto">
-        Your very own fitness tracker and coach
+        Track your exercises with ease and get the most out of your workouts
       </Text>
-      <SvgUri
-        uri={
-          Image.resolveAssetSource(require("../../assets/images/tracker.svg"))
-            .uri
-        }
-        width="100%"
-        height="80%"
-      />
+      <Stack
+        w="120%"
+        h="60%"
+        justifyContent="center"
+        alignItems="center"
+        mr="$10"
+        mt="auto"
+      >
+        <FastImage
+          source={require("../../assets/images/tracker.png")}
+          style={{ width: "120%", height: "100%" }}
+          resizeMode="contain"
+        />
+      </Stack>
       <Button mt="auto" onPress={onNext}>
         Next
       </Button>

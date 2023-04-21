@@ -35,7 +35,15 @@ const ExerciseAccordionEntryInternal = ({ exercise, onPress }: Props) => {
           </Text>
         </YStack>
 
-        <CachedImage
+        {max && (
+          <Star
+            style={{ marginLeft: "auto", marginBottom: 5 }}
+            size={25}
+            color={theme.primary300.val}
+          />
+        )}
+
+        {/*         <CachedImage
           style={{
             width: 60,
             height: 50,
@@ -46,7 +54,7 @@ const ExerciseAccordionEntryInternal = ({ exercise, onPress }: Props) => {
           }}
           alt={`${exercise.name} image`}
           fileName={`${exercise.muscleGroupImageId}.png`}
-        />
+        /> */}
       </XStack>
     </Pressable>
   );

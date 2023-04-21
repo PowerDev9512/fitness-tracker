@@ -10,9 +10,18 @@ export const History = () => {
 
   const pastWorkouts = getPastWorkouts(user);
 
-  const renderItem = (item: CompletedWorkout, index: number) => (
+  const renderItem = (
+    item: CompletedWorkout,
+    index: number,
+    isFocused: boolean
+  ) => (
     <Stack margin="auto">
-      <WorkoutCard workout={item} key={index} footer={null} />
+      <WorkoutCard
+        workout={item}
+        key={index}
+        footer={null}
+        isFocused={isFocused}
+      />
     </Stack>
   );
 

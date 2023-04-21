@@ -1,4 +1,9 @@
-import React, { JSXElementConstructor, ReactElement, useCallback, useEffect } from "react";
+import React, {
+  JSXElementConstructor,
+  ReactElement,
+  useCallback,
+  useEffect,
+} from "react";
 import { Animated, Dimensions } from "react-native";
 import { ExpandingDot } from "react-native-animated-pagination-dots";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -10,7 +15,8 @@ interface Props {
   disable?: boolean | undefined;
   renderItem: (
     item: any,
-    index: number
+    index: number,
+    isFocused: boolean
   ) => ReactElement<any, string | JSXElementConstructor<any>>;
   defaultIndex?: number | undefined;
 }
@@ -23,6 +29,7 @@ export const Carousel = ({
 }: Props) => {
   const { width } = Dimensions.get("window");
 
+  const [index, setIndex] = React.useState(defaultIndex ?? 0);
   const scrollOffsetAnimatedValue = React.useRef(new Animated.Value(0)).current;
   const positionAnimatedValue = React.useRef(new Animated.Value(0)).current;
 
@@ -42,6 +49,7 @@ export const Carousel = ({
   const onPageScroll = useCallback(
     (_offsetProgress: number, absoluteProgress: number) => {
       positionAnimatedValue.setValue(absoluteProgress);
+      setIndex(Math.round(absoluteProgress));
     },
     [positionAnimatedValue]
   );
@@ -63,7 +71,9 @@ export const Carousel = ({
           parallaxScrollingScale: 0.84,
           parallaxScrollingOffset: 100,
         }}
-        renderItem={({ item, index }) => renderItem(item, index)}
+        renderItem={({ item, index: currIndex }) =>
+          renderItem(item, currIndex, index === currIndex)
+        }
       />
       <Stack mx="auto" mt="$-10">
         <ExpandingDot

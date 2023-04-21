@@ -16,9 +16,10 @@ import { Heading } from "../heading";
 interface Props {
   workout: Workout;
   footer: React.ReactNode | null;
+  isFocused?: boolean;
 }
 
-export const WorkoutCard = ({ workout, footer }: Props) => {
+export const WorkoutCard = ({ workout, footer, isFocused = true }: Props) => {
   const theme = useTheme();
 
   const { data: user } = useGetUser();
@@ -39,7 +40,13 @@ export const WorkoutCard = ({ workout, footer }: Props) => {
 
         <WorkoutCardBadges workout={workout} />
 
-        <Card p="$4" accessibilityLabel="workout-card" w={350} minHeight={410}>
+        <Card
+          p="$4"
+          accessibilityLabel="workout-card"
+          w={350}
+          minHeight={410}
+          backgroundColor={isFocused ? theme.white.val : theme.shadowed.val}
+        >
           <Heading textAlign="center" justifyContent="center" mt="$1">
             {titleCase(workout.name)}
           </Heading>

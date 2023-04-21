@@ -28,7 +28,7 @@ export const Stats = () => {
         <Avatar user={user} size="lg" callback={() => {}} />
         <YStack my="auto" ml="$10">
           <Heading>{user.username}</Heading>
-          <Text>{user?.title?.name ?? "Titleless"}</Text>
+          <Text>{user?.title?.name ?? "No Title Set"}</Text>
           <Separator my="$2" w="100%" borderColor="$gray500" />
           <Text>Level {user.workoutBuddy.data.levelStats.overall}</Text>
           <Text>{user.workoutBuddy.data.streak} day streak</Text>

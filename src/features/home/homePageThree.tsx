@@ -3,8 +3,10 @@ import { useLogin } from "api";
 import { Heading, FormInput, Button } from "components";
 import { useMemo, useState } from "react";
 import { View, Image, Pressable, Linking } from "react-native";
+import FastImage from "react-native-fast-image";
 import { SvgUri } from "react-native-svg";
-import { Text, YStack } from "tamagui";
+import { Stack, Text, YStack } from "tamagui";
+import { Mixpanel } from "utils";
 
 export const HomePageThree = () => {
   const navigation = useNavigation();
@@ -54,19 +56,25 @@ export const HomePageThree = () => {
         width: "100%",
       }}
     >
-      <Heading mx="auto" fontSize={30}>
+      <Heading textAlign="center" mx="auto" fontSize={30}>
         Login to your account
       </Heading>
       <Text textAlign="center" fontSize={16} mx="auto">
         Or register below to start your fitness journey right now!
       </Text>
-      <SvgUri
-        uri={
-          Image.resolveAssetSource(require("../../assets/images/stats.svg")).uri
-        }
-        width="100%"
-        height="65%"
-      />
+      <Stack
+        w="100%"
+        h="60%"
+        justifyContent="center"
+        alignItems="center"
+        mt="$5"
+      >
+        <FastImage
+          source={require("../../assets/images/stats.png")}
+          style={{ width: "100%", height: "100%" }}
+          resizeMode="contain"
+        />
+      </Stack>
       <YStack space="$3" mt="$-7">
         <FormInput
           required
@@ -93,14 +101,20 @@ export const HomePageThree = () => {
       <Button
         mb="$2"
         mt="$4"
-        onPress={() => onSubmit(email, password)}
+        onPress={() => {
+          Mixpanel.track("Login Button Pressed");
+          return onSubmit(email, password);
+        }}
         disabled={email.length === 0 || password.length === 0}
       >
         {loggingIn ? "Logging in..." : "Login"}
       </Button>
       <Pressable
         style={{ alignSelf: "center" }}
-        onPress={() => navigation.navigate("Register" as never)}
+        onPress={() => {
+          Mixpanel.track("Register Button Pressed");
+          return navigation.navigate("Register" as never);
+        }}
       >
         <Text>
           Don&apos;t have an account?

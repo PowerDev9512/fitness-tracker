@@ -1,7 +1,8 @@
 import { Button } from "components";
 import { View, Image } from "react-native";
+import FastImage from "react-native-fast-image";
 import { SvgUri } from "react-native-svg";
-import { Text } from "tamagui";
+import { Stack, Text } from "tamagui";
 
 import { Heading } from "../../components/heading";
 
@@ -21,18 +22,26 @@ export const HomePageTwo = ({ onNext }: Props) => {
         width: "100%",
       }}
     >
-      <Heading mx="auto">Simplyfing your fitness journey</Heading>
+      <Heading textAlign="center" mx="auto">
+        Simplifying your fitness journey
+      </Heading>
       <Text textAlign="center" fontSize={16} mx="auto">
-        We make achieving all of your fitness goals fun and easy
+        Gain stats, levels and achievements based on your workouts
       </Text>
-      <SvgUri
-        uri={
-          Image.resolveAssetSource(require("../../assets/images/health.svg"))
-            .uri
-        }
-        width="100%"
-        height="80%"
-      />
+      <Stack
+        w="100%"
+        h="60%"
+        justifyContent="center"
+        alignItems="center"
+        mr="$10"
+        mt="auto"
+      >
+        <FastImage
+          source={require("../../assets/images/health.png")}
+          style={{ width: "110%", height: "100%" }}
+          resizeMode="contain"
+        />
+      </Stack>
       <Button mt="auto" onPress={onNext}>
         Get Started
       </Button>

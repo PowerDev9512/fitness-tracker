@@ -31,15 +31,20 @@ export const Schedule = () => {
       workout: { ...workout, completed: true, past: true },
     });
 
-    const isAvailable = InAppReview.isAvailable();
+    const isAvailable = InAppReview.isAvailable() && user.workouts.length === 1;
     if (isAvailable) {
       InAppReview.RequestInAppReview();
     }
   };
 
-  const renderItem = (item: ScheduledWorkout, index: number) => (
+  const renderItem = (
+    item: ScheduledWorkout,
+    index: number,
+    isFocused: boolean
+  ) => (
     <Stack margin="auto">
       <ScheduledWorkoutCard
+        isFocused={isFocused}
         scheduledWorkout={item}
         onComplete={() => onComplete(item)}
         key={index}
