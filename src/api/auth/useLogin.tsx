@@ -3,6 +3,7 @@ import { useStore } from "store";
 
 import { queryClient } from "../apiProvider";
 import { client } from "../client";
+import { Mixpanel } from "utils";
 
 type LoginRequest = {
   email: string;
@@ -29,6 +30,7 @@ export function useLogin() {
     },
     {
       onSuccess() {
+        Mixpanel.track("Logged In");
         queryClient.invalidateQueries(["user", userId]);
       },
     }

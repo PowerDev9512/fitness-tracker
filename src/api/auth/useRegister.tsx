@@ -5,6 +5,7 @@ import { User } from "types";
 
 import { queryClient } from "../apiProvider";
 import { client } from "../client";
+import { Mixpanel } from "utils";
 
 type RegisterRequest = {
   email: string;
@@ -50,6 +51,7 @@ export function useRegister() {
     {
       onSuccess(response: User) {
         if (response) {
+          Mixpanel.track("Registered");
           queryClient.setQueryData(["user", userId], response);
           navigation.reset({ index: 0, routes: [{ name: "Drawer" as never }] });
         }

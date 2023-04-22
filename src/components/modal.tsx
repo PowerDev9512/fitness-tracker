@@ -31,7 +31,7 @@ export const Modal = ({ isOpen, onClose, children, ...props }: Props) => {
         justifyContent="center"
         alignItems="center"
       >
-        {children}
+        <Stack w="90%">{children}</Stack>
       </Stack>
     </ModalInternal>
   );

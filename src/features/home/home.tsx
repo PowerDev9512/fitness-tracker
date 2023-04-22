@@ -32,7 +32,7 @@ export const Home = ({
   });
 
   useEffect(() => {
-    const event = "Onboarding 1 Viewed";
+    const event = "Landing Page Viewed";
     Mixpanel.track(event);
   }, []);
 

@@ -1,8 +1,5 @@
 import { Mixpanel, MixpanelProperties } from "mixpanel-react-native";
 
-import { queryClient } from "../api/apiProvider";
-import { User } from "../types/domain";
-
 class MixpanelTracker {
   mixpanel: Mixpanel;
   loggedIn: boolean = false;
@@ -21,16 +18,6 @@ class MixpanelTracker {
   }
 
   track(event: string, properties: MixpanelProperties | undefined = {}) {
-    const user = queryClient.getQueryData<User>(["user"]);
-
-    if (user && !this.loggedIn) {
-      this.loggedIn = true;
-      this.mixpanel.identify(user.id.toString());
-      this.mixpanel.alias("DatabaseId", user.id.toString());
-      this.mixpanel.track("Logged in");
-    }
-
-    // track event with properties
     this.mixpanel.track(event, properties);
   }
 }

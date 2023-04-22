@@ -57,14 +57,15 @@ export const ErrorCodes: {
   [key: number]: { title: string; description?: string };
 } = {
   1: {
-    title: "The email address you have entered is not registered",
-    description: "Please check your email address and try again",
+    title: "Error logging in",
+    description: "The email address you have entered is not registered",
   },
   2: {
-    title: "The requested activity does not exist",
+    title: "Error",
+    description: "The requested activity does not exist",
   },
   3: {
-    title: "We've failed to load your exercises",
+    title: "Error loading exercises",
     description: "Please try again later",
   },
   4: {
@@ -72,55 +73,69 @@ export const ErrorCodes: {
     description: "Please try again later",
   },
   5: {
-    title: "The achievement you are trying to claim has already been claimed",
-    description: "Please refresh the page",
+    title: "Error claiming achievement",
+    description: "The achievement you are trying to claim has already been claimed",
   },
   6: {
-    title: "The achievement you are trying to claim does not exist",
+    title: "Error claiming achievement",
+    description: "The achievement you are trying to claim does not exist",
   },
   7: {
+    title: "Error claiming achievement",
     title: "The achievement you are trying to claim is not available to you",
   },
   8: {
-    title: "We've failed to claim the rewards for this achievement",
-    description: "Please try again later",
+    title: "Error claiming achievement",
+    description: "Please contact support if your reward has not been added",
   },
   9: {
-    title: "The password you have entered is incorrect",
+    title: "Error logging in",
+    description: "The password you have entered is incorrect",
   },
   10: {
-    title: "The username or email you have entered is already in use",
+    title: "Error registering",
+    description: "The username or email you have entered is already in use",
   },
   11: {
-    title: "The username or email you have entered is already in use",
+    title: "Error registering",
+    description: "The username or email you have entered is already in use",
   },
   12: {
-    title: "The username or email you have entered is already in use",
+    title: "Error registering",
+    description: "The username or email you have entered is already in use",
   },
   13: {
-    title: "The friend you are interacting with does not exist",
+    title: "Error sending friend request",
+    description: "The friend you are interacting with does not exist",
   },
   14: {
-    title: "The friend you are adding is already your friend",
+    title: "Error sending friend request",
+    description: "The friend you are adding is already your friend",
   },
   15: {
-    title: "The friend you are adding already has a pending request from you",
+    title: "Error sending friend request",
+    description:
+      "The person you are adding already has a request. Please wait for them to accept your request",
   },
   16: {
-    title: "The friend you are deleting is not your friend",
+    title: "Error deleting friend",
+    description: "The friend you are deleting is not your friend",
   },
   17: {
-    title: "The friend request you are interacting with does not exist",
+    title: "Error deleting friend",
+    description: "The friend request you are interacting with does not exist",
   },
   18: {
     title: "An unknown error has occurred",
     description: "Please try again later",
   },
   19: {
-    title: "The requested exercise does not exist",
+    title: "Error",
+    description: "The requested exercise does not exist",
   },
   20: {
-    title: "The requested workout does not exist",
+    title: "Error",
+    description: "The requested workout does not exist",
   },
 };
 

@@ -1,6 +1,6 @@
 import { useGetFeed, useGetOtherUsers, useGetUser } from "api";
 import { Button, Input, Screen, Skeleton } from "components";
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { FlatList } from "react-native";
 import Toast from "react-native-toast-message";
 import { XStack } from "tamagui";
@@ -28,6 +28,17 @@ export const Social = () => {
     ),
     []
   );
+
+  useEffect(() => {
+    if (searchedUserName) {
+      if (searchedUsers?.length === 0) {
+        Toast.show({
+          type: "error",
+          text1: "No user found",
+        });
+      }
+    }
+  }, [searchedUserName, searchedUsers]);
 
   return (
     <Screen extraSpace>
