@@ -17,22 +17,28 @@ type GetFeedResponse = Message[];
 export function useGetFeed(): UseQueryResult<GetFeedResponse, unknown> {
   const { data: user } = useGetUser();
 
-  return useQuery(["feed", user?.id], async () => {
-    if (!user) {
-      return [];
+  return useQuery(
+    ["feed", user?.id],
+    async () => {
+      if (!user) {
+        return [];
+      }
+
+      const { data } = await client.get<GetFeedRawResponse>(
+        `/users/${user?.id}/feed`
+      );
+
+      return data.messages.map(
+        (message) =>
+          ({
+            workout: message.workout,
+            date: message.timestamp,
+            user: message.user,
+          } as Message)
+      );
+    },
+    {
+      refetchInterval: 60,
     }
-
-    const { data } = await client.get<GetFeedRawResponse>(
-      `/users/${user?.id}/feed`
-    );
-
-    return data.messages.map(
-      (message) =>
-        ({
-          workout: message.workout,
-          date: message.timestamp,
-          user: message.user,
-        } as Message)
-    );
-  });
+  );
 }

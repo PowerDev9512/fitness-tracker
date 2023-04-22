@@ -1,4 +1,3 @@
-import { Buffer } from "buffer";
 import { Mixpanel, MixpanelProperties } from "mixpanel-react-native";
 
 import { queryClient } from "../api/apiProvider";
@@ -9,16 +8,16 @@ class MixpanelTracker {
   loggedIn: boolean = false;
 
   constructor() {
-    const EncodedMixPanelToken = "MDJCNjlhZTA4ZmZlMjhmMWRmZTAzN2FiY2FjZDU4NGM=";
-    const MixpanelToken = Buffer.from(
-      EncodedMixPanelToken,
-      "base64"
-    ).toString();
-
     const trackAutomaticEvents = true;
 
-    this.mixpanel = new Mixpanel(MixpanelToken, trackAutomaticEvents);
-    this.mixpanel.init();
+    const instance = new Mixpanel(
+      "0b529ae08ffe28f1dfe037abcacd584c",
+      trackAutomaticEvents
+    );
+
+    instance.init();
+
+    this.mixpanel = instance;
   }
 
   track(event: string, properties: MixpanelProperties | undefined = {}) {

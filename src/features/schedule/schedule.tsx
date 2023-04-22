@@ -26,15 +26,17 @@ export const Schedule = () => {
   }
 
   const onComplete = (workout: ScheduledWorkout) => {
+    const isFirstWorkout = user.workouts.length === 1;
+    if (isFirstWorkout) {
+      if (InAppReview.isAvailable()) {
+        InAppReview.RequestInAppReview();
+      }
+    }
+
     editWorkout({
       userId: user.id,
       workout: { ...workout, completed: true, past: true },
     });
-
-    const isAvailable = InAppReview.isAvailable() && user.workouts.length === 1;
-    if (isAvailable) {
-      InAppReview.RequestInAppReview();
-    }
   };
 
   const renderItem = (

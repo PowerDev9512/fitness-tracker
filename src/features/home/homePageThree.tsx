@@ -64,10 +64,11 @@ export const HomePageThree = () => {
       </Text>
       <Stack
         w="100%"
-        h="60%"
+        h="30%"
         justifyContent="center"
         alignItems="center"
-        mt="$5"
+        mt="$3"
+        mb="$3"
       >
         <FastImage
           source={require("../../assets/images/stats.png")}
@@ -75,7 +76,7 @@ export const HomePageThree = () => {
           resizeMode="contain"
         />
       </Stack>
-      <YStack space="$3" mt="$-7">
+      <YStack space="$3">
         <FormInput
           required
           hideLabel

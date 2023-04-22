@@ -69,6 +69,7 @@ export const SelectExercise = ({ form, incrementIndex }: Props) => {
           return false;
         return true;
       })
+      .sort((a, b) => (a.name > b.name ? 1 : -1))
       .sort((a, b) => (a.userHasMax ? -1 : 1));
   }, [data, filters]);
 
@@ -105,7 +106,7 @@ export const SelectExercise = ({ form, incrementIndex }: Props) => {
     return MuscleGroups.map(getMatchingExercises)
       .filter(whereExercisesExist)
       .map(createAccordionForExercises);
-  }, [filteredExercises]);
+  }, [filteredExercises, form.setFieldValue, incrementIndex]);
 
   return (
     <ScrollView

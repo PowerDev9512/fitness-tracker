@@ -23,6 +23,9 @@ const Store = () => {
   const { products, currentPurchase, currentPurchaseError, getProducts } =
     useIAP();
 
+  getProducts({ skus: ["supporter_title_1"] })
+  console.log("products", products);
+
   const buyItem = (item: StoreEntry) => {
     const matchingProduct = products.find(
       (product) => product.productId === item.productId
@@ -41,6 +44,11 @@ const Store = () => {
     if (loadingId) {
       const timeout = setTimeout(() => {
         setLoadingId(null);
+        Toast.show({
+          text1: "Purchases are currently disabled",
+          text2: "We are working on fixing this issue.",
+          type: "error",
+        });
       }, 3000);
       return () => clearTimeout(timeout);
     }

@@ -3,14 +3,14 @@ import { useAddWorkout, useGetUser, useGetWorkoutNames } from "api";
 import { Autocomplete, FormLabel, Screen } from "components";
 import { Formik, FormikProps } from "formik";
 import React, { useState } from "react";
-import { Stack, Text, YStack } from "tamagui";
+import { Text, YStack } from "tamagui";
 import { Activity, ExerciseType, ScheduledWorkout } from "types";
 
-import { NavigationButtons } from "./navigationButtons";
 import { CreateWorkoutSchema } from "./createWorkoutSchema";
 import { ActivityDetails } from "./forms/activityDetails/activityDetails";
 import { SelectExercise } from "./forms/selectExercise/selectExercise";
 import { WorkoutDetails } from "./forms/workoutDetails/workoutDetails";
+import { NavigationButtons } from "./navigationButtons";
 
 export interface CreateWorkoutValues {
   workout: ScheduledWorkout;
@@ -57,7 +57,10 @@ export const CreateWorkout = () => {
         return <ActivityDetails form={props.form} />;
       case 1:
         return (
-          <SelectExercise form={props.form} incrementIndex={() => setIndex(2)} />
+          <SelectExercise
+            form={props.form}
+            incrementIndex={() => setIndex(2)}
+          />
         );
       case 2:
         return <WorkoutDetails form={props.form} />;
@@ -81,7 +84,9 @@ export const CreateWorkout = () => {
         userId: user?.id ?? -1,
       });
     }
+
     setIndex(0);
+
     navigation.reset({ index: 0, routes: [{ name: "Drawer" as never }] });
   };
 

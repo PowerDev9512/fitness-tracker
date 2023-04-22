@@ -5,10 +5,7 @@ import React, { useState } from "react";
 import { Text } from "tamagui";
 import { Image } from "types";
 
-import { BuddyForm } from "./forms/buddy/buddyForm";
-import { RegisterForm } from "./forms/details/registerForm";
-import { StatsForm } from "./forms/stats/statsForm";
-import { NavigationButton } from "./navigationButton";
+import { RegisterForm } from "./registerForm";
 import { RegisterSchema } from "./registerSchema";
 
 export interface RegisterValues {
@@ -38,20 +35,10 @@ const RegisterScreen = () => {
     register({
       ...registrationDetails,
       buddyName: registrationDetails.username,
+      age: 0,
+      height: 0,
+      weight: 0,
     });
-  };
-
-  const getStep = (props: RegisterProps) => {
-    switch (index) {
-      case 0:
-        return <RegisterForm form={props.form} />;
-      case 1:
-        return <BuddyForm form={props.form} />;
-      case 2:
-        return <StatsForm form={props.form} exercises={exercises ?? []} />;
-      default:
-        return <Text>Well, this is awkward</Text>;
-    }
   };
 
   return (
@@ -76,18 +63,7 @@ const RegisterScreen = () => {
         }
         onSubmit={onSubmit}
       >
-        {(form) => (
-          <>
-            {getStep({ form })}
-            <NavigationButton
-              loading={registering}
-              disabled={Object.keys(form.errors).length > 0}
-              currentIndex={index}
-              setIndex={setIndex}
-              onSubmit={form.handleSubmit}
-            />
-          </>
-        )}
+        {(form) => <RegisterForm form={form} exercises={exercises ?? []} />}
       </Formik>
     </Screen>
   );

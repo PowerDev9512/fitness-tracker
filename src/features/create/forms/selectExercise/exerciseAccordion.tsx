@@ -26,20 +26,24 @@ export const ExerciseAccordion = ({
 }: Props) => {
   const { data: user } = useGetUser();
 
-  const sortedExercises = muscleGroup.exercises.sort((a, b) => {
-    const aMax = user?.maxes.find((max) => max.exercise === a.name);
-    const bMax = user?.maxes.find((max) => max.exercise === b.name);
-    if (aMax && bMax) {
-      return aMax.weight > bMax.weight ? -1 : 1;
-    }
-    if (aMax) {
-      return -1;
-    }
-    if (bMax) {
-      return 1;
-    }
-    return 0;
-  });
+  const sortedExercises = muscleGroup.exercises
+    .sort((a, b) => {
+      return a.name > b.name ? 1 : -1;
+    })
+    .sort((a, b) => {
+      const aMax = user?.maxes.find((max) => max.exercise === a.name);
+      const bMax = user?.maxes.find((max) => max.exercise === b.name);
+      if (aMax && bMax) {
+        return aMax.weight > bMax.weight ? -1 : 1;
+      }
+      if (aMax) {
+        return -1;
+      }
+      if (bMax) {
+        return 1;
+      }
+      return 0;
+    });
 
   const renderExercise = useMemo(
     () =>

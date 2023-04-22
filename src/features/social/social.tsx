@@ -19,8 +19,6 @@ export const Social = () => {
   );
   const { data: feed, isLoading: feedLoading } = useGetFeed();
 
-  console.log(searchedUsers)
-
   const createMessage = useCallback(
     (item: Message) => (
       <FeedEntry

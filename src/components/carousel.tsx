@@ -68,8 +68,8 @@ export const Carousel = ({
         defaultIndex={defaultIndex}
         mode="parallax"
         modeConfig={{
-          parallaxScrollingScale: 0.84,
-          parallaxScrollingOffset: 100,
+          parallaxScrollingScale: 0.88,
+          parallaxScrollingOffset: 95,
         }}
         renderItem={({ item, index: currIndex }) =>
           renderItem(item, currIndex, index === currIndex)
