@@ -5,10 +5,7 @@ import { CreateWorkoutValues } from "./createWorkout";
 export const CreateWorkoutSchema = Yup.object<
   Record<keyof CreateWorkoutValues, Yup.AnySchema>
 >().shape({
-  repeat: Yup.number()
-    .required("Weeks to repeat is required")
-    .min(0, "Weeks to repeat must be at least 0"),
-  date: Yup.date().required("A date is required"),
+  dates: Yup.array().of(Yup.string()).min(1, "At least one date is required"),
   workout: Yup.object().shape({
     name: Yup.string().required("A workout name is required").notOneOf([""]),
     activities: Yup.array()

@@ -1,9 +1,10 @@
-import { Card, DatePicker, FormLabel } from "components";
+import { Card, FormLabel } from "components";
 import React from "react";
-import { Slider } from "tamagui";
+import { Calendar } from "react-native-calendars";
 
 import { ActivitySummary } from "./activitySummary";
 import { CreateWorkoutProps } from "../../createWorkout";
+import { useTheme } from "tamagui";
 
 type BaseProps = {
   onEditActivity: (index: number) => void;
@@ -12,10 +13,8 @@ type BaseProps = {
 type Props = CreateWorkoutProps & BaseProps;
 
 export const ActivityDetails = ({ form, onEditActivity }: Props) => {
-  const { date, repeat, workout } = form.values;
-  const setDate = (newDate: Date) => form.setFieldValue("date", newDate);
-  const setRepeat = (newRepeat: number[]) =>
-    form.setFieldValue("repeat", newRepeat);
+  const theme = useTheme();
+  const { dates, workout } = form.values;
 
   return (
     <>
@@ -29,34 +28,28 @@ export const ActivityDetails = ({ form, onEditActivity }: Props) => {
       />
 
       <FormLabel mb="$-2" mr="auto" ml="$1">
-        Workout date
+        Workout dates
       </FormLabel>
       <Card mb="$2">
-        <DatePicker date={date} setDate={setDate} mode="date" />
-      </Card>
-
-      <FormLabel mr="auto" ml="$1">
-        Schedule this for {repeat} {repeat === 1 ? "week" : "weeks"}
-      </FormLabel>
-
-      <Card mt="$2">
-        <Slider
-          defaultValue={[1]}
-          value={[repeat]}
-          onValueChange={setRepeat}
-          max={10}
-          min={1}
-          step={1}
-          size="$4"
-          mx="auto"
-          w="90%"
-          h={60}
-        >
-          <Slider.Track backgroundColor="$gray200">
-            <Slider.TrackActive />
-          </Slider.Track>
-          <Slider.Thumb circular index={0} backgroundColor="$primary500" />
-        </Slider>
+        <Calendar
+          onDayPress={(day) => {
+            if (dates.includes(day.dateString)) {
+              form.setFieldValue(
+                "dates",
+                dates.filter(date => date !== day.dateString)
+              );
+            } else {
+              form.setFieldValue("dates", [...dates, day.dateString]);
+            }
+          }}
+          markedDates={form.values.dates.reduce(
+            (acc, date) => ({
+              ...acc,
+              [date]: { selected: true, selectedColor: theme.primary500.val },
+            }),
+            {}
+          )}
+        />
       </Card>
     </>
   );

@@ -82,7 +82,7 @@ export const ErrorCodes: {
   },
   7: {
     title: "Error claiming achievement",
-    title: "The achievement you are trying to claim is not available to you",
+    description: "The achievement you are trying to claim is not available to you",
   },
   8: {
     title: "Error claiming achievement",

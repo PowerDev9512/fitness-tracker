@@ -76,7 +76,7 @@ export const Social = () => {
 
         {feedLoading && (
           <FlatList
-            style={{ width: "110%" }}
+            style={{ width: "100%" }}
             data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
             keyExtractor={(item) => item.toString()}
             renderItem={() => <Skeleton my="$2" mx="auto" h={150} />}

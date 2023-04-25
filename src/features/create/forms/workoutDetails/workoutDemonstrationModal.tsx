@@ -1,5 +1,6 @@
 import { IconButton, Modal } from "components";
-import { Image, Stack, Text } from "tamagui";
+import FastImage from "react-native-fast-image";
+import { Stack, Text } from "tamagui";
 
 interface Props {
   url: string;
@@ -12,10 +13,12 @@ export const WorkoutDemonstrationModal = ({ url, isOpen, onClose }: Props) => {
     <Modal isOpen={isOpen} onClose={onClose}>
       <Stack
         w="80%"
-        h="40%"
+        h="70%"
         justifyContent="center"
         alignItems="center"
         backgroundColor="white"
+        mx="auto"
+        my="auto"
       >
         <IconButton
           pos="absolute"
@@ -28,12 +31,14 @@ export const WorkoutDemonstrationModal = ({ url, isOpen, onClose }: Props) => {
           color="gray400"
           size={32}
         />
-        <Image
-          src={url}
-          marginHorizontal="auto"
-          marginBottom="$3"
-          width="100%"
-          height="100%"
+        <FastImage
+          source={{ uri: url }}
+          resizeMode="contain"
+          style={{
+            width: "100%",
+            height: "100%",
+            marginHorizontal: "auto",
+          }}
         />
       </Stack>
     </Modal>

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useStore } from "store";
 
-export const url = "http://13.238.79.62/";
+export const url = "https://3509-106-71-191-213.ngrok-free.app/";
 
 export const client = axios.create({
   baseURL: url,

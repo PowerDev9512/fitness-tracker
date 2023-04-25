@@ -11,12 +11,10 @@ import { ActivityDetails } from "./forms/activityDetails/activityDetails";
 import { SelectExercise } from "./forms/selectExercise/selectExercise";
 import { WorkoutDetails } from "./forms/workoutDetails/workoutDetails";
 import { NavigationButtons } from "./navigationButtons";
-import { useIsMutating } from "@tanstack/react-query";
 
 export interface CreateWorkoutValues {
   workout: ScheduledWorkout;
-  repeat: number;
-  date: Date;
+  dates: string[];
   activity: Activity | null;
   exerciseType: ExerciseType;
 }
@@ -32,7 +30,7 @@ const initialValues = (workout: Workout | undefined) => {
       activities: [],
     },
     repeat: 1,
-    date: new Date(),
+    dates: [],
     activity: null,
     exerciseType: "strength",
   } as CreateWorkoutValues;
@@ -102,16 +100,14 @@ export const CreateWorkout = ({ route }: Props) => {
   };
 
   const handleSave = (createWorkoutValues: CreateWorkoutValues) => {
-    for (let i = 0; i < createWorkoutValues.repeat; i += 1) {
-      const newTime = createWorkoutValues.date;
-      if (i > 0) {
-        newTime.setDate(newTime.getDate() + i * 7);
-      }
+    for (let i = 0; i < createWorkoutValues.dates.length; i += 1) {
+      const date = createWorkoutValues.dates[i];
+      const utcDate = new Date(date).toISOString();
       addWorkout({
         workout: {
           ...createWorkoutValues.workout,
           completed: false,
-          time: newTime.toISOString(),
+          time: utcDate,
         },
         userId: user?.id ?? -1,
       });
@@ -141,6 +137,7 @@ export const CreateWorkout = ({ route }: Props) => {
           };
 
           const errors = [
+            form.errors.dates?.length === 0 ? "You must select a date" : "",
             form.touched.workout?.name ? form.errors.workout?.name ?? "" : "",
             form.values.workout.activities.length === 0
               ? "You must add at least one activity"
