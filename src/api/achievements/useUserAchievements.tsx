@@ -12,7 +12,7 @@ type GetUserAchievements = {
 export function useUserAchievements({
   userId,
 }: GetUserAchievements): UseQueryResult<GetUserAchievementsResponse, unknown> {
-  return useQuery(["userAchievements", userId], async () => {
+  return useQuery(["userAchievements", { id: userId }], async () => {
     const { data } = await client.get<GetUserAchievementsResponse>(
       `Users/${userId}/Achievements`
     );

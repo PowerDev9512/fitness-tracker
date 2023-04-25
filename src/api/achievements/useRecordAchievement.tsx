@@ -26,10 +26,10 @@ export function useRecordAchievement() {
     },
     {
       onSuccess() {
-        if (userId) {
-          queryClient.invalidateQueries(["user", userId]);
-          queryClient.invalidateQueries(["userAchievements", userId]);
-        }
+        queryClient.invalidateQueries(["user", { id: userId }], { exact: false });
+        queryClient.invalidateQueries(["userAchievements", { id: userId }], {
+          exact: false,
+        });
       },
     }
   );

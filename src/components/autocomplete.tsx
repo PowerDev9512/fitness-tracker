@@ -9,7 +9,10 @@ interface Props<T> {
   keyExtractor: (item: T) => string;
   value: string;
   onChange: (value: string) => void;
-  inputProps?: React.ComponentProps<typeof BaseInput>;
+  inputProps?: Omit<
+    React.ComponentProps<typeof Input>,
+    "value" | "type" | "onChangeText"
+  >;
   viewProps?: React.ComponentProps<typeof Stack>;
 }
 
@@ -55,7 +58,7 @@ export const Autocomplete = <T extends unknown>({
           placeholder={inputProps?.placeholder ?? "Search"}
           accessibilityLabel={`${value} input`}
           type="text"
-          placeholderTextColor="$gray400"
+          placeholderTextColor="gray"
           onFocus={() => setShowList(true)}
           onBlur={() => setShowList(false)}
           value={value}

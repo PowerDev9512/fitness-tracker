@@ -8,7 +8,7 @@ import { Animated, Dimensions } from "react-native";
 import { ExpandingDot } from "react-native-animated-pagination-dots";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import BaseCarousel from "react-native-reanimated-carousel";
-import { Stack, useTheme } from "tamagui";
+import { Stack } from "tamagui";
 
 interface Props {
   items: any[];
@@ -20,6 +20,8 @@ interface Props {
   ) => ReactElement<any, string | JSXElementConstructor<any>>;
   defaultIndex?: number | undefined;
 }
+
+const maxDotsToShow = 5;
 
 export const Carousel = ({
   renderItem,
@@ -33,13 +35,25 @@ export const Carousel = ({
   const scrollOffsetAnimatedValue = React.useRef(new Animated.Value(0)).current;
   const positionAnimatedValue = React.useRef(new Animated.Value(0)).current;
 
-  const inputRange = [0, items.length];
+  const memoizedItems = React.useMemo(() => items, [items]);
+
+  const startIndex =
+    index <= maxDotsToShow / 2 ? 0 : index - Math.floor(maxDotsToShow / 2);
+
+  const endIndex =
+    startIndex + maxDotsToShow >= memoizedItems.length
+      ? memoizedItems.length
+      : startIndex + maxDotsToShow;
+
+  const displayedItems = memoizedItems.slice(startIndex, endIndex);
+
+  const inputRange = [startIndex, endIndex];
   const scrollX = Animated.add(
     scrollOffsetAnimatedValue,
     positionAnimatedValue
   ).interpolate({
     inputRange,
-    outputRange: [0, items.length * width],
+    outputRange: [0, displayedItems.length * width],
   });
 
   useEffect(() => {
@@ -63,7 +77,7 @@ export const Carousel = ({
         enabled={!disable}
         width={width}
         scrollAnimationDuration={500}
-        data={items}
+        data={memoizedItems}
         onProgressChange={onPageScroll}
         defaultIndex={defaultIndex}
         mode="parallax"
@@ -77,7 +91,7 @@ export const Carousel = ({
       />
       <Stack mx="auto" mt="$-10">
         <ExpandingDot
-          data={items}
+          data={displayedItems}
           expandingDotWidth={30}
           //@ts-ignore
           scrollX={scrollX}

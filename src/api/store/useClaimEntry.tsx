@@ -1,7 +1,6 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Reward, User } from "types";
 
-import { queryClient } from "../apiProvider";
 import { client } from "../client";
 import { useGetUser } from "../user/useGetUser";
 
@@ -19,6 +18,7 @@ type ClaimEntryPayload = {
 
 export function useClaimEntry() {
   const { data: user } = useGetUser();
+  const queryClient = useQueryClient();
 
   return useMutation(
     async (rawRequest: ClaimEntryRequest) => {

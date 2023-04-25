@@ -2,15 +2,16 @@ import { useNavigation } from "@react-navigation/native";
 import { useAddWorkout, useGetUser, useGetWorkoutNames } from "api";
 import { Autocomplete, FormLabel, Screen } from "components";
 import { Formik, FormikProps } from "formik";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text, YStack } from "tamagui";
-import { Activity, ExerciseType, ScheduledWorkout } from "types";
+import { Activity, ExerciseType, ScheduledWorkout, Workout } from "types";
 
 import { CreateWorkoutSchema } from "./createWorkoutSchema";
 import { ActivityDetails } from "./forms/activityDetails/activityDetails";
 import { SelectExercise } from "./forms/selectExercise/selectExercise";
 import { WorkoutDetails } from "./forms/workoutDetails/workoutDetails";
 import { NavigationButtons } from "./navigationButtons";
+import { useIsMutating } from "@tanstack/react-query";
 
 export interface CreateWorkoutValues {
   workout: ScheduledWorkout;
@@ -20,26 +21,35 @@ export interface CreateWorkoutValues {
   exerciseType: ExerciseType;
 }
 
-const initialValues = {
-  workout: {
-    id: 0,
-    name: "",
-    time: new Date().toString(),
-    past: false,
-    completed: false,
-    activities: [],
-  },
-  repeat: 1,
-  date: new Date(),
-  activity: null,
-  exerciseType: "strength",
-} as CreateWorkoutValues;
-
+const initialValues = (workout: Workout | undefined) => {
+  return {
+    workout: workout ?? {
+      id: 0,
+      name: "",
+      time: new Date().toString(),
+      past: false,
+      completed: false,
+      activities: [],
+    },
+    repeat: 1,
+    date: new Date(),
+    activity: null,
+    exerciseType: "strength",
+  } as CreateWorkoutValues;
+};
 export interface CreateWorkoutProps {
   form: FormikProps<CreateWorkoutValues>;
 }
 
-export const CreateWorkout = () => {
+interface Props {
+  route: {
+    params: {
+      workout?: Workout;
+    };
+  };
+}
+
+export const CreateWorkout = ({ route }: Props) => {
   const navigation = useNavigation();
   const { data: user } = useGetUser();
   const { data: workoutNames } = useGetWorkoutNames({
@@ -47,14 +57,36 @@ export const CreateWorkout = () => {
     order: "Ascending",
   });
 
-  const { isLoading: addLoading, mutate: addWorkout } = useAddWorkout();
+  const {
+    isLoading: addLoading,
+    mutate: addWorkout,
+    isSuccess: addedSuccessfully,
+  } = useAddWorkout();
 
   const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (addedSuccessfully) {
+      navigation.goBack();
+    }
+  }, [addedSuccessfully, navigation]);
 
   const getStep = (props: CreateWorkoutProps) => {
     switch (index) {
       case 0:
-        return <ActivityDetails form={props.form} />;
+        return (
+          <ActivityDetails
+            form={props.form}
+            onEditActivity={(index: number) => {
+              props.form.setFieldValue(
+                "activity",
+                props.form.values.workout.activities[index]
+              );
+              props.form.values.workout.activities.splice(index, 1);
+              setIndex(2);
+            }}
+          />
+        );
       case 1:
         return (
           <SelectExercise
@@ -86,15 +118,13 @@ export const CreateWorkout = () => {
     }
 
     setIndex(0);
-
-    navigation.reset({ index: 0, routes: [{ name: "Drawer" as never }] });
   };
 
   return (
     <Screen scrollable extraSpace>
       <Formik
         validationSchema={CreateWorkoutSchema}
-        initialValues={initialValues}
+        initialValues={initialValues(route.params.workout)}
         onSubmit={handleSave}
       >
         {(form) => {
@@ -126,6 +156,7 @@ export const CreateWorkout = () => {
                     fontSize: 32,
                     placeholder: "Workout name",
                     borderWidth: 0,
+                    characterLimit: 15,
                     backgroundColor: "transparent",
                     textDecorationStyle: undefined,
                     focusStyle: {

@@ -8,9 +8,14 @@ import { getDistanceFormatter, getWeightFormatter } from "utils";
 interface Props {
   activity: Activity;
   deleteActivity: () => void;
+  editActivity: () => void;
 }
 
-export const ActivityEntry = ({ activity, deleteActivity }: Props) => {
+export const ActivityEntry = ({
+  activity,
+  deleteActivity,
+  editActivity,
+}: Props) => {
   const { data: user } = useGetUser();
 
   const weightFormatter = getWeightFormatter(user);
@@ -57,15 +62,22 @@ export const ActivityEntry = ({ activity, deleteActivity }: Props) => {
   return (
     <XStack p="$1" key={`${activity.exercise.name}-hstack`} alignItems="center">
       {createChild(activity)}
-      <IconButton
-        onPress={deleteActivity}
-        key={`${activity.exercise.name}-delete-button`}
-        ml="auto"
-        mt="auto"
-        size={24}
-        color="$gray500"
-        icon="ios-trash-bin"
-      />
+      <XStack mt="auto" ml="auto" space={10}>
+        <IconButton
+          onPress={editActivity}
+          key={`${activity.exercise.name}-edit-button`}
+          size={24}
+          color="$gray500"
+          icon="ios-create-outline"
+        />
+        <IconButton
+          onPress={deleteActivity}
+          key={`${activity.exercise.name}-delete-button`}
+          size={24}
+          color="$gray500"
+          icon="ios-trash-bin"
+        />
+      </XStack>
     </XStack>
   );
 };

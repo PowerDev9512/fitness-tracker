@@ -7,6 +7,7 @@ interface Props {
   side: "left" | "right";
   children: React.ReactNode;
   background?: boolean;
+  offset?: number;
 }
 
 export const Badge = ({
@@ -14,6 +15,7 @@ export const Badge = ({
   loading,
   children,
   side,
+  offset = 0,
   background = true,
 }: Props) => {
   return (
@@ -24,8 +26,8 @@ export const Badge = ({
       alignSelf="flex-end"
       position="absolute"
       top={50}
-      right={side === "right" ? 20 : undefined}
-      left={side === "left" ? 20 : undefined}
+      right={side === "right" ? 20 + offset : undefined}
+      left={side === "left" ? 20 + offset : undefined}
     >
       {loading && <Spinner color="$primary300" />}
       {!loading && children}

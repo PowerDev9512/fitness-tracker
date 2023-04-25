@@ -1,6 +1,7 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useStore } from "store";
+import { User } from "types";
 
-import { queryClient } from "../apiProvider";
 import { client } from "../client";
 import { useGetUser } from "../user/useGetUser";
 
@@ -14,6 +15,8 @@ type ConfirmFriendRequestResponse = {
 
 export function useConfirmFriendRequest() {
   const { data: user } = useGetUser();
+  const queryClient = useQueryClient();
+  const { userId } = useStore();
 
   return useMutation(
     async (request: ConfirmFriendRequestRequest) => {
@@ -24,18 +27,25 @@ export function useConfirmFriendRequest() {
       return { friendIds: data.friendIds };
     },
     {
-      onSuccess(response: ConfirmFriendRequestResponse) {
-        if (user && response) {
-          queryClient.setQueryData(["user", user.id], {
-            ...user,
-            friends: response.friendIds,
-            friendRequests: user.friendRequests.filter(
-              (id: number) =>
-                id !== response.friendIds[response.friendIds.length - 1]
-            ),
-          });
-          queryClient.invalidateQueries(["feed", user.id]);
-        }
+      onSuccess(response) {
+        queryClient.setQueryData(
+          ["user", { id: userId }],
+          (user: User | undefined) => {
+            if (!user) {
+              return;
+            }
+
+            return {
+              ...user,
+              friends: response.friendIds,
+              friendRequests: user.friendRequests.filter(
+                (id: number) =>
+                  id !== response.friendIds[response.friendIds.length - 1]
+              ),
+            };
+          }
+        );
+        queryClient.invalidateQueries(["feed"]);
       },
     }
   );

@@ -9,6 +9,7 @@ import { ActivityEntry } from "./activityEntry";
 interface Props {
   workout: Workout;
   onDeleteActivity: (field: string, workout: Workout) => void;
+  onEditActivity: (index: number) => void;
 }
 
 type ExerciseSummary = {
@@ -16,7 +17,7 @@ type ExerciseSummary = {
   total: number;
 };
 
-export const ActivitySummary = ({ workout, onDeleteActivity }: Props) => {
+export const ActivitySummary = ({ workout, onDeleteActivity, onEditActivity }: Props) => {
   const calculateStrengthVolume = (exercise: StrengthActivity): number => {
     const { targetSets, targetReps, targetWeight } = exercise;
     return targetSets * targetReps * targetWeight;
@@ -26,6 +27,10 @@ export const ActivitySummary = ({ workout, onDeleteActivity }: Props) => {
     const newActivities = [...workout.activities];
     newActivities.splice(activityIndex, 1);
     onDeleteActivity("workout", { ...workout, activities: newActivities });
+  };
+
+  const editActivity = (activityIndex: number) => () => {
+    onEditActivity(activityIndex);
   };
 
   const summary = useMemo(() => {
@@ -94,6 +99,7 @@ export const ActivitySummary = ({ workout, onDeleteActivity }: Props) => {
             key={currentActivity.id}
             activity={currentActivity}
             deleteActivity={deleteActivity(i)}
+            editActivity={editActivity(i)}
           />
         ))
       ) : (

@@ -38,61 +38,62 @@ export const Social = () => {
         });
       }
     }
-  }, [searchedUserName, searchedUsers]);
+  }, [searchedUserName, searchedUsers, user?.username]);
 
   return (
-    <Screen extraSpace>
+    <>
       <AddFriendModal
         user={user as User}
         friend={searchedUsers?.[0] ?? null}
         loading={friendLoading}
         onClose={() => setSearchedUserName(null)}
       />
+      <Screen extraSpace>
+        <XStack space="$3" w="100%">
+          <Input
+            w="65%"
+            placeholder="Search for friends"
+            value={searchText}
+            onChangeText={setSearchText}
+            type="text"
+          />
+          <Button
+            w="30%"
+            onPress={() => {
+              if (searchText.length > 0) {
+                setSearchedUserName(searchText);
+              } else {
+                Toast.show({
+                  type: "error",
+                  text1: "Please enter a username",
+                });
+              }
+            }}
+          >
+            Search
+          </Button>
+        </XStack>
 
-      <XStack space="$3" w="100%">
-        <Input
-          w="65%"
-          placeholder="Search for friends"
-          value={searchText}
-          onChangeText={setSearchText}
-          type="text"
-        />
-        <Button
-          w="30%"
-          onPress={() => {
-            if (searchText.length > 0) {
-              setSearchedUserName(searchText);
-            } else {
-              Toast.show({
-                type: "error",
-                text1: "Please enter a username",
-              });
+        {feedLoading && (
+          <FlatList
+            style={{ width: "110%" }}
+            data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+            keyExtractor={(item) => item.toString()}
+            renderItem={() => <Skeleton my="$2" mx="auto" h={150} />}
+          />
+        )}
+
+        {!feedLoading && feed && (
+          <FlatList
+            style={{ width: "100%" }}
+            data={feed ?? []}
+            keyExtractor={(item) =>
+              item.workout.id + item.user.username + item.date
             }
-          }}
-        >
-          Search
-        </Button>
-      </XStack>
-
-      {feedLoading && (
-        <FlatList
-          style={{ width: "100%" }}
-          data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
-          keyExtractor={(item) => item.toString()}
-          renderItem={() => <Skeleton my="$2" mx="auto" h={150} />}
-        />
-      )}
-
-      {!feedLoading && feed && (
-        <FlatList
-          style={{ width: "100%" }}
-          data={feed ?? []}
-          keyExtractor={(item) =>
-            item.workout.id + item.user.username + item.date
-          }
-          renderItem={({ item }) => createMessage(item)}
-        />
-      )}
-    </Screen>
+            renderItem={({ item }) => createMessage(item)}
+          />
+        )}
+      </Screen>
+    </>
   );
 };

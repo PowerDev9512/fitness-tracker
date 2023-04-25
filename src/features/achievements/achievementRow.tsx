@@ -77,7 +77,11 @@ export const AchievementRow = ({ achievement, user }: Props) => {
 
       const { text, max, key } = entry;
 
-      const percentOfMax = Math.floor((achievement.progress / max) * 100);
+      let percentOfMax = Math.floor((achievement.progress / max) * 100);
+
+      if (percentOfMax >= 100) {
+        percentOfMax = 100;
+      }
 
       return (
         <>

@@ -86,6 +86,7 @@ export const StrengthModal = ({
             placeholder="Notes"
             value={notes ?? undefined}
             onChangeText={(value) => setNotes(value)}
+            maxLength={100}
           />
           <XStack>
             <Text my="auto"> {image ? "Image added" : "No image added"} </Text>

@@ -12,19 +12,14 @@ interface BaseProps {
 type Props = BaseProps & React.ComponentProps<typeof ModalInternal>;
 
 const ModalInternal = styled(ModalBase, {
-  name: "MyStack",
+  name: "Modal",
   transparent: true,
   animationType: "slide",
 });
 
 export const Modal = ({ isOpen, onClose, children, ...props }: Props) => {
   return (
-    <ModalInternal
-      animationType="fade"
-      onRequestClose={onClose}
-      visible={isOpen}
-      {...props}
-    >
+    <ModalInternal onRequestClose={onClose} visible={isOpen} {...props}>
       <Stack
         backgroundColor="rgba(0, 0, 0, 0.7)"
         flex={1}

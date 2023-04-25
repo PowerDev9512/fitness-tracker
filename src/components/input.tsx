@@ -11,6 +11,7 @@ interface InputProps {
   rightElement?: React.ReactNode;
   placeholder: string | undefined;
   type: "text" | "password" | "number" | "email";
+  characterLimit?: number;
 }
 
 type Props = Omit<React.ComponentProps<typeof InputBase>, "value"> & InputProps;
@@ -22,6 +23,7 @@ export const Input = ({
   type,
   rightElement,
   onBlur = () => {},
+  characterLimit = 100,
   ...props
 }: Props) => {
   const [hidden, setHidden] = useState(type === "password");
@@ -82,8 +84,10 @@ export const Input = ({
     <Stack w={props.w ?? props.width ?? "100%"}>
       <InputBase
         accessibilityLabel={`${value} input`}
+        maxLength={characterLimit}
         value={valueAsString}
         onChangeText={onChangeText}
+        onBlur={onBlur}
         borderRadius={10}
         caretHidden={false}
         keyboardType={keyboardType}

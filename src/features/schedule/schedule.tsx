@@ -1,6 +1,6 @@
 import { useEditWorkout, useGetUser } from "api";
 import { Carousel, Screen } from "components";
-import React from "react";
+import React, { useMemo } from "react";
 import InAppReview from "react-native-in-app-review";
 import { Stack, Text } from "tamagui";
 import { ScheduledWorkout } from "types";
@@ -12,7 +12,7 @@ export const Schedule = () => {
   const { mutate: editWorkout } = useEditWorkout();
   const { data: user } = useGetUser();
 
-  const scheduledWorkouts = getScheduledWorkouts(user);
+  const scheduledWorkouts = useMemo(() => getScheduledWorkouts(user), [user]);
 
   if (!user || scheduledWorkouts.length === 0) {
     return (

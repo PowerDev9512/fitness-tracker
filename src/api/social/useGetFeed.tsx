@@ -1,8 +1,8 @@
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import { useStore } from "store";
 import { Message, User, Workout } from "types";
 
 import { client } from "../client";
-import { useGetUser } from "../user/useGetUser";
 
 type GetFeedRawResponse = {
   messages: {
@@ -15,30 +15,24 @@ type GetFeedRawResponse = {
 type GetFeedResponse = Message[];
 
 export function useGetFeed(): UseQueryResult<GetFeedResponse, unknown> {
-  const { data: user } = useGetUser();
+  const { userId } = useStore();
 
-  return useQuery(
-    ["feed", user?.id],
-    async () => {
-      if (!user) {
-        return [];
-      }
-
-      const { data } = await client.get<GetFeedRawResponse>(
-        `/users/${user?.id}/feed`
-      );
-
-      return data.messages.map(
-        (message) =>
-          ({
-            workout: message.workout,
-            date: message.timestamp,
-            user: message.user,
-          } as Message)
-      );
-    },
-    {
-      refetchInterval: 60,
+  return useQuery(["feed"], async () => {
+    if (!userId) {
+      return [];
     }
-  );
+
+    const { data } = await client.get<GetFeedRawResponse>(
+      `/users/${userId}/feed`
+    );
+
+    return data.messages.map(
+      (message) =>
+        ({
+          workout: message.workout,
+          date: message.timestamp,
+          user: message.user,
+        } as Message)
+    );
+  });
 }

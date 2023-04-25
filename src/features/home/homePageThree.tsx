@@ -11,6 +11,8 @@ import { Mixpanel } from "utils";
 export const HomePageThree = () => {
   const navigation = useNavigation();
 
+  const [emailTouched, setEmailTouched] = useState(false);
+  const [passwordTouched, setPasswordTouched] = useState(false);
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
@@ -26,24 +28,24 @@ export const HomePageThree = () => {
       password: [],
     };
 
-    if (email.length === 0) {
+    if (email.length === 0 && emailTouched) {
       errors.email.push("Email is required");
     }
 
-    if (password.length === 0) {
+    if (password.length === 0 && passwordTouched) {
       errors.password.push("Password is required");
     }
 
-    if (password.length > 0 && password.length < 6) {
+    if (password.length > 0 && password.length < 6 && passwordTouched) {
       errors.password.push("Password must be at least 6 characters");
     }
 
-    if (email.length > 0 && !email.includes("@")) {
+    if (email.length > 0 && !email.includes("@") && emailTouched) {
       errors.email.push("Email must be valid");
     }
 
     return errors;
-  }, [email, password]);
+  }, [email, emailTouched, password.length, passwordTouched]);
 
   return (
     <View
@@ -82,7 +84,9 @@ export const HomePageThree = () => {
           hideLabel
           placeholder="Email"
           onChangeText={(text) => setEmail(text)}
-          onBlur={(text) => setEmail(text)}
+          onBlur={(text) => {
+            setEmailTouched(true);
+          }}
           value={email}
           error={errors.email.join(", ")}
           name="Email"
@@ -94,7 +98,9 @@ export const HomePageThree = () => {
           hideLabel
           placeholder="Password"
           onChangeText={(text) => setPassword(text)}
-          onBlur={(text) => setPassword(text)}
+          onBlur={(text) => {
+            setPasswordTouched(true);
+          }}
           value={password}
           name="Password"
         />

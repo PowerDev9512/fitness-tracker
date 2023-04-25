@@ -24,19 +24,23 @@ export function useGetWorkoutData({
   reps,
 }: GetWorkoutData): UseQueryResult<GetWorkoutDataResponse, unknown> {
   return useQuery(
-    ["workoutData", exerciseName, userId, workoutGraphType, reps],
+    ["workoutData", { userId, exerciseName, workoutGraphType, reps }],
     async () => {
-      if (!exerciseName) {
-        return { graphData: {} };
-      }
+      if (!exerciseName)
+        return {
+          graphData: [],
+        };
 
-      const { data } = await client.get(`/users/${userId}/workoutGraphData`, {
-        params: {
-          ExerciseName: exerciseName,
-          WorkoutGraphType: workoutGraphType,
-          Reps: reps,
-        },
-      });
+      const { data } = await client.get<GetWorkoutDataResponse>(
+        `/users/${userId}/workoutGraphData`,
+        {
+          params: {
+            ExerciseName: exerciseName,
+            WorkoutGraphType: workoutGraphType,
+            Reps: reps,
+          },
+        }
+      );
 
       return data;
     }

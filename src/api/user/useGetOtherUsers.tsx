@@ -15,7 +15,7 @@ export function useGetOtherUsers(
 ): UseQueryResult<GetOtherUserResponse, unknown> {
   const { userId } = useStore();
 
-  return useQuery(["otherUsers", otherUsers], async () => {
+  return useQuery(["otherUsers", { ids: otherUsers }], async () => {
     if (otherUsers.length === 0) {
       return [];
     }

@@ -15,7 +15,7 @@ export function useGetWorkoutNames({
   userId,
   order,
 }: GetWorkoutData): UseQueryResult<GetWorkoutDataResponse, unknown> {
-  return useQuery(["workoutNames", userId, order], async () => {
+  return useQuery(["workoutNames", { id: userId, order }], async () => {
     const { data } = await client.get<GetWorkoutDataResponse>(
       `/users/${userId}/WorkoutNames`,
       {

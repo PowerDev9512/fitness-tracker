@@ -9,6 +9,7 @@ import {
   SelectData,
 } from "components";
 import React, { useEffect, useMemo, useState } from "react";
+import Toast from "react-native-toast-message";
 import { Stack, YStack } from "tamagui";
 import { Badge, Image, Title } from "types";
 
@@ -38,13 +39,27 @@ const SettingsInternal = () => {
     [user]
   );
 
-  const { mutate: update, isLoading: isUpdating } = useEditUser();
+  const {
+    mutate: update,
+    isLoading: isUpdating,
+    isSuccess: savedSuccessfully,
+  } = useEditUser();
+
   const [userDetails, setUserDetails] =
     useState<RawEditUserRequest>(initialState);
 
   useEffect(() => {
     setUserDetails(initialState);
   }, [initialState]);
+
+  useEffect(() => {
+    if (savedSuccessfully) {
+      Toast.show({
+        text1: "Settings saved successfully!",
+        type: "success",
+      });
+    }
+  }, [savedSuccessfully]);
 
   const titleOptions = useMemo(() => {
     return (user?.inventory ?? [])

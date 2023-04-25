@@ -1,5 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { useGetUser } from "api";
+import { useQueryClient } from "@tanstack/react-query";
+import { useGetUser, useSignalR } from "api";
 import { StatusBar } from "expo-status-bar";
 import {
   ActivityDetails,
@@ -11,8 +12,7 @@ import {
 import React, { useEffect } from "react";
 import { useStore } from "store";
 import { Theme, useTheme } from "tamagui";
-
-// import { AssetLoader } from "./assetLoader";
+import { Message, User } from "types";
 
 import { LoadingMessage } from "./loadingMessage";
 import { MainHeader } from "./mainHeader";
@@ -22,12 +22,8 @@ const Stack = createNativeStackNavigator<MainStackParams>();
 
 export const MainStack = () => {
   const theme = useTheme();
-
-  /*   const [assetProgress, setAssetProgress] = React.useState({
-    current: -1,
-    total: 0,
-  }); */
-
+  const queryClient = useQueryClient();
+  const { connection, isConnected } = useSignalR();
   const { data: user, isLoading: gettingUser } = useGetUser();
   const { setUserId, token, setToken, userId } = useStore();
 
@@ -38,11 +34,35 @@ export const MainStack = () => {
     }
   }, [setToken, setUserId, token]);
 
-  /*   if (assetProgress.current < assetProgress.total) {
-    return (
-      <AssetLoader progress={assetProgress} setProgress={setAssetProgress} />
-    );
-  } */
+  useEffect(() => {
+    if (isConnected && connection) {
+      connection.on("SendFriendRequest", (id: number, friendId: number) => {
+        queryClient.setQueryData(
+          ["user", { id }],
+          (oldData: User | undefined) => {
+            if (!oldData) {
+              return;
+            }
+
+            return {
+              ...oldData,
+              friendRequests: [...oldData.friendRequests, friendId],
+            };
+          }
+        );
+      });
+
+      connection.on("FeedUpdated", (id: number, message: Message) => {
+        queryClient.setQueryData(["feed"], (oldData: Message[] | undefined) => {
+          if (!oldData) {
+            return;
+          }
+
+          return [...oldData, message];
+        });
+      });
+    }
+  }, [connection, isConnected, queryClient, userId]);
 
   if (gettingUser && userId !== undefined) {
     return <LoadingMessage title="Loading ..." />;
@@ -71,7 +91,11 @@ export const MainStack = () => {
                 headerShown: false,
               }}
             />
-            <Stack.Screen name="Create" component={CreateWorkout} />
+            <Stack.Screen
+              name="Create"
+              component={CreateWorkout}
+              initialParams={{ workout: undefined }}
+            />
             <Stack.Screen
               name="Activity"
               component={ActivityDetails}
@@ -103,3 +127,16 @@ export const MainStack = () => {
     </Theme>
   );
 };
+
+// todo: fix asset loader
+
+/*   const [assetProgress, setAssetProgress] = React.useState({
+    current: -1,
+    total: 0,
+  }); */
+
+/*   if (assetProgress.current < assetProgress.total) {
+    return (
+      <AssetLoader progress={assetProgress} setProgress={setAssetProgress} />
+    );
+  } */

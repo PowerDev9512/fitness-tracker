@@ -75,16 +75,17 @@ export const WorkoutDetails = ({ form }: CreateWorkoutProps) => {
           value={strengthActivity.targetWeight}
           onChange={handleActivityUpdate("targetWeight")}
           titleAccessory={
-            <ActionButton
-              size={12}
-              color="$gray700"
-              title="Set as bodyweight"
+            <Button
+              variant="link"
+              mb="$2"
               onPress={() =>
                 handleActivityUpdate("targetWeight")(
                   user?.weight?.toString() ?? "0"
                 )
               }
-            />
+            >
+              Set as bodyweight
+            </Button>
           }
         />
       </Stack>

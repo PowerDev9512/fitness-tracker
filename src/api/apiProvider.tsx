@@ -38,7 +38,7 @@ const onErrorHandler = (err: unknown) => {
   }
 };
 
-export const queryClient = new QueryClient({
+const queryClient = new QueryClient({
   queryCache: new QueryCache({
     onError: onErrorHandler,
   }),

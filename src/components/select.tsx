@@ -51,13 +51,13 @@ const SelectInternal = <T extends unknown>({
         {...props}
       >
         {value?.label !== undefined && (
-          <Text color="black" fontSize={15} mr={1}>
+          <Text fontSize={15} mr={1}>
             {titleCase(value?.label)}
           </Text>
         )}
         {value?.label === undefined ||
           (value?.label === "" && (
-            <Text mr="auto" color="$gray500" textAlign="left" fontSize={13}>
+            <Text mr="auto" textAlign="left" fontSize={15}>
               {titleCase(placeholder)}
             </Text>
           ))}

@@ -24,7 +24,6 @@ const Store = () => {
     useIAP();
 
   getProducts({ skus: ["supporter_title_1"] })
-  console.log("products", products);
 
   const buyItem = (item: StoreEntry) => {
     const matchingProduct = products.find(

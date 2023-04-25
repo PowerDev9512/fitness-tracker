@@ -16,6 +16,7 @@ interface Props {
   onChangeText: (value: string) => void;
   hideLabel?: boolean;
   type?: "text" | "password";
+  maxLength?: number;
 }
 
 export const FormInput = ({
@@ -24,6 +25,7 @@ export const FormInput = ({
   onChangeText,
   onBlur,
   onFocus,
+  maxLength = 100,
   hideLabel = false,
   placeholder = undefined,
   error = undefined,
@@ -41,6 +43,7 @@ export const FormInput = ({
       <Input
         accessibilityLabel={`${name} input`}
         mb={2}
+        maxLength={maxLength}
         w="100%"
         type={type}
         value={value}

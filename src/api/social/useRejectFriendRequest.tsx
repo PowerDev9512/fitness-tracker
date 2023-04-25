@@ -1,8 +1,8 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useStore } from "store";
 
-import { queryClient } from "../apiProvider";
+import { User } from "../../types/domain";
 import { client } from "../client";
-import { useGetUser } from "../user/useGetUser";
 
 type RejectFriendRequestRequest = {
   friendId: number;
@@ -13,29 +13,37 @@ type RejectFriendRequestResponse = {
 };
 
 export function useRejectFriendRequest() {
-  const { data: user } = useGetUser();
+  const { userId } = useStore();
+  const queryClient = useQueryClient();
 
   return useMutation(
     async (request: RejectFriendRequestRequest) => {
       const { data } = await client.post<RejectFriendRequestResponse>(
-        `/users/${user?.id}/friends/deny`,
+        `/users/${userId}/friends/deny`,
         request
       );
       return { friendIds: data.friendIds };
     },
     {
       onSuccess(response: RejectFriendRequestResponse) {
-        if (user && response) {
-          queryClient.setQueryData(["user", user.id], {
-            ...user,
-            friends: response.friendIds,
-            friendRequests: user.friendRequests.filter(
-              (id: number) =>
-                id !== response.friendIds[response.friendIds.length - 1]
-            ),
-          });
-          queryClient.invalidateQueries(["feed", user.id]);
-        }
+        queryClient.setQueryData(
+          ["user", { id: userId }],
+          (user: User | undefined) => {
+            if (!user) {
+              return;
+            }
+
+            return {
+              ...user,
+              friends: response.friendIds,
+              friendRequests: user.friendRequests.filter(
+                (id: number) =>
+                  id !== response.friendIds[response.friendIds.length - 1]
+              ),
+            };
+          }
+        );
+        queryClient.invalidateQueries(["feed"]);
       },
     }
   );

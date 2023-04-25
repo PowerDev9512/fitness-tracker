@@ -1,8 +1,7 @@
-import { useQuery, UseQueryResult } from "@tanstack/react-query";
+import { useQuery, useQueryClient, UseQueryResult } from "@tanstack/react-query";
 import { Exercise } from "types";
 
 import { client } from "../client";
-import { queryClient } from "../apiProvider";
 
 type RawGetExercisesResponse = {
   exercises: Exercise[];
@@ -17,8 +16,10 @@ type GetExercisesParams = {
 export function useExercises({
   retrieveImages,
 }: GetExercisesParams): UseQueryResult<GetExercisesResponse, unknown> {
+  const queryClient = useQueryClient();
+
   return useQuery({
-    queryKey: ["exercises", retrieveImages ? "withImages" : "withoutImages"],
+    queryKey: ["exercises", { retrieveImages }],
     queryFn: async () => {
       if (retrieveImages) {
         return []; // broken because the payload is like 300mb now lmfao

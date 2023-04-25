@@ -1,3 +1,4 @@
+import { useIsMutating, useQueryClient } from "@tanstack/react-query";
 import { Button, WorkoutCard } from "components";
 import React from "react";
 import { ScheduledWorkout } from "types";
@@ -13,7 +14,17 @@ export const ScheduledWorkoutCard = ({
   onComplete,
   isFocused,
 }: Props) => {
-  const footer = <Button onPress={onComplete}>Complete Workout</Button>;
+  const currentEdits = useIsMutating({ mutationKey: ["editWorkout"] });
+  const currentCreates = useIsMutating({ mutationKey: ["addWorkout"] });
+
+  const footer = (
+    <Button
+      isLoading={currentEdits > 0 || currentCreates > 0}
+      onPress={onComplete}
+    >
+      Complete Workout
+    </Button>
+  );
 
   return (
     <WorkoutCard

@@ -4,7 +4,8 @@ import {
   DrawerItem,
   DrawerItemList,
 } from "@react-navigation/drawer";
-import { queryClient, useGetUser } from "api";
+import { useQueryClient } from "@tanstack/react-query";
+import { useGetUser } from "api";
 import { Avatar } from "components";
 import React, { useCallback } from "react";
 import { useStore } from "store";
@@ -15,8 +16,9 @@ export const SideBar = ({
   navigation,
   descriptors,
 }: DrawerContentComponentProps) => {
-  const { setUserId } = useStore();
+  const { setUserId, setToken } = useStore();
   const { data: user } = useGetUser();
+  const queryClient = useQueryClient();
 
   const theme = useTheme();
   const userName = !user ? "Guest" : `${user.username}`;
@@ -64,6 +66,7 @@ export const SideBar = ({
         label="Logout"
         onPress={() => {
           queryClient.clear();
+          setToken(undefined);
           setUserId(undefined);
         }}
       />

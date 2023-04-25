@@ -1,9 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useStore } from "store";
 import { User } from "types";
 
-import { queryClient } from "../apiProvider";
 import { client } from "../client";
 import { Mixpanel } from "utils";
 
@@ -28,6 +27,7 @@ type RegisterRawResponse = {
 
 export function useRegister() {
   const { setUserId, setToken, userId } = useStore();
+  const queryClient = useQueryClient();
   const navigation = useNavigation();
 
   return useMutation(
@@ -52,7 +52,7 @@ export function useRegister() {
       onSuccess(response: User) {
         if (response) {
           Mixpanel.track("Registered");
-          queryClient.setQueryData(["user", userId], response);
+          queryClient.setQueryData(["user", { id: userId }], response);
           navigation.reset({ index: 0, routes: [{ name: "Drawer" as never }] });
         }
       },

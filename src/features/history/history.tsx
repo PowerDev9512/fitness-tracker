@@ -1,6 +1,6 @@
 import { useGetUser } from "api";
 import { Carousel, Screen, WorkoutCard } from "components";
-import React from "react";
+import React, { useMemo } from "react";
 import { Stack, Text } from "tamagui";
 import { CompletedWorkout } from "types";
 import { getPastWorkouts } from "utils";
@@ -8,7 +8,7 @@ import { getPastWorkouts } from "utils";
 export const History = () => {
   const { data: user } = useGetUser();
 
-  const pastWorkouts = getPastWorkouts(user);
+  const pastWorkouts = useMemo(() => getPastWorkouts(user), [user]);
 
   const renderItem = (
     item: CompletedWorkout,

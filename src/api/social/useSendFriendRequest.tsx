@@ -1,8 +1,8 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useStore } from "store";
+import { User } from "types";
 
-import { queryClient } from "../apiProvider";
 import { client } from "../client";
-import { useGetUser } from "../user/useGetUser";
 
 type AddFriendRequest = {
   friendId: number;
@@ -13,25 +13,33 @@ type AddFriendResponse = {
 };
 
 export function useSendFriendRequest() {
-  const { data: user } = useGetUser();
+  const { userId } = useStore();
+  const queryClient = useQueryClient();
 
   return useMutation(
     async (request: AddFriendRequest) => {
       const { data } = await client.post<AddFriendResponse>(
-        `/users/${user?.id}/friends`,
+        `/users/${userId}/friends`,
         request
       );
       return { friendIds: data.friendIds };
     },
     {
       onSuccess(response: AddFriendResponse) {
-        if (user && response) {
-          queryClient.setQueryData(["user", user.id], {
-            ...user,
-            friends: response.friendIds,
-          });
-          queryClient.invalidateQueries(["feed", user.id]);
-        }
+        queryClient.setQueryData(
+          ["user", { id: userId }],
+          (user: User | undefined) => {
+            if (!user) {
+              return;
+            }
+
+            return {
+              ...user,
+              friends: response.friendIds,
+            };
+          }
+        );
+        queryClient.invalidateQueries(["feed"]);
       },
     }
   );

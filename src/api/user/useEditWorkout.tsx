@@ -1,8 +1,8 @@
-import { useMutation } from "@tanstack/react-query";
-import { Activity, Exercise, Max, Workout } from "types";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useStore } from "store";
+import { Activity, Exercise, Max, User, Workout } from "types";
 
 import { useGetUser } from "./useGetUser";
-import { queryClient } from "../apiProvider";
 import { client } from "../client";
 
 type EditWorkoutRequest = {
@@ -22,6 +22,8 @@ type EditWorkoutResponse = {
 
 export function useEditWorkout() {
   const { data: user } = useGetUser();
+  const queryClient = useQueryClient();
+  const { userId } = useStore();
 
   return useMutation(
     async (rawRequest: EditWorkoutRequest) => {
@@ -45,23 +47,36 @@ export function useEditWorkout() {
       };
     },
     {
+      mutationKey: ["editWorkout"],
       onSuccess(response) {
-        if (user && response) {
-          queryClient.setQueryData(["user", user.id], {
-            ...user,
-            maxes: response.maxes,
-            workouts: user.workouts.map((workout) => {
-              if (workout.id === response.workout.id) {
-                return response.workout;
+        if (user) {
+          queryClient.setQueryData(
+            ["user", { id: userId }],
+            (oldUser: User | undefined) => {
+              if (!oldUser) {
+                return;
               }
-              return workout;
-            }),
-          });
+
+              return {
+                ...oldUser,
+                maxes: response.maxes,
+                workouts: oldUser.workouts.map((workout) => {
+                  if (workout.id === response.workout.id) {
+                    return response.workout;
+                  }
+                  return workout;
+                }),
+              };
+            }
+          );
 
           queryClient.setQueryData(
             ["exercises"],
             (exercises: Exercise[] | undefined) => {
-              if (!exercises) return;
+              if (!exercises) {
+                return [];
+              }
+
               return exercises.map((exercise) => {
                 const matchingMax = response.maxes.find(
                   (max) => max.exercise === exercise.name
@@ -74,8 +89,8 @@ export function useEditWorkout() {
             }
           );
 
-          queryClient.invalidateQueries(["workoutData"]);
-          queryClient.invalidateQueries(["userAchievements"]);
+          queryClient.invalidateQueries(["workoutData"], { exact: false });
+          queryClient.invalidateQueries(["userAchievements"], { exact: false });
         }
       },
     }

@@ -120,6 +120,7 @@ export const RegisterForm = ({ form, exercises }: Props) => {
 
       <FormInput
         required
+        maxLength={12}
         onChangeText={form.handleChange("username")}
         onBlur={form.handleBlur("username")}
         value={form.values.username}

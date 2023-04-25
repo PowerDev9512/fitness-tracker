@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useStore } from "store";
 
-const local = "http://13.238.79.62/";
+export const url = "http://13.238.79.62/";
 
 export const client = axios.create({
-  baseURL: local,
+  baseURL: url,
   headers: {
     "Content-Type": "application/json",
   },
@@ -13,10 +13,9 @@ export const client = axios.create({
 client.interceptors.request.use(async (config) => {
   const { token } = useStore.getState();
 
-  if (!token) {
-    return config;
+  if (token) {
+    config.headers.Authorization = `Bearer ${token.token}`;
   }
 
-  config.headers.Authorization = `Bearer ${token.token}`;
   return config;
 });

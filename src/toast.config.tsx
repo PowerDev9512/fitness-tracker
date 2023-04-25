@@ -14,7 +14,7 @@ export const toastConfig = {
   success: (props: any) => (
     <BaseToast
       {...props}
-      style={{ borderLeftColor: "blue", borderLeftWidth: 10 }}
+      style={{ borderLeftColor: "green", borderLeftWidth: 10 }}
       contentContainerStyle={{ paddingHorizontal: 20 }}
       text1Style={text1Style}
       text2Style={text2Style}

@@ -72,6 +72,7 @@ export const CardioModal = ({ workout, activity, onClose, isOpen }: Props) => {
             placeholder="Notes"
             value={notes ?? undefined}
             onChangeText={(value) => setNotes(value)}
+            maxLength={100}
           />
           <XStack>
             <Text my="auto">{image ? "Image added" : "No image added"}</Text>

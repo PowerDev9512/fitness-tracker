@@ -1,9 +1,7 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useStore } from "store";
 import { Badge, Image, Title, User } from "types";
 
-import { useGetUser } from "./useGetUser";
-import { queryClient } from "../apiProvider";
 import { client } from "../client";
 
 export type RawEditUserRequest = {
@@ -38,47 +36,75 @@ type EditUserResponse = {
   user: User;
 };
 
+const boolFromStr = (str: string) => {
+  if (str === "true") {
+    return true;
+  }
+  return false;
+};
+
 export function useEditUser() {
   const { userId } = useStore();
-  const { data: oldUser } = useGetUser();
+  const queryClient = useQueryClient();
 
   return useMutation(
     async (rawRequest: RawEditUserRequest) => {
-      const boolFromStr = (str: string) => {
-        if (str === "true") {
-          return true;
-        }
-        return false;
-      };
-
       const request = {
         ...rawRequest,
         darkMode: boolFromStr(rawRequest.darkMode),
       } as EditUserRequest;
 
-      queryClient.setQueryData(["user", userId], {
-        ...oldUser,
-        weeklyWorkoutAmountGoal: request.weeklyWorkountAmountGoal,
-        height: request.height,
-        weight: request.weight,
-        age: request.age,
-        avatar: request.avatar,
-        userSettings: {
-          ...oldUser?.userSettings,
-          weightUnit: request.weightUnit,
-          measurementUnit: request.measurementUnit,
-          darkMode: request.darkMode,
-        },
-      });
+      queryClient.setQueryData(
+        ["user", { id: userId }],
+        (oldUser: User | undefined) => {
+          if (!oldUser) {
+            return;
+          }
 
-      await client.put<EditUserResponse>(
+          return {
+            ...oldUser,
+            userSettings: {
+              ...oldUser?.userSettings,
+              darkMode: request.darkMode,
+            },
+          };
+        }
+      );
+
+      const { data } = await client.put<EditUserResponse>(
         `/users/${rawRequest.userId}`,
         request
       );
+
+      return data.user;
     },
     {
       onError: () => {
-        queryClient.setQueryData(["user", userId], oldUser);
+        queryClient.setQueryData(
+          ["user", { id: userId }],
+          (oldUser: User | undefined) => {
+            if (!oldUser) {
+              return;
+            }
+
+            return { ...oldUser };
+          }
+        );
+      },
+      onSuccess: (response: User) => {
+        queryClient.setQueryData(
+          ["user", { id: userId }],
+          (oldUser: User | undefined) => {
+            if (!oldUser) {
+              return;
+            }
+
+            return {
+              ...oldUser,
+              ...response,
+            };
+          }
+        );
       },
     }
   );

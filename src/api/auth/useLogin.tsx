@@ -1,7 +1,6 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useStore } from "store";
 
-import { queryClient } from "../apiProvider";
 import { client } from "../client";
 import { Mixpanel } from "utils";
 
@@ -17,6 +16,7 @@ type RawLoginResponse = {
 
 export function useLogin() {
   const { setUserId, setToken, userId } = useStore();
+  const queryClient = useQueryClient();
 
   return useMutation(
     async (request: LoginRequest) => {
@@ -31,7 +31,7 @@ export function useLogin() {
     {
       onSuccess() {
         Mixpanel.track("Logged In");
-        queryClient.invalidateQueries(["user", userId]);
+        queryClient.invalidateQueries(["user", { id: userId }]);
       },
     }
   );

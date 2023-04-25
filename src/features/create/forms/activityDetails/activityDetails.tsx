@@ -5,7 +5,13 @@ import { Slider } from "tamagui";
 import { ActivitySummary } from "./activitySummary";
 import { CreateWorkoutProps } from "../../createWorkout";
 
-export const ActivityDetails = ({ form }: CreateWorkoutProps) => {
+type BaseProps = {
+  onEditActivity: (index: number) => void;
+};
+
+type Props = CreateWorkoutProps & BaseProps;
+
+export const ActivityDetails = ({ form, onEditActivity }: Props) => {
   const { date, repeat, workout } = form.values;
   const setDate = (newDate: Date) => form.setFieldValue("date", newDate);
   const setRepeat = (newRepeat: number[]) =>
@@ -18,6 +24,7 @@ export const ActivityDetails = ({ form }: CreateWorkoutProps) => {
       </FormLabel>
       <ActivitySummary
         workout={workout}
+        onEditActivity={onEditActivity}
         onDeleteActivity={form.setFieldValue}
       />
 

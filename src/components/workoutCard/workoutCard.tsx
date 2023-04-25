@@ -22,22 +22,9 @@ interface Props {
 export const WorkoutCard = ({ workout, footer, isFocused = true }: Props) => {
   const theme = useTheme();
 
-  const { data: user } = useGetUser();
-  const { mutate: deleteWorkout, isLoading: deleting } = useDeleteWorkout();
-
   return (
     <Stack h="100%">
       <YStack h="100%">
-        <Badge
-          side="left"
-          loading={deleting}
-          onClick={() => {
-            deleteWorkout({ userId: user?.id ?? -1, workoutId: workout.id });
-          }}
-        >
-          <Icon name="trash-bin-sharp" size={25} color={theme.red.val} />
-        </Badge>
-
         <WorkoutCardBadges workout={workout} />
 
         <Card

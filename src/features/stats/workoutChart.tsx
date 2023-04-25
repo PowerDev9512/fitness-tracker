@@ -23,7 +23,7 @@ export const WorkoutChart = () => {
     .filter((workout) => workout.completed)
     .filter((workout) => workout.activities.length >= 1);
 
-  const [reps, setReps] = useState<number>(0);
+  const [reps, setReps] = useState<number | null>(null);
   const [workoutType, setWorkoutType] = useState<ExerciseType | null>(
     "strength"
   );
@@ -81,6 +81,10 @@ export const WorkoutChart = () => {
 
     if (!selectedExercise) {
       return <Text mt={10}> Select an exercise to graph </Text>;
+    }
+
+    if ([0, 1].includes(workoutData.graphData.length)) {
+      return <Text mt={10}> Not enough workout data exists, train more! </Text>;
     }
 
     const chartData = workoutData.graphData.map((data) => ({
@@ -221,13 +225,16 @@ export const WorkoutChart = () => {
           <Select
               mr="auto"
               borderWidth={0}
-              value={{ label: reps.toString(), value: reps }}
+              value={{
+                label: reps ? reps.toString() : "Select a rep range",
+                value: reps,
+              }}
               data={repCounts.map((count) => ({
                 label: count.toString(),
                 value: count,
               }))}
               onChangeValue={(item) => setReps(item)}
-              placeholder="Select rep range"
+              placeholder="Select a rep range"
             />
           )}
       </YStack>

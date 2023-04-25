@@ -79,11 +79,7 @@ const IncrementBarInternal = ({
         <FormLabel pl="$3" mt="$2">
           {name}
         </FormLabel>
-        {titleAccessory && (
-          <Text fontSize={8} ml="auto" mr="$3" mt="auto" mb="$1">
-            {titleAccessory}
-          </Text>
-        )}
+        {titleAccessory && <Stack ml="auto">{titleAccessory}</Stack>}
       </XStack>
       <XStack mx="auto" alignContent="center">
         {positiveIncrements}

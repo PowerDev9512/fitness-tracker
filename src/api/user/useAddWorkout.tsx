@@ -1,10 +1,8 @@
-import { useMutation } from "@tanstack/react-query";
-import { Activity, ScheduledWorkout, Workout } from "types";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Activity, ScheduledWorkout, User, Workout } from "types";
 
-import { useGetUser } from "./useGetUser";
-import { queryClient } from "../apiProvider";
+import { useStore } from "../../store/store";
 import { client } from "../client";
-import { log } from "utils";
 
 type AddWorkoutRequest = {
   userId: number;
@@ -26,7 +24,8 @@ type AddWorkoutPayload = {
 };
 
 export function useAddWorkout() {
-  const { data: user } = useGetUser();
+  const { userId } = useStore();
+  const queryClient = useQueryClient();
 
   return useMutation(
     async (rawRequest: AddWorkoutRequest) => {
@@ -48,20 +47,27 @@ export function useAddWorkout() {
         payload
       );
 
-      return { workouts: data.workout };
+      return { workout: data.workout };
     },
     {
+      mutationKey: ["addWorkout"],
       onSuccess(response) {
-        if (user && response) {
-          const newData = {
-            ...user,
-            workouts: [...user.workouts, response.workouts],
-          };
+        queryClient.invalidateQueries(["userAchievements"], { exact: false });
+        queryClient.invalidateQueries(["workoutData"], { exact: false });
+        queryClient.setQueryData(
+          ["user", { id: userId }],
+          (oldUser: User | undefined) => {
+            if (!oldUser) {
+              return;
+            }
 
-          queryClient.setQueryData(["user", user.id], newData);
-          queryClient.invalidateQueries(["workoutData", user.id]);
-          queryClient.invalidateQueries(["userAchievements"]);
-        }
+            return {
+              ...oldUser,
+              workouts: [...oldUser.workouts, response.workout],
+            };
+          }
+        );
+        queryClient.invalidateQueries(["user"], { exact: false });
       },
     }
   );

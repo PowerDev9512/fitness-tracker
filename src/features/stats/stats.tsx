@@ -1,8 +1,16 @@
-import SegmentedControl from "@react-native-segmented-control/segmented-control";
 import { useGetUser } from "api";
-import { Avatar, Heading, Screen } from "components";
+import { Avatar, Button, Heading, Screen } from "components";
 import React from "react";
-import { Separator, Text, XStack, YStack, useTheme } from "tamagui";
+import {
+  Separator,
+  Text,
+  ToggleGroup,
+  Group,
+  XStack,
+  YStack,
+  useTheme,
+  Stack,
+} from "tamagui";
 
 import { BuddyStats } from "./buddyStats";
 import { WorkoutChart } from "./workoutChart";
@@ -35,27 +43,28 @@ export const Stats = () => {
         </YStack>
       </XStack>
 
-      <SegmentedControl
-        style={{
-          width: "100%",
-          marginBottom: -25,
-          height: 30,
-        }}
-        tintColor={theme.backgroundStrong.val}
-        fontStyle={{
-          color: theme.black.val,
-        }}
-        tabStyle={{
-          backgroundColor: theme.white.val,
-          borderRadius: 0,
-        }}
-        values={["Stats", "Graphs"]}
-        selectedIndex={index}
-        onChange={(event) => {
-          setIndex(event.nativeEvent.selectedSegmentIndex);
-        }}
-        backgroundColor={theme.white.val}
-      />
+      <Group orientation="horizontal" backgroundColor="$white" h="$2" w="100%">
+        <Group.Item>
+          <Button
+            w="50%"
+            backgroundColor={index === 0 ? "$primary100" : "$white"}
+            onPress={() => setIndex(0)}
+            pressStyle={{ backgroundColor: "$primary200" }}
+          >
+            <Text>Stats</Text>
+          </Button>
+        </Group.Item>
+        <Group.Item>
+          <Button
+            w="50%"
+            backgroundColor={index === 1 ? "$primary100" : "$white"}
+            onPress={() => setIndex(1)}
+            pressStyle={{ backgroundColor: "$primary200" }}
+          >
+            <Text>Graph</Text>
+          </Button>
+        </Group.Item>
+      </Group>
 
       {index === 0 && <BuddyStats />}
       {index === 1 && <WorkoutChart />}
