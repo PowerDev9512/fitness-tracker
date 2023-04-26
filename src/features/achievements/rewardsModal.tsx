@@ -39,7 +39,13 @@ export const RewardsModal = ({ rewards, onClose }: Props) => {
             </Text>
           );
         })}
-        <Button mt="$5" onPress={onClose}>Close</Button>
+        <Button
+          accessibilityLabel="Close rewards modal"
+          mt="$5"
+          onPress={onClose}
+        >
+          Close
+        </Button>
       </Card>
     </Modal>
   );

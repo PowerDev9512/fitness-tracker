@@ -43,12 +43,17 @@ export const AddFriendModal = ({ friend, user, loading, onClose }: Props) => {
         <Avatar callback={() => null} user={friend} size="xl" />
 
         <XStack ml="auto" mt="$4">
-          <Button variant="link" onPress={onClose}>
+          <Button
+            accessibilityLabel="Close modal"
+            variant="link"
+            onPress={onClose}
+          >
             Close
           </Button>
 
           {!isFriend && (
             <Button
+              accessibilityLabel="Add friend"
               isLoading={adding || loading}
               onPress={() => {
                 addFriend({ friendId: friend?.id ?? -1 });
@@ -59,7 +64,11 @@ export const AddFriendModal = ({ friend, user, loading, onClose }: Props) => {
           )}
 
           {isFriend && (
-            <Button isLoading={adding} onPress={() => null}>
+            <Button
+              accessibilityLabel="Remove friend"
+              isLoading={adding}
+              onPress={() => null}
+            >
               Remove Friend
             </Button>
           )}

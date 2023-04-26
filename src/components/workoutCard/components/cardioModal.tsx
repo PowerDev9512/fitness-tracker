@@ -47,7 +47,10 @@ export const CardioModal = ({ workout, activity, onClose, isOpen }: Props) => {
           <Input
             placeholder="Distance"
             rightElement={
-              <Button onPress={() => setDistance(activity.targetDistance)}>
+              <Button
+                accessibilityLabel="Fill distance with target distance"
+                onPress={() => setDistance(activity.targetDistance)}
+              >
                 Fill
               </Button>
             }
@@ -59,7 +62,10 @@ export const CardioModal = ({ workout, activity, onClose, isOpen }: Props) => {
           <Input
             placeholder="Duration"
             rightElement={
-              <Button onPress={() => setDuration(activity.targetDuration)}>
+              <Button
+                accessibilityLabel="Fill duration with target duration"
+                onPress={() => setDuration(activity.targetDuration)}
+              >
                 Fill
               </Button>
             }
@@ -83,8 +89,15 @@ export const CardioModal = ({ workout, activity, onClose, isOpen }: Props) => {
         </YStack>
 
         <XStack ml="auto" space={2}>
-          <Button variant="link" onPress={onClose}>Cancel</Button>
           <Button
+            accessibilityLabel="Cancel editing workout"
+            variant="link"
+            onPress={onClose}
+          >
+            Cancel
+          </Button>
+          <Button
+            accessibilityLabel="Save workout"
             isLoading={editing}
             onPress={() => {
               editWorkout({

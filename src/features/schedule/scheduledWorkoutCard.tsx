@@ -19,6 +19,7 @@ export const ScheduledWorkoutCard = ({
 
   const footer = (
     <Button
+      accessibilityLabel="Complete Workout"
       isLoading={currentEdits > 0 || currentCreates > 0}
       onPress={onComplete}
     >

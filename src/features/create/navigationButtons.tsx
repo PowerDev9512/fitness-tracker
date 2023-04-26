@@ -35,10 +35,15 @@ export const NavigationButtons = ({
     <Stack mt="$5" mb="$2">
       {currentIndex === 0 && (
         <XStack justifyContent="center" space={2}>
-          <Button w="50%" onPress={onClickNext}>
+          <Button
+            accessibilityLabel="New Activity"
+            w="50%"
+            onPress={onClickNext}
+          >
             New Activity
           </Button>
           <Button
+            accessibilityLabel="Submit"
             w="50%"
             onPress={onSubmit}
             disabled={disabled}
@@ -50,17 +55,21 @@ export const NavigationButtons = ({
       )}
 
       {currentIndex === 1 && (
-        <Button w="100%" onPress={onClickPrevious}>
+        <Button accessibilityLabel="Back" w="100%" onPress={onClickPrevious}>
           Back
         </Button>
       )}
 
       {currentIndex === 2 && (
         <XStack space={2} justifyContent="center">
-          <Button w="50%" onPress={onCancel}>
+          <Button accessibilityLabel="Cancel" w="50%" onPress={onCancel}>
             Cancel
           </Button>
-          <Button w="50%" onPress={onAddActivity}>
+          <Button
+            accessibilityLabel="Add Activity"
+            w="50%"
+            onPress={onAddActivity}
+          >
             Add Activity
           </Button>
         </XStack>

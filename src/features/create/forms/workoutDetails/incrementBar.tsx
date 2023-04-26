@@ -29,6 +29,7 @@ const IncrementBarInternal = ({
 
       return (
         <Button
+          accessibilityLabel={`${increment} ${name}`}
           w="19%"
           key={`${increment}-${index}`}
           borderRadius={0}

@@ -19,7 +19,7 @@ const DrawerStackInternal = () => {
     >
       <Drawer.Screen name="Dashboard" component={DashboardStack} />
       <Drawer.Screen name="Achievements" component={Achievements} />
-      <Drawer.Screen name="Store" component={Store} />
+      {/*<Drawer.Screen name="Store" component={Store} />*/}
     </Drawer.Navigator>
   );
 };

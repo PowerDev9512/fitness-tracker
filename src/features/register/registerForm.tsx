@@ -238,6 +238,7 @@ export const RegisterForm = ({ form, exercises }: Props) => {
       {maxes}
 
       <Button
+        accessibilityLabel="Add New Exercise Max"
         mb="$4"
         mt="$4"
         w="100%"
@@ -252,6 +253,7 @@ export const RegisterForm = ({ form, exercises }: Props) => {
       </Button>
 
       <Button
+        accessibilityLabel="Submit"
         mb="$4"
         w="100%"
         onPress={() => {

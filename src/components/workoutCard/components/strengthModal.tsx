@@ -53,7 +53,12 @@ export const StrengthModal = ({
           <Input
             placeholder={`Sets / ${activity.targetSets}`}
             rightElement={
-              <Button onPress={() => setSets(activity.targetSets)}>Fill</Button>
+              <Button
+                accessibilityLabel="Fill sets with target sets"
+                onPress={() => setSets(activity.targetSets)}
+              >
+                Fill
+              </Button>
             }
             mb="$4"
             type="text"
@@ -63,7 +68,12 @@ export const StrengthModal = ({
           <Input
             placeholder={`Reps / ${activity.targetReps}`}
             rightElement={
-              <Button onPress={() => setReps(activity.targetReps)}>Fill</Button>
+              <Button
+                accessibilityLabel="Fill reps with target reps"
+                onPress={() => setReps(activity.targetReps)}
+              >
+                Fill
+              </Button>
             }
             mb="$4"
             type="text"
@@ -73,7 +83,10 @@ export const StrengthModal = ({
           <Input
             placeholder={`Weight / ${activity.targetWeight}`}
             rightElement={
-              <Button onPress={() => setWeight(activity.targetWeight)}>
+              <Button
+                accessibilityLabel="Fill weight with target weight"
+                onPress={() => setWeight(activity.targetWeight)}
+              >
                 Fill
               </Button>
             }
@@ -96,8 +109,15 @@ export const StrengthModal = ({
           </XStack>
         </YStack>
         <XStack ml="auto" space={2}>
-          <Button variant="link" onPress={onClose}>Cancel</Button>
           <Button
+            accessibilityLabel="Cancel editing"
+            variant="link"
+            onPress={onClose}
+          >
+            Cancel
+          </Button>
+          <Button
+            accessibilityLabel="Save changes"
             isLoading={editing}
             onPress={() => {
               editWorkout({

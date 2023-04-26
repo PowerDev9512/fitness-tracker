@@ -1,9 +1,10 @@
 import React from "react";
-import { Button as BaseButton, Spinner, Stack } from "tamagui";
+import { Button as BaseButton, Spinner } from "tamagui";
 
 type Variant = "primary" | "secondary" | "link";
 
 interface BaseProps {
+  accessibilityLabel: string;
   variant?: Variant;
   isLoading?: boolean;
 }
@@ -11,6 +12,7 @@ interface BaseProps {
 type Props = BaseProps & React.ComponentProps<typeof BaseButton>;
 
 export const Button = ({
+  accessibilityLabel,
   variant = "primary",
   isLoading = false,
   ...props
@@ -50,8 +52,12 @@ export const Button = ({
     return (
       <BaseButton
         disabled
+        h={48}
         color={textColor}
         backgroundColor={color}
+        accessibilityLabel={accessibilityLabel}
+        accessibilityRole="button"
+        accessibilityState={{ disabled, busy: true }}
         icon={
           <Spinner
             mx="auto"
@@ -72,6 +78,11 @@ export const Button = ({
       pressStyle={{
         backgroundColor: pressColor,
       }}
+      h={48}
+      accessibilityLabel={accessibilityLabel}
+      accessibilityRole="button"
+      accessibilityState={{ disabled }}
+      disabled={disabled}
       color={textColor}
       backgroundColor={color}
       {...props}

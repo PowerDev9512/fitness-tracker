@@ -76,6 +76,7 @@ export const WorkoutDetails = ({ form }: CreateWorkoutProps) => {
           onChange={handleActivityUpdate("targetWeight")}
           titleAccessory={
             <Button
+              accessibilityLabel="Set as bodyweight"
               variant="link"
               mb="$2"
               onPress={() =>
@@ -123,6 +124,7 @@ export const WorkoutDetails = ({ form }: CreateWorkoutProps) => {
             <XStack mt={2} justifyContent="space-between">
               <YStack alignItems="center">
                 <Button
+                  accessibilityLabel="Set weight to 100% of estimated one rep max"
                   onPress={() =>
                     form.setFieldValue("activity", {
                       ...activity,
@@ -136,6 +138,7 @@ export const WorkoutDetails = ({ form }: CreateWorkoutProps) => {
               </YStack>
               <YStack alignItems="center">
                 <Button
+                  accessibilityLabel="Set weight to 90% of estimated one rep max"
                   onPress={() =>
                     form.setFieldValue("activity", {
                       ...activity,
@@ -149,6 +152,7 @@ export const WorkoutDetails = ({ form }: CreateWorkoutProps) => {
               </YStack>
               <YStack alignItems="center">
                 <Button
+                  accessibilityLabel="Set weight to 80% of estimated one rep max"
                   onPress={() =>
                     form.setFieldValue("activity", {
                       ...activity,
@@ -162,6 +166,7 @@ export const WorkoutDetails = ({ form }: CreateWorkoutProps) => {
               </YStack>
               <YStack alignItems="center">
                 <Button
+                  accessibilityLabel="Set weight to 75% of estimated one rep max"
                   onPress={() =>
                     form.setFieldValue("activity", {
                       ...activity,
@@ -200,6 +205,7 @@ export const WorkoutDetails = ({ form }: CreateWorkoutProps) => {
         {maxFields}
         <Stack>
           <Button
+            accessibilityLabel="View demonstration"
             variant="link"
             mx="auto"
             mb="$3"

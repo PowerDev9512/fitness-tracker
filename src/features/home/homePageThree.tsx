@@ -106,6 +106,7 @@ export const HomePageThree = () => {
         />
       </YStack>
       <Button
+        accessibilityLabel="Login"
         mb="$2"
         mt="$4"
         onPress={() => {

@@ -67,6 +67,7 @@ export const Input = ({
 
     return type === "password" ? (
       <Button
+        accessibilityLabel="Toggle password visibility"
         position="absolute"
         right={0}
         backgroundColor="transparent"
@@ -98,6 +99,7 @@ export const Input = ({
         secureTextEntry={hidden}
         {...props}
         w="100%"
+        h={48}
       />
       {createRightElement()}
     </Stack>

@@ -58,6 +58,7 @@ export const Social = () => {
             type="text"
           />
           <Button
+            accessibilityLabel="Search for friends"
             w="30%"
             onPress={() => {
               if (searchText.length > 0) {
@@ -87,9 +88,7 @@ export const Social = () => {
           <FlatList
             style={{ width: "100%" }}
             data={feed ?? []}
-            keyExtractor={(item) =>
-              item.workout.id + item.user.username + item.date
-            }
+            keyExtractor={(item) => item.workout.id.toString()}
             renderItem={({ item }) => createMessage(item)}
           />
         )}

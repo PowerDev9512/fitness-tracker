@@ -6,7 +6,6 @@ export { Button } from "./button";
 export { CachedImage } from "./cachedImage";
 export { Card } from "./card";
 export { Carousel } from "./carousel";
-export { DatePicker } from "./datePicker";
 export type { FilterOption } from "./filters";
 export { Filters } from "./filters";
 export { FormInput } from "./formInput";

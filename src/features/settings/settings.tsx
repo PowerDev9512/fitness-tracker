@@ -235,6 +235,7 @@ const SettingsInternal = () => {
       </Stack>
 
       <Button
+        accessibilityLabel="Save settings"
         w="100%"
         isLoading={isUpdating}
         onPress={() =>

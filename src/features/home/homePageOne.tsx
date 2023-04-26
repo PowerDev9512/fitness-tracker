@@ -41,7 +41,7 @@ export const HomePageOne = ({ onNext }: Props) => {
           resizeMode="contain"
         />
       </Stack>
-      <Button mt="auto" onPress={onNext}>
+      <Button accessibilityLabel="Next" mt="auto" onPress={onNext}>
         Next
       </Button>
     </View>

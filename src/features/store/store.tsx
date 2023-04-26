@@ -101,6 +101,7 @@ const Store = () => {
         </XStack>
         <Text mb="$4">{storeEntry.description}</Text>
         <Button
+          accessibilityLabel="Buy"
           disabled={alreadyBought}
           onPress={() => {
             setLoadingId(storeEntry.productId);

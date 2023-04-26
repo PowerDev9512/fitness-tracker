@@ -15,7 +15,6 @@ export const BuddyStats = () => {
   const createStats = (
     name: string,
     currentLevel: number,
-    state: number,
     maxLevel: number,
     index: number
   ) => (
@@ -45,7 +44,6 @@ export const BuddyStats = () => {
             createStats(
               item.muscleGroup,
               item.levelData.currentLevel,
-              item.levelData.currentLevelProgress,
               item.levelData.maxLevel,
               index
             )

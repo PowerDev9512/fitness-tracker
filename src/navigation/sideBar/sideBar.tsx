@@ -42,7 +42,7 @@ export const SideBar = ({
         {text}
       </XStack>
     );
-  }, []);
+  }, [title, user, userName]);
 
   return (
     <DrawerContentScrollView

@@ -43,9 +43,16 @@ export const Stats = () => {
         </YStack>
       </XStack>
 
-      <Group orientation="horizontal" backgroundColor="$white" h="$2" w="100%">
+      <Group
+        orientation="horizontal"
+        backgroundColor="$white"
+        h="$0.5"
+        w="100%"
+      >
         <Group.Item>
           <Button
+            accessibilityLabel="Stats"
+            h={30}
             w="50%"
             backgroundColor={index === 0 ? "$primary100" : "$white"}
             onPress={() => setIndex(0)}
@@ -56,6 +63,8 @@ export const Stats = () => {
         </Group.Item>
         <Group.Item>
           <Button
+            accessibilityLabel="Graph"
+            h={30}
             w="50%"
             backgroundColor={index === 1 ? "$primary100" : "$white"}
             onPress={() => setIndex(1)}

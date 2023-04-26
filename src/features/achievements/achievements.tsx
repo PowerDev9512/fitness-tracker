@@ -78,6 +78,7 @@ export const Achievements = () => {
         <AchievementRow user={user} achievement={achievement} />
         {achievement.isCompleted && (
           <Button
+            accessibilityLabel="Claim achievement reward"
             mt="$10"
             isLoading={recording}
             onPress={() =>

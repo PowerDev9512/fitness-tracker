@@ -6,7 +6,7 @@ type GetWorkoutData = {
   userId: number;
   exerciseName: string | null;
   workoutGraphType: "Reps" | "Sets" | "Weight" | "Distance";
-  reps: number;
+  reps: number | null;
 };
 
 type GetWorkoutDataResponse = {

@@ -64,6 +64,7 @@ export const Notifications = () => {
               </XStack>
               <XStack ml="auto">
                 <Button
+                  accessibilityLabel="Decline friend request"
                   variant="link"
                   isLoading={accepting}
                   onPress={() => handleOnDecline(currentUser.id)}
@@ -71,6 +72,7 @@ export const Notifications = () => {
                   Decline
                 </Button>
                 <Button
+                  accessibilityLabel="Accept friend request"
                   isLoading={declining}
                   onPress={() => handleOnAccept(currentUser.id)}
                 >

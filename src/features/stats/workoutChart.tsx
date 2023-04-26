@@ -1,33 +1,44 @@
 import { useGetUser, useGetWorkoutData } from "api";
-import { Card, Heading, Select } from "components";
-import React, { useMemo, useState } from "react";
-import { Spinner, Stack, Text, YStack, useTheme } from "tamagui";
-import { ExerciseType, GraphType, StrengthActivity, StrengthData, StrengthExercise } from "types";
-import { createDistanceFormatter, createWeightFormatter, getPastWorkouts } from "utils";
+import { Button, Card, Heading, Select } from "components";
+import React, { useEffect, useMemo, useState } from "react";
+import { LineGraph } from "react-native-graph";
+import { Spinner, Stack, Text, XStack, YStack, useTheme } from "tamagui";
+import { ExerciseType, GraphType, StrengthActivity } from "types";
 import {
-  VictoryArea,
-  VictoryAxis,
-  VictoryChart,
-  VictoryTooltip,
-  VictoryVoronoiContainer,
-} from "victory-native";
+  createDistanceFormatter,
+  createWeightFormatter,
+  getPastWorkouts,
+} from "utils";
+
+type GraphOverview = "All" | "3Months" | "1Month" | "1Week";
 
 export const WorkoutChart = () => {
   const { data: user } = useGetUser();
   const theme = useTheme();
 
-  const weightFormatter = createWeightFormatter(user?.userSettings?.weightUnit ?? "kilograms");
-  const distanceFormatter = createDistanceFormatter(user?.userSettings?.measurementUnit ?? "imperial");
+  const weightFormatter = createWeightFormatter(
+    user?.userSettings?.weightUnit ?? "kilograms"
+  );
+
+  const distanceFormatter = createDistanceFormatter(
+    user?.userSettings?.measurementUnit ?? "imperial"
+  );
 
   const pastWorkouts = getPastWorkouts(user)
     .filter((workout) => workout.completed)
     .filter((workout) => workout.activities.length >= 1);
 
+  const [graphOverview, setGraphOverview] = useState<GraphOverview>("All");
+  const [title, setTitle] = useState<string | null>();
+  const [titularData, setTitularData] = useState<{
+    value: number;
+    date: Date;
+  } | null>(null);
   const [reps, setReps] = useState<number | null>(null);
   const [workoutType, setWorkoutType] = useState<ExerciseType | null>(
     "strength"
   );
-  const [workoutGraphType, setWorkoutGraphType] = useState<GraphType>("Reps");
+  const [workoutGraphType, setWorkoutGraphType] = useState<GraphType>("Weight");
   const [selectedExercise, setSelectedExercise] = useState<string | null>(null);
 
   const { data: workoutData, isLoading: workoutDataLoading } =
@@ -37,6 +48,68 @@ export const WorkoutChart = () => {
       workoutGraphType,
       reps,
     });
+
+  const chartData = useMemo(() => {
+    return (workoutData?.graphData ?? [])
+      .map((data) => ({
+        value: data.exerciseMetaData,
+        date: new Date(data.timeOfExercise),
+      }))
+      .filter((data) => {
+        const dataDate = data.date;
+        const today = new Date();
+        const oneWeekAgo = new Date(today.setDate(today.getDate() - 7));
+        const oneMonthAgo = new Date(today.setDate(today.getDate() - 30));
+        const threeMonthsAgo = new Date(today.setDate(today.getDate() - 90));
+
+        if (graphOverview === "1Week") {
+          return dataDate > oneWeekAgo;
+        }
+
+        if (graphOverview === "1Month") {
+          return dataDate > oneMonthAgo;
+        }
+
+        if (graphOverview === "3Months") {
+          return dataDate > threeMonthsAgo;
+        }
+
+        return data.value;
+      });
+  }, [graphOverview, workoutData]);
+
+  useEffect(() => {
+    if (chartData.length !== 0) {
+      const lastDataPoint = chartData[chartData.length - 1];
+      setTitularData(lastDataPoint);
+    }
+  }, [chartData]);
+
+  useEffect(() => {
+    if (titularData) {
+      if (workoutGraphType === "Weight") {
+        setTitle(`${weightFormatter(titularData.value.toString())}`);
+      }
+
+      if (workoutGraphType === "Distance") {
+        setTitle(`${distanceFormatter(titularData.value.toString())}`);
+      }
+
+      if (workoutGraphType === "Reps") {
+        setTitle(`${titularData.value} Reps`);
+      }
+
+      if (workoutGraphType === "Sets") {
+        setTitle(`${titularData.value} Sets`);
+      }
+    }
+  }, [
+    chartData,
+    distanceFormatter,
+    titularData,
+    weightFormatter,
+    workoutGraphType,
+  ]);
 
   const exerciseNames = useMemo(
     () =>
@@ -60,7 +133,8 @@ export const WorkoutChart = () => {
           .flatMap((workout) => workout.activities)
           .filter(
             (activity) =>
-              activity.exercise.name === selectedExercise && activity.type === "strength"
+              activity.exercise.name === selectedExercise &&
+              activity.type === "strength"
           )
           .map((exercise) => exercise as StrengthActivity)
           .map((exercise) => exercise.reps)
@@ -87,67 +161,87 @@ export const WorkoutChart = () => {
       return <Text mt={10}> Not enough workout data exists, train more! </Text>;
     }
 
-    const chartData = workoutData.graphData.map((data) => ({
-      x: data.xAxis.toString(),
-      y: data.exerciseMetaData,
-      label: new Date(data.timeOfExercise).toLocaleDateString(),
-    }));
-
-    const highestValue = Math.max(
-      ...workoutData.graphData.map((data) => data.exerciseMetaData)
-    );
-
     return (
-      <VictoryChart style={{ parent: { maxWidth: "100%" } }} containerComponent={<VictoryVoronoiContainer />}>
-        <VictoryArea
-          interpolation="natural"
-          labelComponent={<VictoryTooltip renderInPortal={false} />}
-          domainPadding={{ x: 2 }}
-          domain={{ y: [0, highestValue * 1.3], x: [chartData.length, chartData.length + 0.4] }}
+      <>
+        <Heading mt={2}>{title}</Heading>
+        <Text mt={2}> {titularData?.date.toDateString()} </Text>
+        <LineGraph
           style={{
-            data: {
-              fill: theme.primary300.val,
-              strokeWidth: 3,
-              zIndex: 1,
-              width: 10,
-            },
+            paddingTop: 10,
+            height: 200,
+            width: 320,
+            overflow: "visible",
+            backgroundColor: "transparent",
           }}
-          data={chartData}
+          lineThickness={2}
+          points={chartData}
+          animated
+          enablePanGesture
+          onPointSelected={(p) => setTitularData(p)}
+          color={theme.primary500.val}
         />
-        <VictoryAxis
-          dependentAxis
-          tickFormat={(x) => {
-            if (workoutGraphType === "Weight") {
-              return weightFormatter(x, false);
-            } else if (workoutGraphType === "Distance") {
-              return distanceFormatter(x, false);
-            } else {
-              return x;
-            }
-          }}
-          style={{
-            axis: { stroke: "transparent" },
-            grid: { stroke: "transparent" },
-            ticks: { stroke: "transparent" },
-            tickLabels: { fontSize: 12 },
-          }}
-        />
-        <VictoryAxis
-          style={{
-            axis: { stroke: "transparent" },
-            grid: { stroke: "transparent" },
-            ticks: { stroke: "transparent" },
-            tickLabels: { fontSize: 12 },
-          }}
-        />
-      </VictoryChart>
+        <XStack space="$1" mx="auto" mt={2}>
+          <Button
+            style={{
+              backgroundColor:
+                graphOverview === "All" ? theme.gray200.val : "transparent",
+            }}
+            variant="link"
+            w="25%"
+            accessibilityLabel="All"
+            onPress={() => setGraphOverview("All")}
+          >
+            All
+          </Button>
+          <Button
+            style={{
+              backgroundColor:
+                graphOverview === "3Months" ? theme.gray200.val : "transparent",
+            }}
+            variant="link"
+            w="25%"
+            accessibilityLabel="3 Months"
+            onPress={() => setGraphOverview("3Months")}
+          >
+            3M
+          </Button>
+          <Button
+            style={{
+              backgroundColor:
+                graphOverview === "1Month" ? theme.gray200.val : "transparent",
+            }}
+            variant="link"
+            w="25%"
+            accessibilityLabel="1 Month"
+            onPress={() => setGraphOverview("1Month")}
+          >
+            1M
+          </Button>
+          <Button
+            style={{
+              backgroundColor:
+                graphOverview === "1Week" ? theme.gray200.val : "transparent",
+            }}
+            variant="link"
+            w="25%"
+            accessibilityLabel="1 Week"
+            onPress={() => setGraphOverview("1Week")}
+          >
+            1W
+          </Button>
+        </XStack>
+      </>
     );
   }, [
     workoutDataLoading,
     workoutData,
-    pastWorkouts,
     selectedExercise,
-    workoutType,
+    title,
+    titularData?.date,
+    chartData,
+    theme.primary500.val,
+    theme.gray200.val,
+    graphOverview,
   ]);
 
   return (
@@ -188,14 +282,17 @@ export const WorkoutChart = () => {
         <Select
           mr="auto"
           borderWidth={0}
-          value={{ label: selectedExercise ?? "", value: selectedExercise ?? "" }}
+          value={{
+            label: selectedExercise ?? "",
+            value: selectedExercise ?? "",
+          }}
           data={exerciseNames.map((name) => ({
             label: name,
             value: name,
           }))}
           onChangeValue={(item) => {
             setSelectedExercise(item);
-            setWorkoutGraphType("Reps");
+            setWorkoutGraphType("Weight");
           }}
           isDisabled={!exerciseNames.length || workoutType === null}
           placeholder="Select an exercise"
@@ -211,7 +308,7 @@ export const WorkoutChart = () => {
           }))}
           onChangeValue={(item) => {
             if (item === "weight") {
-              setReps(0);
+              setReps(repCounts[0] ?? 0);
             }
             setWorkoutGraphType(item as GraphType);
           }}
@@ -222,7 +319,7 @@ export const WorkoutChart = () => {
         {workoutType === "strength" &&
           selectedExercise !== null &&
           workoutGraphType.toLocaleLowerCase() === "weight" && (
-          <Select
+            <Select
               mr="auto"
               borderWidth={0}
               value={{
