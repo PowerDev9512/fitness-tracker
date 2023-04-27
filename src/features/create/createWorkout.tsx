@@ -100,18 +100,16 @@ export const CreateWorkout = ({ route }: Props) => {
   };
 
   const handleSave = (createWorkoutValues: CreateWorkoutValues) => {
-    for (let i = 0; i < createWorkoutValues.dates.length; i += 1) {
-      const date = createWorkoutValues.dates[i];
-      const utcDate = new Date(date).toISOString();
-      addWorkout({
-        workout: {
-          ...createWorkoutValues.workout,
-          completed: false,
-          time: utcDate,
-        },
-        userId: user?.id ?? -1,
-      });
-    }
+    addWorkout({
+      workout: {
+        ...createWorkoutValues.workout,
+        completed: false,
+        time: createWorkoutValues.dates.map((date) =>
+          new Date(date).toISOString()
+        ),
+      },
+      userId: user?.id ?? -1,
+    });
 
     setIndex(0);
   };

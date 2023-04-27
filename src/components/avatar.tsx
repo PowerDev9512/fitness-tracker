@@ -7,7 +7,7 @@ import { Badge, Image as ImageType, OtherUser, User } from "types";
 import { ImagePicker } from "./imagePicker";
 
 interface BaseProps {
-  size: "sm" | "md" | "lg" | "xl" | "2xl";
+  size: "sm" | "ms" | "md" | "lg" | "xl" | "2xl";
   callback: (image: ImageType) => void;
   user: User | OtherUser | null;
   badge?: Badge;
@@ -42,6 +42,10 @@ export const Avatar = ({
       width = 50;
       height = 50;
       break;
+    case "ms":
+      width = 75;
+      height = 75;
+      break;
     case "lg":
       width = 100;
       height = 100;
@@ -65,7 +69,7 @@ export const Avatar = ({
       width,
       height,
       borderRadius: width / 2,
-      borderWidth: 2,
+      borderWidth: 1.5,
     };
 
     const tempImage =
@@ -126,11 +130,9 @@ export const Avatar = ({
   }, [height, placeholderName, userBadge, width]);
 
   return (
-    <Pressable>
-      <Stack {...props}>
-        {badgeImage}
-        {avatarImage}
-      </Stack>
-    </Pressable>
+    <Stack {...props}>
+      {badgeImage}
+      {avatarImage}
+    </Stack>
   );
 };

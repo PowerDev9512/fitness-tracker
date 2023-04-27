@@ -1,16 +1,22 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Activity, ScheduledWorkout, User, Workout } from "types";
+import { Activity, User, Workout } from "types";
 
 import { useStore } from "../../store/store";
 import { client } from "../client";
 
 type AddWorkoutRequest = {
   userId: number;
-  workout: ScheduledWorkout;
+  workout: {
+    name: string;
+    activities: Activity[];
+    completed: boolean;
+    past: boolean;
+    time: string[];
+  };
 };
 
 type AddWorkoutResponse = {
-  workout: Workout;
+  workouts: Workout[];
 };
 
 type ActivityDto = Activity & { exerciseId: number };
@@ -20,7 +26,7 @@ type AddWorkoutPayload = {
   activities: ActivityDto[];
   completed: boolean;
   past: boolean;
-  time: string;
+  time: string[];
 };
 
 export function useAddWorkout() {
@@ -47,7 +53,7 @@ export function useAddWorkout() {
         payload
       );
 
-      return { workout: data.workout };
+      return { workout: data.workouts };
     },
     {
       mutationKey: ["addWorkout"],
@@ -63,7 +69,7 @@ export function useAddWorkout() {
 
             return {
               ...oldUser,
-              workouts: [...oldUser.workouts, response.workout],
+              workouts: [...oldUser.workouts, ...response.workout],
             };
           }
         );

@@ -56,7 +56,11 @@ const InternalAccordion = ({
     <Stack>
       <XStack>
         <Heading accessibilityLabel={title}>{title}</Heading>
-        {secondTitle && <Heading ml="auto">{secondTitle}</Heading>}
+        {secondTitle && (
+          <Heading fontWeight="normal" ml="auto">
+            {secondTitle}
+          </Heading>
+        )}
       </XStack>
 
       <Animated.View style={fadeStyle}>

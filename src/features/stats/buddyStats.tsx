@@ -37,7 +37,10 @@ export const BuddyStats = () => {
 
   return (
     <Card p="$4">
-      <Accordion title="Stats">
+      <Accordion
+        title="Stats"
+        secondTitle={`Level ${user.workoutBuddy.data.levelStats.overall}`}
+      >
         <FlatList
           data={anatomy}
           renderItem={({ item, index }) =>
