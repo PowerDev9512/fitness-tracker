@@ -104,7 +104,7 @@ export const CreateWorkout = ({ route }: Props) => {
       workout: {
         ...createWorkoutValues.workout,
         completed: false,
-        dates: createWorkoutValues.dates.map((date) =>
+        time: createWorkoutValues.dates.map((date) =>
           new Date(date).toISOString()
         ),
       },

@@ -11,7 +11,7 @@ type AddWorkoutRequest = {
     activities: Activity[];
     completed: boolean;
     past: boolean;
-    dates: string[];
+    time: string[];
   };
 };
 
@@ -26,7 +26,7 @@ type AddWorkoutPayload = {
   activities: ActivityDto[];
   completed: boolean;
   past: boolean;
-  dates: string[];
+  time: string[];
 };
 
 export function useAddWorkout() {
@@ -45,7 +45,7 @@ export function useAddWorkout() {
         })),
         completed: workout.completed,
         past: workout.past,
-        dates: workout.dates,
+        time: workout.time,
       };
 
       const { data } = await client.post<AddWorkoutResponse>(
