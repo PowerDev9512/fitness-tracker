@@ -5,6 +5,7 @@ import { ExpandingDot } from "react-native-animated-pagination-dots";
 import PagerView, {
   PagerViewOnPageScrollEventData,
 } from "react-native-pager-view";
+import { useStore } from "store";
 import { Stack } from "tamagui";
 import { Mixpanel } from "utils";
 
@@ -18,6 +19,7 @@ const AnimatedPagerView = Animated.createAnimatedComponent(PagerView);
 export const Home = ({
   navigation,
 }: NativeStackScreenProps<MainStackParams, "Home">) => {
+  const { viewedScreens } = useStore();
   const width = Dimensions.get("window").width;
   const ref = React.useRef<PagerView>(null);
   const scrollOffsetAnimatedValue = React.useRef(new Animated.Value(0)).current;
@@ -58,7 +60,7 @@ export const Home = ({
   return (
     <Stack flex={1}>
       <AnimatedPagerView
-        initialPage={0}
+        initialPage={viewedScreens.loggedInOnce ? 2 : 0}
         ref={ref}
         style={{ flex: 1 }}
         onPageScroll={onPageScroll}

@@ -12,6 +12,7 @@ import { IconButton } from "./iconButton";
 interface Props {
   children: React.ReactNode;
   title: string;
+  callback?: () => void;
   secondTitle?: string;
   short?: boolean;
 }
@@ -19,6 +20,7 @@ interface Props {
 const InternalAccordion = ({
   title,
   children,
+  callback = undefined,
   short = false,
   secondTitle = undefined,
 }: Props) => {
@@ -50,6 +52,10 @@ const InternalAccordion = ({
       damping: 20,
       stiffness: 100,
     });
+
+    if (callback) {
+      callback();
+    }
   };
 
   return (

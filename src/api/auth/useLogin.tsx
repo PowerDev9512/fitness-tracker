@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useStore } from "store";
+import { Mixpanel } from "utils";
 
 import { client } from "../client";
-import { Mixpanel } from "utils";
 
 type LoginRequest = {
   email: string;
@@ -15,7 +15,7 @@ type RawLoginResponse = {
 };
 
 export function useLogin() {
-  const { setUserId, setToken, userId } = useStore();
+  const { setUserId, setToken, setViewedScreens, userId } = useStore();
   const queryClient = useQueryClient();
 
   return useMutation(
@@ -27,6 +27,7 @@ export function useLogin() {
 
       setUserId(data.userId);
       setToken(data.token);
+      setViewedScreens("loggedInOnce", true);
     },
     {
       onSuccess() {

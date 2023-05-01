@@ -1,15 +1,16 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import { useNavigation } from "@react-navigation/native";
-import { IconButton } from "components";
 import { History, Schedule, Stats } from "features";
 import React from "react";
 import { useTheme } from "tamagui";
+
+import { CreateButton } from "./createButton";
+import { PremiumModal } from "./premiumModal";
 
 const Tab = createMaterialTopTabNavigator();
 
 export const JournalStack = () => {
   const theme = useTheme();
-  const navigation = useNavigation();
+  const [isPremiumModalOpen, setIsPremiumModalOpen] = React.useState(false);
   const [selectedTab, setSelectedTab] = React.useState("Stats");
 
   const screens = [
@@ -29,6 +30,12 @@ export const JournalStack = () => {
 
   return (
     <>
+      <PremiumModal
+        isOpen={isPremiumModalOpen}
+        onClose={() => {
+          setIsPremiumModalOpen(false);
+        }}
+      />
       <Tab.Navigator
         style={{ backgroundColor: theme.backgroundAccent.val }}
         screenOptions={(props) => ({
@@ -66,16 +73,7 @@ export const JournalStack = () => {
           />
         ))}
       </Tab.Navigator>
-      <IconButton
-        position="absolute"
-        bottom={92}
-        right={10}
-        size={64}
-        color="$primary500"
-        icon="add-circle"
-        zIndex={3}
-        onPress={() => navigation.navigate("Create" as never)}
-      />
+      <CreateButton onButton2Press={() => setIsPremiumModalOpen(true)} />
     </>
   );
 };

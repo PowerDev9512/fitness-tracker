@@ -5,6 +5,7 @@ import {
   createMeasurementFormatter,
   createWeightFormatter,
 } from "./formatting";
+import { ViewedScreens } from "store";
 
 export type LogScope = "info" | "error" | "debug";
 
@@ -47,3 +48,9 @@ export const getPastWorkouts = (user: User | undefined | null) =>
         .filter((workout) => workout.past || workout.completed)
         .sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime())
     : []) as CompletedWorkout[];
+
+export const getUnreadMessages = (viewedScreens: ViewedScreens) => {
+  return Object.entries(viewedScreens).filter(([key, value]) => {
+    return key.toLowerCase().startsWith("message") && value === false;
+  }).length;
+};

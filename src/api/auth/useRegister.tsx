@@ -2,9 +2,9 @@ import { useNavigation } from "@react-navigation/native";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useStore } from "store";
 import { User } from "types";
+import { Mixpanel } from "utils";
 
 import { client } from "../client";
-import { Mixpanel } from "utils";
 
 type RegisterRequest = {
   email: string;
@@ -26,7 +26,7 @@ type RegisterRawResponse = {
 };
 
 export function useRegister() {
-  const { setUserId, setToken, userId } = useStore();
+  const { setUserId, setToken, setViewedScreens, userId } = useStore();
   const queryClient = useQueryClient();
   const navigation = useNavigation();
 
@@ -40,12 +40,16 @@ export function useRegister() {
           weight: v.weight,
         })),
       };
+
       const { data } = await client.post<RegisterRawResponse>(
         "/users/register",
         updatedRequest
       );
+
       setUserId(data.user.id);
       setToken(data.token);
+      setViewedScreens("loggedInOnce", true);
+
       return data.user;
     },
     {

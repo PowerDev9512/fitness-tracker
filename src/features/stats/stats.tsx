@@ -1,23 +1,18 @@
 import { useGetUser } from "api";
 import { Avatar, Button, Heading, Screen } from "components";
 import React, { useMemo } from "react";
-import {
-  Separator,
-  Text,
-  ToggleGroup,
-  Group,
-  XStack,
-  YStack,
-  useTheme,
-  Stack,
-} from "tamagui";
+import { useStore } from "store";
+import { Text, Group, XStack, YStack } from "tamagui";
+import { getUnreadMessages } from "utils";
 
 import { BuddyStats } from "./buddyStats";
+import { Messages } from "./messages";
 import { WorkoutChart } from "./workoutChart";
 
 export const Stats = () => {
   const [index, setIndex] = React.useState(0);
   const { data: user } = useGetUser();
+  const { viewedScreens } = useStore();
   const time = new Date().getHours();
 
   const greeting = useMemo(() => {
@@ -29,6 +24,10 @@ export const Stats = () => {
       return "Good evening";
     }
   }, [time]);
+
+  const unreadMessages = useMemo(() => {
+    return getUnreadMessages(viewedScreens);
+  }, [viewedScreens]);
 
   if (!user) {
     return (
@@ -67,7 +66,8 @@ export const Stats = () => {
           <Button
             accessibilityLabel="Stats"
             h={30}
-            w="50%"
+            w="33%"
+            px="$3"
             backgroundColor={index === 0 ? "$primary100" : "$white"}
             onPress={() => setIndex(0)}
             pressStyle={{ backgroundColor: "$primary200" }}
@@ -79,7 +79,8 @@ export const Stats = () => {
           <Button
             accessibilityLabel="Graph"
             h={30}
-            w="50%"
+            w="33%"
+            px="$3"
             backgroundColor={index === 1 ? "$primary100" : "$white"}
             onPress={() => setIndex(1)}
             pressStyle={{ backgroundColor: "$primary200" }}
@@ -87,10 +88,24 @@ export const Stats = () => {
             <Text>Graph</Text>
           </Button>
         </Group.Item>
+        <Group.Item>
+          <Button
+            accessibilityLabel="Messages"
+            h={30}
+            w="34%"
+            px="$3"
+            backgroundColor={index === 2 ? "$primary100" : "$white"}
+            onPress={() => setIndex(2)}
+            pressStyle={{ backgroundColor: "$primary200" }}
+          >
+            <Text>Messages {unreadMessages > 0 && `(${unreadMessages})`}</Text>
+          </Button>
+        </Group.Item>
       </Group>
 
       {index === 0 && <BuddyStats />}
       {index === 1 && <WorkoutChart />}
+      {index === 2 && <Messages />}
     </Screen>
   );
 };
