@@ -20,7 +20,7 @@ export const Messages = () => {
     {
       title: "Getting started",
       date: `5/1/2023${viewedScreens.messageTwo ? "" : " !"}`,
-      callback: () => setViewedScreens("messageOne", true),
+      callback: () => setViewedScreens("messageTwo", true),
       message:
         "Welcome to Pocket Coach! Here's a few tips to help you get started:" +
         "\n\n1. Tap on the 'Plus button' in the corner to get started with your first workout." +
@@ -32,7 +32,7 @@ export const Messages = () => {
     {
       title: "Welcome",
       date: `5/1/2023${viewedScreens.messageOne ? "" : " !"}`,
-      callback: () => setViewedScreens("messageTwo", true),
+      callback: () => setViewedScreens("messageOne", true),
       message:
         "Pocket Coach is a workout tracker that helps you get the most out of your workouts." +
         "\n\nIt's simple: schedule a workout, complete it, and watch your progress grow." +

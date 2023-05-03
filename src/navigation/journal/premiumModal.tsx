@@ -1,7 +1,7 @@
 import { Button, Card, Heading, Modal } from "components";
 import * as InAppPurchases from "expo-in-app-purchases";
 import React, { useEffect, useState } from "react";
-import { Spinner, Text } from "tamagui";
+import { Text } from "tamagui";
 
 import { useIap } from "../../utils/useIap";
 
@@ -10,13 +10,9 @@ interface Props {
   onClose: () => void;
 }
 
-const skus = ["premium_subscription"];
-
 export const PremiumModal = ({ isOpen, onClose }: Props) => {
   const { connected, processing, purchaseItem, getProducts } = useIap();
-  const [error, setError] = useState<string | null>(null);
   const [products, setProducts] = useState<InAppPurchases.IAPItemDetails[]>([]);
-  const [purchases, setPurchases] = useState<InAppPurchases.InAppPurchase[]>([]);
 
   useEffect(() => {
     if (!connected) {
@@ -30,7 +26,7 @@ export const PremiumModal = ({ isOpen, onClose }: Props) => {
 
   let content;
 
-  if (products.length === 0 || error) {
+  if (products.length === 0) {
     content = (
       <Text mx="auto" textAlign="center">
         This feature is currently unavailable! Please try again later!
@@ -41,9 +37,10 @@ export const PremiumModal = ({ isOpen, onClose }: Props) => {
       <Button
         accessibilityLabel="Get Premium"
         isLoading={processing}
+        mt="$4"
         onPress={() => purchaseItem(sub.productId)}
       >
-        Buy ${sub.price}
+        Buy {sub.price}
       </Button>
     ));
   }
@@ -54,6 +51,10 @@ export const PremiumModal = ({ isOpen, onClose }: Props) => {
         <Heading mx="auto" mb="$4">
           Get Premium
         </Heading>
+        <Text mb="$4" mx="auto" textAlign="center">
+          Get access to exclusive features, such as AI powered workout
+          recommendations, and support the development of this app!
+        </Text>
         {content}
         <Button
           ml="auto"

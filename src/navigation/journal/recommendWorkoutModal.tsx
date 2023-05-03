@@ -170,7 +170,7 @@ interface CheckboxProps {
 export const CheckboxWithLabel = (props: CheckboxProps) => {
   const id = `checkbox-${props.size.toString().slice(1)}`;
   return (
-    <XStack ml="$4" w={120} alignItems="center" space="$4">
+    <XStack ml="$3" w={120} alignItems="center" space="$4">
       <Checkbox
         id={id}
         size={props.size}
