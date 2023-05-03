@@ -5,12 +5,14 @@ import { useTheme } from "tamagui";
 
 import { CreateButton } from "./createButton";
 import { PremiumModal } from "./premiumModal";
+import { RecommendWorkoutModal } from "./recommendWorkoutModal";
 
 const Tab = createMaterialTopTabNavigator();
 
 export const JournalStack = () => {
   const theme = useTheme();
   const [isPremiumModalOpen, setIsPremiumModalOpen] = React.useState(false);
+  const [isRecommendationModalOpen, setIsRecommendationModalOpen] = React.useState(false);
   const [selectedTab, setSelectedTab] = React.useState("Stats");
 
   const screens = [
@@ -34,6 +36,12 @@ export const JournalStack = () => {
         isOpen={isPremiumModalOpen}
         onClose={() => {
           setIsPremiumModalOpen(false);
+        }}
+      />
+      <RecommendWorkoutModal
+        isOpen={isRecommendationModalOpen}
+        onClose={() => {
+          setIsRecommendationModalOpen(false);
         }}
       />
       <Tab.Navigator
@@ -73,7 +81,10 @@ export const JournalStack = () => {
           />
         ))}
       </Tab.Navigator>
-      <CreateButton onButton2Press={() => setIsPremiumModalOpen(true)} />
+      <CreateButton
+        onPromptPremium={() => setIsPremiumModalOpen(true)}
+        onPromptRecommendation={() => setIsRecommendationModalOpen(true)}
+      />
     </>
   );
 };

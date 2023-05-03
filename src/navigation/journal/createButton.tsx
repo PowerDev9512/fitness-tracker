@@ -1,50 +1,91 @@
 import { useNavigation } from "@react-navigation/native";
 import { IconButton } from "components";
+import { InAppPurchase } from "expo-in-app-purchases";
+import { useEffect, useState } from "react";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
   interpolate,
 } from "react-native-reanimated";
-import { Text, XStack } from "tamagui";
+import { Text } from "tamagui";
+
+import { useIap } from "../../utils/useIap";
 
 interface Props {
-  onButton2Press: () => void;
+  onPromptPremium: () => void;
+  onPromptRecommendation: () => void;
 }
 
-export const CreateButton = ({ onButton2Press: onButton1Press }: Props) => {
+export const CreateButton = ({
+  onPromptPremium,
+  onPromptRecommendation,
+}: Props) => {
   const navigation = useNavigation();
+  const [purchases, setPurchases] = useState<InAppPurchase[]>([]);
+  const { connected, getPurchases } = useIap();
 
-  const button1Y = useSharedValue(0);
-  const button2Y = useSharedValue(0);
+  const isSubscribed =
+    purchases.length > 0 &&
+    purchases.find((p) => p.productId === "premium_subscription")?.acknowledged !== undefined;
+
+  const createWorkoutButtonY = useSharedValue(0);
+  const recommendWorkoutButtonY = useSharedValue(0);
+
+  useEffect(() => {
+    if (!connected) {
+      return;
+    }
+
+    getPurchases().then((purchases) => {
+      setPurchases(purchases);
+    });
+  }, [connected, getPurchases]);
 
   const onPress = () => {
-    if (button1Y.value !== 0 && button2Y.value !== 0) {
-      button1Y.value = withTiming(0);
-      button2Y.value = withTiming(0);
+    if (
+      createWorkoutButtonY.value !== 0 &&
+      recommendWorkoutButtonY.value !== 0
+    ) {
+      createWorkoutButtonY.value = withTiming(0);
+      recommendWorkoutButtonY.value = withTiming(0);
     } else {
-      button1Y.value = withTiming(-90);
-      button2Y.value = withTiming(-160);
+      createWorkoutButtonY.value = withTiming(-90);
+      recommendWorkoutButtonY.value = withTiming(-160);
     }
   };
 
-  const button1Style = useAnimatedStyle(() => {
+  const onPressCreateWorkout = () => {
+    navigation.navigate("Create" as never);
+    onPress();
+  };
+
+  const onPressRecommendWorkout = () => {
+    if (!isSubscribed) {
+      onPromptPremium();
+    } else {
+      onPromptRecommendation();
+    }
+    onPress();
+  };
+
+  const createWorkoutButtonStyle = useAnimatedStyle(() => {
     return {
-      transform: [{ translateY: button1Y.value }],
-      opacity: interpolate(button1Y.value, [0, -90], [0, 1]),
+      transform: [{ translateY: createWorkoutButtonY.value }],
+      opacity: interpolate(createWorkoutButtonY.value, [0, -90], [0, 1]),
     };
   });
 
-  const button2Style = useAnimatedStyle(() => {
+  const recommendWorkoutButtonStyle = useAnimatedStyle(() => {
     return {
-      transform: [{ translateY: button2Y.value }],
-      opacity: interpolate(button2Y.value, [0, -160], [0, 1]),
+      transform: [{ translateY: recommendWorkoutButtonY.value }],
+      opacity: interpolate(recommendWorkoutButtonY.value, [0, -160], [0, 1]),
     };
   });
 
   return (
     <>
-      <Animated.View style={[button1Style]}>
+      <Animated.View style={[createWorkoutButtonStyle]}>
         <Text
           position="absolute"
           bottom={108}
@@ -52,7 +93,7 @@ export const CreateButton = ({ onButton2Press: onButton1Press }: Props) => {
           color="$primary500"
           zIndex={2}
         >
-          Recommend Workout
+          Recommend Workout {!isSubscribed && "\n  (Purchase Required)"}
         </Text>
 
         <IconButton
@@ -63,10 +104,10 @@ export const CreateButton = ({ onButton2Press: onButton1Press }: Props) => {
           color="$primary500"
           icon="logo-ionitron"
           zIndex={2}
-          onPress={() => onButton1Press()}
+          onPress={onPressRecommendWorkout}
         />
       </Animated.View>
-      <Animated.View style={[button2Style]}>
+      <Animated.View style={[recommendWorkoutButtonStyle]}>
         <Text
           position="absolute"
           bottom={108}
@@ -84,7 +125,7 @@ export const CreateButton = ({ onButton2Press: onButton1Press }: Props) => {
           color="$primary500"
           icon="md-create-outline"
           zIndex={1}
-          onPress={() => navigation.navigate("Create" as never)}
+          onPress={onPressCreateWorkout}
         />
       </Animated.View>
       <IconButton

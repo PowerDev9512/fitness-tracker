@@ -31,7 +31,7 @@ export const WorkoutCard = ({ workout, footer, isFocused = true }: Props) => {
           p="$4"
           accessibilityLabel="workout-card"
           w={350}
-          minHeight={410}
+          height="80%"
           backgroundColor={isFocused ? theme.white.val : theme.shadowed.val}
         >
           <Heading textAlign="center" justifyContent="center" mt="$1">

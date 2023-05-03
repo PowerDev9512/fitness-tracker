@@ -1,6 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native";
 import React, { Suspense } from "react";
-import { withIAPContext } from "react-native-iap";
 import { TamaguiProvider } from "tamagui";
 
 import APIProvider from "../api/apiProvider";
@@ -10,7 +9,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const BaseProvider = ({ children }: Props) => {
+export const Provider = ({ children }: Props) => {
   return (
     <TamaguiProvider config={config}>
       <Suspense>
@@ -21,5 +20,3 @@ const BaseProvider = ({ children }: Props) => {
     </TamaguiProvider>
   );
 };
-
-export const Provider = withIAPContext(BaseProvider);

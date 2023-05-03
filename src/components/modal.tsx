@@ -14,7 +14,7 @@ type Props = BaseProps & React.ComponentProps<typeof ModalInternal>;
 const ModalInternal = styled(ModalBase, {
   name: "Modal",
   transparent: true,
-  animationType: "slide",
+  animationType: "fade",
 });
 
 export const Modal = ({ isOpen, onClose, children, ...props }: Props) => {

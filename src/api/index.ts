@@ -19,5 +19,6 @@ export * from "./user/useGetWorkoutNames";
 export * from "./user/useGetOtherUsers";
 export * from "./store/useStoreEntries";
 export * from "./store/useClaimEntry";
+export * from "./recommendations/useRecommendation";
 export { useSignalR } from "./useSignalR";
 export { client } from "./client";

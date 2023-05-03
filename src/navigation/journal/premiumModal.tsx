@@ -1,65 +1,51 @@
 import { Button, Card, Heading, Modal } from "components";
+import * as InAppPurchases from "expo-in-app-purchases";
 import React, { useEffect, useState } from "react";
-import { requestPurchase, useIAP } from "react-native-iap";
 import { Spinner, Text } from "tamagui";
+
+import { useIap } from "../../utils/useIap";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const skus = ["com.tamagui.premium"];
+const skus = ["premium_subscription"];
 
 export const PremiumModal = ({ isOpen, onClose }: Props) => {
+  const { connected, processing, purchaseItem, getProducts } = useIap();
   const [error, setError] = useState<string | null>(null);
-
-  const {
-    connected,
-    subscriptions,
-    currentPurchase,
-    currentPurchaseError,
-    finishTransaction,
-    getSubscriptions,
-  } = useIAP();
+  const [products, setProducts] = useState<InAppPurchases.IAPItemDetails[]>([]);
+  const [purchases, setPurchases] = useState<InAppPurchases.InAppPurchase[]>([]);
 
   useEffect(() => {
-    if (connected) {
-      getSubscriptions({ skus });
+    if (!connected) {
+      return;
     }
-  }, [connected, getSubscriptions]);
 
-  useEffect(() => {
-    if (currentPurchaseError) {
-      setError(currentPurchaseError.message);
-    }
-  }, [currentPurchaseError]);
-
-  useEffect(() => {
-    if (currentPurchase) {
-      finishTransaction({ purchase: currentPurchase });
-    }
-  }, [currentPurchase, finishTransaction]);
+    getProducts().then((products) => {
+      setProducts(products);
+    });
+  }, [connected, getProducts]);
 
   let content;
 
-  if (!connected && !error) {
-    content = <Spinner size="large" />;
-  } else if (subscriptions.length === 0 || error) {
-    content = <Text>No products</Text>;
-  } else {
+  if (products.length === 0 || error) {
     content = (
-      <Text>
-        {subscriptions.map((product) => (
-          <Button
-            key={product.productId}
-            accessibilityLabel="Get Premium"
-            onPress={() => requestPurchase({ sku: product.productId })}
-          >
-            {product.title}
-          </Button>
-        ))}
+      <Text mx="auto" textAlign="center">
+        This feature is currently unavailable! Please try again later!
       </Text>
     );
+  } else {
+    content = products.map((sub) => (
+      <Button
+        accessibilityLabel="Get Premium"
+        isLoading={processing}
+        onPress={() => purchaseItem(sub.productId)}
+      >
+        Buy ${sub.price}
+      </Button>
+    ));
   }
 
   return (
