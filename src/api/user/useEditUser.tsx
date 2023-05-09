@@ -47,6 +47,11 @@ export function useEditUser() {
   const { userId } = useStore();
   const queryClient = useQueryClient();
 
+  const oldUser = queryClient.getQueryData<User>(["user", { id: userId }]);
+  if (!oldUser) {
+    throw new Error("User not found");
+  }
+
   return useMutation(
     async (rawRequest: RawEditUserRequest) => {
       const request = {
@@ -54,57 +59,37 @@ export function useEditUser() {
         darkMode: boolFromStr(rawRequest.darkMode),
       } as EditUserRequest;
 
-      queryClient.setQueryData(
-        ["user", { id: userId }],
-        (oldUser: User | undefined) => {
-          if (!oldUser) {
-            return;
-          }
-
-          return {
-            ...oldUser,
-            userSettings: {
-              ...oldUser?.userSettings,
-              darkMode: request.darkMode,
-            },
-          };
-        }
-      );
+      queryClient.setQueryData(["user", { id: userId }], () => ({
+        ...oldUser,
+        userSettings: {
+          ...oldUser?.userSettings,
+          darkMode: request.darkMode,
+        },
+      }));
 
       const { data } = await client.put<EditUserResponse>(
         `/users/${rawRequest.userId}`,
         request
       );
 
-      return data.user;
+      return {
+        user: {
+          ...oldUser,
+          ...data.user,
+        },
+      };
     },
     {
       onError: () => {
-        queryClient.setQueryData(
-          ["user", { id: userId }],
-          (oldUser: User | undefined) => {
-            if (!oldUser) {
-              return;
-            }
-
-            return { ...oldUser };
-          }
-        );
+        queryClient.setQueryData(["user", { id: userId }], () => ({
+          ...oldUser,
+        }));
       },
-      onSuccess: (response: User) => {
-        queryClient.setQueryData(
-          ["user", { id: userId }],
-          (oldUser: User | undefined) => {
-            if (!oldUser) {
-              return;
-            }
-
-            return {
-              ...oldUser,
-              ...response,
-            };
-          }
-        );
+      onSuccess: (response) => {
+        queryClient.setQueryData(["user", { id: userId }], () => ({
+          ...oldUser,
+          ...response.user,
+        }));
       },
     }
   );

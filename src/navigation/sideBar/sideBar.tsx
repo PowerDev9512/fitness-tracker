@@ -78,6 +78,12 @@ export const SideBar = ({
         pressOpacity={0}
       />
 
+      <DrawerItemList
+        state={state}
+        navigation={navigation}
+        descriptors={descriptors}
+      />
+
       {connected && !isSubscribed && (
         <DrawerItem label="Premium" onPress={() => onPremiumPress()} />
       )}
@@ -92,12 +98,6 @@ export const SideBar = ({
           }
         />
       )}
-
-      <DrawerItemList
-        state={state}
-        navigation={navigation}
-        descriptors={descriptors}
-      />
 
       <DrawerItem
         label="Logout"

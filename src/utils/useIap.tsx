@@ -57,18 +57,6 @@ export const useIap = () => {
               InAppPurchases.finishTransactionAsync(purchase, true);
             }
           });
-        } else if (
-          responseCode === InAppPurchases.IAPResponseCode.USER_CANCELED
-        ) {
-          console.log("User canceled the transaction");
-        } else if (responseCode === InAppPurchases.IAPResponseCode.DEFERRED) {
-          console.log(
-            "User does not have permissions to buy but requested parental approval (iOS only)"
-          );
-        } else {
-          console.warn(
-            `Something went wrong with the purchase. Received errorCode ${errorCode}`
-          );
         }
 
         setProcessing(false);
