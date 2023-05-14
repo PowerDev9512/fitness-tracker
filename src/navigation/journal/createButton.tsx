@@ -23,11 +23,12 @@ export const CreateButton = ({
 }: Props) => {
   const navigation = useNavigation();
   const [purchases, setPurchases] = useState<InAppPurchase[]>([]);
-  const { connected, getPurchases } = useIap();
+  const { connected, disconnect, getPurchases } = useIap();
 
   const isSubscribed =
     purchases.length > 0 &&
-    purchases.find((p) => p.productId === "premium_subscription")?.acknowledged !== undefined;
+    purchases.find((p) => p.productId === "premium_subscription")
+      ?.acknowledged !== undefined;
 
   const createWorkoutButtonY = useSharedValue(0);
   const recommendWorkoutButtonY = useSharedValue(0);
@@ -41,6 +42,12 @@ export const CreateButton = ({
       setPurchases(purchases);
     });
   }, [connected, getPurchases]);
+
+  useEffect(() => {
+    return () => {
+      disconnect();
+    };
+  }, []);
 
   const onPress = () => {
     if (

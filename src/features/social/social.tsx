@@ -48,7 +48,7 @@ export const Social = () => {
         loading={friendLoading}
         onClose={() => setSearchedUserName(null)}
       />
-      <Screen extraSpace>
+      <Screen>
         <XStack space="$3" w="100%">
           <Input
             w="65%"
@@ -77,7 +77,7 @@ export const Social = () => {
 
         {feedLoading && (
           <FlatList
-            style={{ width: "100%" }}
+            style={{ width: "120%", height: "100%" }}
             data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
             keyExtractor={(item) => item.toString()}
             renderItem={() => <Skeleton my="$2" mx="auto" h={150} />}
@@ -86,7 +86,7 @@ export const Social = () => {
 
         {!feedLoading && feed && (
           <FlatList
-            style={{ width: "100%" }}
+            style={{ width: "120%", height: "100%" }}
             data={feed ?? []}
             keyExtractor={(item) => item.workout.id.toString()}
             renderItem={({ item }) => createMessage(item)}

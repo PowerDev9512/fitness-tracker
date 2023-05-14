@@ -58,7 +58,7 @@ export const Stats = () => {
 
       <Group
         orientation="horizontal"
-        backgroundColor="$white"
+        backgroundColor="$backgroundAccent"
         h="$0.5"
         w="100%"
       >
@@ -98,7 +98,7 @@ export const Stats = () => {
             onPress={() => setIndex(2)}
             pressStyle={{ backgroundColor: "$primary200" }}
           >
-            <Text>Messages {unreadMessages > 0 && `(${unreadMessages})`}</Text>
+            <Text>Info {unreadMessages > 0 && `(${unreadMessages})`}</Text>
           </Button>
         </Group.Item>
       </Group>

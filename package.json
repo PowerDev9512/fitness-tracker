@@ -45,7 +45,7 @@
     "mixpanel-react-native": "^2.2.3",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-native": "0.71.3",
+    "react-native": "0.71.7",
     "react-native-animated-pagination-dots": "^0.1.73",
     "react-native-calendars": "^1.1295.0",
     "react-native-date-picker": "^4.2.13",

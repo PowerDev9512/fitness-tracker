@@ -47,6 +47,12 @@ export const Notifications = () => {
     <Screen>
       <FlatList
         data={user?.friendRequests ?? []}
+        ListEmptyComponent={
+          <Text textAlign="center">
+            Sorry, there's no new friend requests for you!
+          </Text>
+        }
+        keyExtractor={(item) => `${item}`}
         renderItem={({ item }) => {
           const currentUser = batchedUsers?.find((u) => u.id === item) ?? null;
           if (currentUser == null) {

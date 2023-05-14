@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import { useGetUser } from "api";
 import { IconButton } from "components";
 import React from "react";
-import { Stack, Text } from "tamagui";
+import { Circle, Stack } from "tamagui";
 
 export default () => {
   const { data: user } = useGetUser();
@@ -18,16 +18,13 @@ export default () => {
         color="$gray700"
       />
       {friendRequests > 0 && (
-        <Text
-          textAlign="center"
-          color="$primary300"
-          fontSize={18}
+        <Circle
           position="absolute"
           top={2}
-          right={-10}
-        >
-          {user?.friendRequests.length}
-        </Text>
+          right={2}
+          size={10}
+          bg="$primary500"
+        />
       )}
     </Stack>
   );

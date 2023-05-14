@@ -19,6 +19,10 @@ export const useIap = () => {
     setupEventListeners();
   }, []);
 
+  const disconnect = async () => {
+    await InAppPurchases.disconnectAsync();
+  };
+
   const getProducts = async () => {
     const { responseCode, results } = await InAppPurchases.getProductsAsync(
       IAP_SKUS
@@ -70,5 +74,6 @@ export const useIap = () => {
     purchaseItem,
     processing,
     connected,
+    disconnect,
   };
 };
